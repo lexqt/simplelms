@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'tinymce',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -154,3 +155,25 @@ LOGGING = {
         },
     }
 }
+
+
+TINYMCE_JS_URL  = MEDIA_URL  + 'js/tiny_mce/tiny_mce.js'
+TINYMCE_JS_ROOT = MEDIA_ROOT + 'js/tiny_mce'
+TINYMCE_DEFAULT_CONFIG = {
+    #'mode'           : "specific_textareas",
+    #'editor_selector' : "tiny_mce",
+    'theme'    : "advanced",
+    'language' : "ru",
+
+    'plugins' : "advhr,inlinepopups,searchreplace,fullscreen,style,layer,table,advimage,contextmenu,paste,directionality,noneditable,nonbreaking,xhtmlxtras",
+
+    'theme_advanced_buttons1' : "undo,redo,|,search,|,bold,italic,|,formatselect,|,bullist,numlist,|,pastetext,pasteword",
+    'theme_advanced_buttons2' : "link,unlink,|,image,insertfile,insertimage,|,advhr,charmap,|,tablecontrols,|,removeformat,cleanup,|,fullscreen,|,code",
+    'theme_advanced_buttons3' : "",
+
+    'theme_advanced_toolbar_location' : "top",
+    'theme_advanced_toolbar_align' : "left",
+    'theme_advanced_statusbar_location' : "bottom",
+    'theme_advanced_resizing' : False,
+}
+TINYMCE_COMPRESSOR = True
