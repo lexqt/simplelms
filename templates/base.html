@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Главная{% endblock %} — SimpleLMS</title>
+</head>
+<body>
+	<div id="sidebar">
+		{% block topbar %}
+		<ul>
+			<li><a href="/">Главная</a></li>
+			<li><a href="/admin/">Админка</a></li>
+		</ul>
+		{% endblock %}
+	</div>
+
+	<div id="content">
+		{% block content %}{% endblock %}
+	</div>
+</body>
+</html>
