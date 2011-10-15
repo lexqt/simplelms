@@ -158,8 +158,6 @@ LOGGING = {
 }
 
 
-TINYMCE_JS_URL  = MEDIA_URL  + 'js/tiny_mce/tiny_mce.js'
-TINYMCE_JS_ROOT = MEDIA_ROOT + 'js/tiny_mce'
 TINYMCE_DEFAULT_CONFIG = {
     #'mode'           : "specific_textareas",
     #'editor_selector' : "tiny_mce",
@@ -167,6 +165,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'language' : "ru",
 
     'plugins' : "advhr,inlinepopups,searchreplace,fullscreen,style,layer,table,advimage,contextmenu,paste,directionality,noneditable,nonbreaking,xhtmlxtras",
+
+    'relative_urls' : False,
 
     'theme_advanced_buttons1' : "undo,redo,|,search,|,bold,italic,|,formatselect,|,bullist,numlist,|,pastetext,pasteword",
     'theme_advanced_buttons2' : "link,unlink,|,image,insertfile,insertimage,|,advhr,charmap,|,tablecontrols,|,removeformat,cleanup,|,fullscreen,|,code",
@@ -177,4 +177,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_statusbar_location' : "bottom",
     'theme_advanced_resizing' : False,
 }
-TINYMCE_COMPRESSOR = True
+TINYMCE_SPELLCHECKER = False
+TINYMCE_COMPRESSOR   = False
