@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from .news.views import FrontpageNewsView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -6,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'simplelms.views.home', name='home'),
+    url(r'^$', FrontpageNewsView.as_view(), name='home'),
     # url(r'^simplelms/', include('simplelms.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
