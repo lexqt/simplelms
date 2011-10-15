@@ -4,7 +4,7 @@
  */
  
 var django = {
-    "jQuery": jQuery.noConflict(true)
+    "jQuery": jQuery.noConflict(false)
 };
 
 (function($) {
