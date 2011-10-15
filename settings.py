@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'grappelli',
+    'filebrowser',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -184,3 +185,8 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 TINYMCE_SPELLCHECKER = False
 TINYMCE_COMPRESSOR   = False
+
+FILEBROWSER_DIRECTORY = ''
+FILEBROWSER_URL_TINYMCE  = STATIC_URL  + 'tiny_mce/'
+FILEBROWSER_PATH_TINYMCE = STATIC_ROOT + 'tiny_mce/'
+FILEBROWSER_MAX_UPLOAD_SIZE = 2097152
