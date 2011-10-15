@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Django settings for simplelms project.
 
 DEBUG = True
@@ -65,7 +66,8 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
+#ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + "grappelli/"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -126,6 +128,7 @@ INSTALLED_APPS = (
     # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'grappelli',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -133,6 +136,8 @@ INSTALLED_APPS = (
     'tinymce',
     'news',
 )
+
+GRAPPELLI_ADMIN_TITLE = 'Администрирование сайта'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
