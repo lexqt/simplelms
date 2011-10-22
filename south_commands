@@ -1,0 +1,21 @@
+The First Migration on New App
+
+./manage.py schemamigration myapp --initial
+./manage.py migrate myapp
+
+Then
+
+./manage.py schemamigration myapp --auto
+./manage.py migrate myapp
+
+
+
+Existing App
+
+./manage.py convert_to_south myapp
+
+Then (after commit) on every machine that has a copy of the codebase:
+
+./manage.py migrate myapp 0001 --fake
+
+
