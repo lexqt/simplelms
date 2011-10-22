@@ -136,9 +136,11 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'tinymce',
     'news',
+    'accounts',
 )
 
 GRAPPELLI_ADMIN_TITLE = 'Администрирование сайта'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
