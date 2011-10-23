@@ -4,6 +4,10 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+import os
+CURRENT_APP_DIR = os.path.dirname(__file__)
+
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -74,7 +78,8 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/lex/Projects/simplelms/static/',
+#    '/home/lex/Projects/simplelms/static/',
+    os.path.join(CURRENT_APP_DIR, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -109,7 +114,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/lex/Projects/simplelms/templates',
+#    '/home/lex/Projects/simplelms/templates',
+    os.path.join(CURRENT_APP_DIR, 'templates'),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -198,3 +204,11 @@ FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_URL_TINYMCE  = STATIC_URL  + 'tiny_mce/'
 FILEBROWSER_PATH_TINYMCE = STATIC_ROOT + 'tiny_mce/'
 FILEBROWSER_MAX_UPLOAD_SIZE = 2097152
+
+
+# The machine specific settings
+try:
+    from localsettings import *
+except ImportError:
+    print 'no localsettings detected'
+    pass
