@@ -166,6 +166,7 @@ LOGGING = {
     }
 }
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
 TINYMCE_DEFAULT_CONFIG = {
     #'mode'           : "specific_textareas",

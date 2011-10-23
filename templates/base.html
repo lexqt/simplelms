@@ -6,6 +6,14 @@
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.4.min.js"></script>
 </head>
 <body>
+	{% if messages %}
+	<ul id="messages">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+	{% endif %}
+
 	<div id="sidebar">
 		{% block topbar %}
 		<ul>
