@@ -22,6 +22,14 @@
 		</ul>
 		{% endblock %}
 	</div>
+	
+	<div id="account">
+		{% if user.is_authenticated %}
+		    <p>Добро пожаловать, {{ user.username }}. <a href="{% url accounts:logout %}">Выход</a></p>
+		{% else %}
+		    <p><a href="{% url accounts:login %}">Вход</a> | <a href="{% url accounts:register %}">Регистрация</a></p>
+		{% endif %}
+	</div>
 
 	<div id="content">
 		{% block content %}{% endblock %}
