@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load url from future %}
+
+{% block content %}
+<h2>Вход на сайт</h2>
+{% if form.non_field_errors %}
+	<h3>Ошибки:</h3>
+    {{ field.non_field_errors }}
+{% endif %}
+
+<form method="post" action="{% url 'accounts:login' %}">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="hidden" name="next" value="{{ next }}" />
+<input type="submit" value="Войти" />
+</form>
+{% endblock %}

@@ -9,7 +9,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', FrontpageNewsView.as_view(), name='home'),
-    # url(r'^simplelms/', include('simplelms.foo.urls')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts', app_name='accounts')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
