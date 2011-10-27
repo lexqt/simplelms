@@ -210,5 +210,4 @@ FILEBROWSER_MAX_UPLOAD_SIZE = 2097152
 try:
     from localsettings import *
 except ImportError:
-    print 'no localsettings detected'
     pass

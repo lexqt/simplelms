@@ -19,3 +19,11 @@ Then (after commit) on every machine that has a copy of the codebase:
 ./manage.py migrate myapp 0001 --fake
 
 
+
+
+Some
+
+если нужно проапдейтить permissions
+./manage.py syncdb --all
+
+
