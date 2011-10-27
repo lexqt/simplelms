@@ -1,4 +1,5 @@
 # http://djangosnippets.org/snippets/2566/
+# 2011-10-27 - some optimizations by lex
 
 from django import template
 from django.template import resolve_variable, NodeList
@@ -34,6 +35,8 @@ def ifusergroup(parser, token):
 
 
 class GroupCheckNode(template.Node):
+    _groups_cache = []
+    
     def __init__(self, group, nodelist_true, nodelist_false):
         self.group = group
         self.nodelist_true = nodelist_true
@@ -47,7 +50,9 @@ class GroupCheckNode(template.Node):
         for group in self.group.split("|"):
             group = group[1:-1] if group.startswith('"') and group.endswith('"') else group
             try:
-                if Group.objects.get(name=group) in user.groups.all():
+                if not GroupCheckNode._groups_cache:
+                    GroupCheckNode._groups_cache = [ group.name for group in user.groups.all() ]
+                if group in GroupCheckNode._groups_cache:
                     return self.nodelist_true.render(context)
             except Group.DoesNotExist:
                 pass
