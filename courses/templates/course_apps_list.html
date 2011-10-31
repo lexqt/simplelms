@@ -1,0 +1,38 @@
+{% extends 'courses_base.html' %}
+
+{% block title %}Список заявок на курс "{{ course.title }}" | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2>Заявки на курс "{{ course.title }}"</h2>
+<table>
+{% for app in app_list %}
+	<tr>
+		<td>{{ app.date_submitted }}</td>
+		<td>{{ app.user.userprofile }}</td>
+		<td>
+			<a href="{% url courses:accept_app app.id 1 %}">принять</a><br />
+			<a href="{% url courses:accept_app app.id 0 %}">отклонить</a>
+		</td>
+	</tr>
+{% endfor %}
+</table>
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a> |
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            | <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+{% endblock %}

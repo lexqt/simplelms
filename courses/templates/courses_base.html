@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы{% endblock %}
+
+{% block appmenu %}
+	<li><a href="{% url courses:list %}">Доступные курсы</a></li>
+	<li><a href="{% url courses:my_courses %}">Мои курсы</a></li>
+{% endblock %}
+
+{% block appmenu_manager %}
+	<li><a href="{% url courses:apps_overview %}">Заявки на курсы</a></li>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'courses_base.html' %}
+
+{% block title %}Заявки на курсы | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2>Заявки на курсы</h2>
+<ul>
+{% for course in course_list %}
+    <li>
+    <h3>{{ course.title }}</h3>
+    <p>{{ course.date_created }}</p>
+    <p>Количество заявок: <b>{{ course.apps_count }}</b></p>
+    <div class="controls"><a href="{% url courses:course_apps course.id %}">просмотреть заявки</a></div>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

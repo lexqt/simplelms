@@ -19,6 +19,7 @@
 		<ul id="mainmenu">
 			{% block mainmenu %}
 			<li><a href="/">Главная</a></li>
+			<li><a href="{% url courses:list %}">Курсы</a></li>
 			{% endblock %}
 			{% ifusergroup managers %}
 				{% block mainmenu_manager %}

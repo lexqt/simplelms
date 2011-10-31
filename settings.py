@@ -144,6 +144,8 @@ INSTALLED_APPS = (
     'south',
     'news',
     'accounts',
+    'courses',
+    'lections',
 )
 
 GRAPPELLI_ADMIN_TITLE = 'Администрирование сайта'

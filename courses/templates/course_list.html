@@ -1,0 +1,37 @@
+{% extends 'courses_base.html' %}
+
+{% block title %}Список курсов | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2>Учебные курсы</h2>
+<ul>
+{% with nexturl=next|urlencode %}
+{% for course in course_list %}
+    <li>
+    <h3>{{ course.title }}</h3>
+    <p>{{ course.date_created }}</p>
+    <div>{{ course.description|safe }}</div>
+    <div class="controls"><a href="{% url courses:submit_app course.id %}?next={{ nexturl }}">записаться на курс</a></div>
+    </li>
+{% endfor %}
+{% endwith %}
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a> |
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            | <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+{% endblock %}
