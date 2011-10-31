@@ -14,4 +14,4 @@ class UserProfile(models.Model):
     middle_name = models.CharField('отчество', max_length=30, blank=True)
     
     def __unicode__(self):
-        return self.user.__unicode__()
+        return ' '.join((self.user.last_name, self.user.first_name, self.middle_name))

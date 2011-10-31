@@ -29,6 +29,7 @@ def login_view(request):
 
 def register_view(request):
     from django.shortcuts import render
+    from django.contrib.auth.models import Group
     from .forms import UserForm, UserProfileForm
     if request.method == 'POST':
         user_form    = UserForm(request.POST)
@@ -38,6 +39,8 @@ def register_view(request):
             profile = profile_form.save(commit = False)
             profile.user = user
             profile.save()
+            g = Group.objects.get(name='newcomers')
+            g.user_set.add(user)
             from django.contrib import messages
             messages.success(request, 'Учетная запись успешно создана. Теперь можете зайти на сайт.')
             return HttpResponseRedirect('login')
