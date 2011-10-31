@@ -1,3 +1,4 @@
+{% load user_extras %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,18 +10,30 @@
 	{% if messages %}
 	<ul id="messages">
 	    {% for message in messages %}
-	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
 	    {% endfor %}
 	</ul>
 	{% endif %}
 
 	<div id="sidebar">
-		{% block topbar %}
-		<ul>
+		<ul id="mainmenu">
+			{% block mainmenu %}
 			<li><a href="/">Главная</a></li>
-			<li><a href="/admin/">Админка</a></li>
+			{% endblock %}
+			{% ifusergroup managers %}
+				{% block mainmenu_manager %}
+				<li><a href="/admin/">Админка</a></li>
+				{% endblock %}
+			{% endifusergroup %}
 		</ul>
-		{% endblock %}
+		<ul id="appmenu">
+			{% block appmenu %}
+			{% endblock %}
+			{% ifusergroup managers %}
+				{% block appmenu_manager %}
+				{% endblock %}
+			{% endifusergroup %}
+		</ul>
 	</div>
 	
 	<div id="account">
