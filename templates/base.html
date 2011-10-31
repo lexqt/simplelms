@@ -34,5 +34,15 @@
 	<div id="content">
 		{% block content %}{% endblock %}
 	</div>
+
+{% if debug %}
+<div id="debug">
+    <ol>
+    {% for q in sql_queries %}
+        <li><b>{{ q.time }}s</b>: {{ q.sql }};
+    {% endfor %}
+    </ol>
+</div>
+{% endif %}
 </body>
 </html>
