@@ -17,6 +17,9 @@ class Lection(models.Model):
                                               content_type_field='element_type',
                                               object_id_field='object_id')
     
+    def in_course(self, course):
+        return 0 != self.course_elements.filter(part__course=course).count()
+    
     def __unicode__(self):
         return self.title
 
@@ -30,7 +33,7 @@ class LectionPage(models.Model):
     
     lection    = models.ForeignKey(Lection, related_name='pages')
     title      = models.CharField('название', max_length=150)
-    content    = models.TextField('текст лекции', default='')
+    content    = models.TextField('текст лекции')
     num        = models.PositiveIntegerField('номер страницы')
 
     def __unicode__(self):
@@ -48,3 +51,11 @@ class LectionResult(models.Model):
     course     = models.ForeignKey(Course, related_name='+')
     user       = models.ForeignKey(User, related_name='+')
     is_passed  = models.BooleanField('пройдено', default=True)
+
+    @classmethod
+    def pass_lection(cls, lection, course, user):
+        result, created = cls.objects.get_or_create(lection=lection, course=course, user=user, defaults={'is_passed': True})
+        if not created and not result.is_passed:
+            result.is_passed = True
+            result.save()
+        return result

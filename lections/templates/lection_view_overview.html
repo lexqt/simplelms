@@ -1,0 +1,23 @@
+{% extends 'lections_base.html' %}
+
+{% block title %}{{ lection.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h3>{{ lection.title }}</h3>
+<p>{{ lection.description|safe }}</p>
+
+<h4>Содержание лекции</h4>
+<ol>
+{% for page in lection_pages %}
+	<li>
+		<span>{{ page.title }}</span>
+		<a href="{% url lections:lection_view course_id=course.id lection_id=lection.id page=forloop.counter %}">читать с этой страницы</a>
+	</li>
+{% endfor %}
+</ol>
+
+<p>
+	<a href="{% url lections:lection_view course_id=course.id lection_id=lection.id page=1 %}">читать лекцию</a>
+</p>
+
+{% endblock %}

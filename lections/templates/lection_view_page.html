@@ -1,0 +1,30 @@
+{% extends 'lections_base.html' %}
+
+{% block title %}{{ lection.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h3>{{ lection_page.title }}</h3>
+<div>
+{{ lection_page.content|safe }}
+</div>
+
+<div class="pagination">
+    <p>
+        Страница {{ page.number }} из {{ page_cnt }}
+    </p>
+    <p class="step-links">
+        {% if page.has_previous %}
+            <a href="{% url lections:lection_view course_id=course.id lection_id=lection.id page=page.previous_page_number %}">предыдущая</a>
+        {% endif %}
+        {% if page.has_next %}
+            <a href="{% url lections:lection_view course_id=course.id lection_id=lection.id page=page.next_page_number %}">следующая</a>
+        {% endif %}
+    </p>
+    {% if not page.has_next %}
+        <a href="{% url lections:lection_finish course_id=course.id lection_id=lection.id %}">Завершить</a>
+    {% endif %}
+    <p>
+    </p>
+</div>
+
+{% endblock %}

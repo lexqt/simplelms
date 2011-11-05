@@ -1,0 +1,14 @@
+{% extends 'lections_base.html' %}
+
+{% block title %}{{ lection.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h3>{{ lection.title }}</h3>
+
+<p>Вы успешно завершили лекцию!</p>
+
+<p>
+	<a href="{% url courses:course_view course_id=course.id %}">Вернуться к курсу</a>
+</p>
+
+{% endblock %}

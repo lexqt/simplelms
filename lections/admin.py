@@ -2,9 +2,10 @@
 
 from django.contrib import admin
 from django.db import models
-from .models import Lection, LectionPage
+from .models import Lection, LectionPage, LectionResult
 from tinymce.widgets import TinyMCE
 from common.admin import LinkedStackedInline
+from django.conf import settings
 
 
 
@@ -60,3 +61,6 @@ class LectionPageAdmin(admin.ModelAdmin):
 
 admin.site.register(Lection, LectionAdmin)
 admin.site.register(LectionPage, LectionPageAdmin)
+
+if settings.DEBUG:
+    admin.site.register(LectionResult, admin.ModelAdmin)
