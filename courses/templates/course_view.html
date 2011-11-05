@@ -1,0 +1,23 @@
+{% extends 'courses_base.html' %}
+
+{% block title %}{{ course.title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h3>{{ course.title }}</h3>
+<p>{{ course.date_created }}</p>
+<p>{{ course.description|safe }}</p>
+
+{% for part in course_parts %}
+	<h4>{{ part.title }}</h4>
+	<p>{{ part.description|safe }}</p>
+	{% for element in part.part_elements %}
+		<h5>{{ element.num }}. {{ element.title }}</h5>
+		<p>{{ element.description|safe }}</p>
+		{% if element.element_type.model == 'lection' %}
+			<a href="{% url lections:lection_view course.id element.object_id %}">открыть</a>
+		{% else %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+{% endblock %}

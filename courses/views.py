@@ -1,14 +1,17 @@
 # coding: utf-8
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Course, Enrollment, Application
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.utils import simplejson as json
 from django.shortcuts import render
+from courses.models import Part
+from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 
 class CourseListView(ListView):
     queryset = Course.objects.filter(is_active=True).order_by('-date_created')
@@ -19,6 +22,43 @@ class CourseListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(CourseListView, self).get_context_data(**kwargs)
         context['next'] = self.request.get_full_path()
+        return context
+
+
+
+class CourseView(DetailView):
+
+    template_name = 'course_view.html'
+    context_object_name = 'course'
+
+    def get_object(self):
+        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user,
+                                             check_student=True)
+        
+        parts = Part.objects.filter(course=self.course).all()
+#        id_lection = ContentType.objects.get(app_label='lections', model='lection').id
+        
+        for part in parts:
+            elements = []
+            for element in part.elements.select_related('element_type').defer('element_type__name').all():
+                element.num += 1
+#                if element.element_type.id == id_lection:
+#                    element.type_name = 'lection'
+                elements.append(element)
+            part.part_elements = elements
+        
+        self.course_parts = parts
+        
+        return self.course
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CourseView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(CourseView, self).get_context_data(**kwargs)
+        context['course'] = self.course
+        context['course_parts'] = self.course_parts
         return context
 
 
@@ -81,7 +121,7 @@ class CourseApplicationsListView(ListView):
 
 
 
-@login_required    
+@login_required
 def submit_application_view(request, course_id):
     class AnyError:
         pass
@@ -174,8 +214,10 @@ def accept_application_view(request, app_id, accept):
         'msgs': msgs,
     }
     
-    return render(request, 'debug.html', {'content': json.dumps(response, ensure_ascii=False)})
-#    return HttpResponse(json.dumps(response, ensure_ascii=False), content_type='application/json')
+    if settings.DEBUG:
+        return render(request, 'debug.html', {'content': json.dumps(response, ensure_ascii=False)})
+    
+    return HttpResponse(json.dumps(response, ensure_ascii=False), content_type='application/json')
 
 
 

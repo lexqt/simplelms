@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.http import Http404, HttpResponseForbidden
 
 class Course(models.Model):
     
@@ -30,8 +31,32 @@ class Course(models.Model):
             user = user.id
         return 0 != self.managers.filter(pk=user).count()
     
+    def has_student(self, user):
+        if isinstance(user, User):
+            user = user.id
+        return 0 != self.students.filter(pk=user).count()
+    
     def __unicode__(self):
         return self.title
+    
+    @classmethod
+    def get_or_fail(cls, cid, check_existence=True, user=None, check_student=False, check_manager=False, queryset=None):
+        if queryset is None:
+            queryset = cls.objects
+        try:
+            course = queryset.get(id=cid)
+        except cls.DoesNotExist:
+            if check_existence:
+                raise Http404('Курс не найден')
+            else:
+                return None
+        if check_student:
+            if not course.has_student(user):
+                raise HttpResponseForbidden('Вы не записаны на данный курс')
+        if check_manager:
+            if not course.has_course_manager(user):
+                raise HttpResponseForbidden('Вы не являетесь управляющим данного курса')
+        return course
 
 
 
@@ -100,8 +125,9 @@ class Part(models.Model):
         verbose_name        = 'раздел'
         verbose_name_plural = 'разделы'
         unique_together     = ('course', 'num')
+        ordering = ('course', 'num')
         
-    course      = models.ForeignKey(Course)
+    course      = models.ForeignKey(Course, related_name='parts')
     num         = models.PositiveIntegerField('номер')
     title       = models.CharField('название', max_length=150)
     description = models.TextField('описание', blank=True)
@@ -117,8 +143,9 @@ class Element(models.Model):
         verbose_name        = 'элемент'
         verbose_name_plural = 'элементы'
         unique_together     = ('part', 'num')
+        ordering = ('part', 'num')
     
-    part        = models.ForeignKey(Part)
+    part        = models.ForeignKey(Part, related_name='elements')
     num         = models.PositiveIntegerField('номер')
     title       = models.CharField('название', max_length=150)
     description = models.TextField('описание', blank=True)
