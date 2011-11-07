@@ -186,12 +186,18 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme'    : "advanced",
     'language' : "ru",
 
-    'plugins' : "advhr,inlinepopups,searchreplace,fullscreen,style,layer,table,advimage,contextmenu,paste,directionality,noneditable,nonbreaking,xhtmlxtras",
-
+    'plugins' : "advhr,advimage,advlink,advlist,contextmenu,fullscreen,inlinepopups,insertdatetime,media,nonbreaking,noneditable,paste,preview,searchreplace,style,table,visualchars",
+    
+    # for advimage
+    'extended_valid_elements' : "img[!src|border:0|alt|title|width|height|style]a[name|href|target|title|onclick]",
+    
+    'plugin_preview_width' : 800,
+    'plugin_preview_height' : 600,
+    
     'relative_urls' : False,
 
-    'theme_advanced_buttons1' : "undo,redo,|,search,|,bold,italic,|,formatselect,|,bullist,numlist,|,pastetext,pasteword",
-    'theme_advanced_buttons2' : "link,unlink,|,image,insertfile,insertimage,|,advhr,charmap,|,tablecontrols,|,removeformat,cleanup,|,fullscreen,|,code",
+    'theme_advanced_buttons1' : "fullscreen,|,undo,redo,|,bold,italic,|,styleprops,formatselect,|,bullist,numlist,|,pastetext,pasteword,|,insertdate,inserttime,|,search,replace",
+    'theme_advanced_buttons2' : "link,unlink,|,image,media,|,advhr,charmap,nonbreaking,visualchars,|,tablecontrols,|,removeformat,cleanup,|,preview,code",
     'theme_advanced_buttons3' : "",
 
     'theme_advanced_toolbar_location' : "top",
@@ -206,7 +212,13 @@ FILEBROWSER_DIRECTORY = ''
 FILEBROWSER_URL_TINYMCE  = STATIC_URL  + 'tiny_mce/'
 FILEBROWSER_PATH_TINYMCE = STATIC_ROOT + 'tiny_mce/'
 FILEBROWSER_MAX_UPLOAD_SIZE = 2097152
-
+FILEBROWSER_VERSIONS_BASEDIR = 'img_versions'
+FILEBROWSER_VERSIONS = {
+    'thumbnail': {'verbose_name': 'Миниатюра (квадратная)', 'width': 60, 'height': 60, 'opts': 'crop'},
+    'small': {'verbose_name': 'Уменьшенное изображение', 'width': 140, 'height': '', 'opts': ''},
+}
+FILEBROWSER_ADMIN_THUMBNAIL = 'thumbnail'
+FILEBROWSER_ADMIN_VERSIONS = ['thumbnail', 'small']
 
 # The machine specific settings
 try:
