@@ -30,6 +30,7 @@ class LectionPage(models.Model):
     class Meta:
         verbose_name        = 'страница'
         verbose_name_plural = 'страницы'
+        ordering = ('lection', 'num')
     
     lection    = models.ForeignKey(Lection, related_name='pages')
     title      = models.CharField('название', max_length=150)
