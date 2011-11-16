@@ -104,7 +104,8 @@ class TestFrameXml(object):
         e = E.FrameIndex(
             E.TestFrame(
                 prepare_mixed_content('Data', self.data),
-                t_element
+                t_element,
+                Name=self.name
             ),
             Scheme=self.frame_index.scheme,
             FrameID=self.frame_index.frame_id
@@ -143,18 +144,18 @@ class CloseType(FrameType):
     def __init__(self, dom):
         super(CloseType, self).__init__(dom)
         self._dom = dom.Close
-        self.right_vars = {}
-        self.wrong_vars = {}
+        self.right_vars   = {}
+        self.wrong_vars   = {}
+        self.orig_variants = []
     
     @property
     def variants(self):
-        import random
-        all_var = {}
-        all_var.update(self.right_vars)
-        all_var.update(self.wrong_vars)
-        ii = all_var.items()
-        random.shuffle(ii)
-        return ii
+        if not hasattr(self, '_all_var'):
+            all_var = {}
+            all_var.update(self.right_vars)
+            all_var.update(self.wrong_vars)
+            self._all_var = all_var
+        return self._all_var
     
     def is_multiple(self):
         cnt = len(self.right_vars)
@@ -170,9 +171,18 @@ class CloseType(FrameType):
             
             container         = self.right_vars if is_right else self.wrong_vars
             container[var_id] = data
+            
+            self.orig_variants.append({
+                'id': var_id,
+                'right': is_right,
+                'data': data
+            })
     
     def get_answer_data(self):
-        return self.variants
+        import random
+        ii = self.variants.items()
+        random.shuffle(ii)
+        return ii
     
     def check_answer(self, answer):
 #        answer = map(str, answer)
@@ -192,15 +202,10 @@ class CloseType(FrameType):
         E = objectify.ElementMaker(annotate=False)
         
         variants = [E.Variant(
-            prepare_mixed_content('Data', data),
-            VariantID=v_id,
-            Value='Right')
-        for v_id, data in self.right_vars.iteritems()]
-        variants += [E.Variant(
-            prepare_mixed_content('Data', data),
-            VariantID=v_id,
-            Value='Wrong')
-        for v_id, data in self.wrong_vars.iteritems()]
+            prepare_mixed_content('Data', var['data']),
+            VariantID=var['id'],
+            Value='Right' if var['right'] else 'Wrong')
+        for var in self.orig_variants]
         
         e = E.Close(
             *variants

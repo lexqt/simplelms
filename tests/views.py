@@ -19,12 +19,12 @@ def form_class_factory(frame_type, frame):
             cls = MultipleCloseTypeForm
         else:
             cls = SingleCloseTypeForm
-        return curry(cls, frame.type.variants)
+        return curry(cls, frame.type.get_answer_data())
     elif frame_type == 'open':
         t = frame.type.get_type()
         if t == 'string':
             cls = StringOpenTypeForm
-        return curry(cls, frame.type.default)
+        return curry(cls, frame.type.get_answer_data())
         
     raise Exception('Unsupported frame')
 
