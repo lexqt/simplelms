@@ -1,7 +1,8 @@
 from django.views.generic import FormView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .models import TestFrame, TestFrameXml, CloseType, FRAME_TYPE_CLASSES
+from .models import TestFrame
+from .xml import TestFrameXml, FRAME_TYPE_CLASSES
 from .forms import SingleCloseTypeForm, MultipleCloseTypeForm, StringOpenTypeForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404

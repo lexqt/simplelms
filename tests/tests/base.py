@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(CURRENT_DIR+'/../../..'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'simplelms.settings'
 
 import unittest
-from tests.models import TestFrameXml, CloseType, OpenType
+from tests.xml import TestFrameXml, CloseType, OpenType
 
 
 def assertXmlEqual(result, expect):
