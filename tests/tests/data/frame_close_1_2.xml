@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameIndex Scheme="100" FrameID="102">
+	<TestFrame Name="Dummy вопрос - выбрать несколько ответов">
+		<Data>
+			<p>Выберите <b>первый</b> и <b>третий</b> вариант.</p>
+		</Data>
+		<Close>
+			<Variant Value="Right" VariantID="75">
+				<Data>
+					первый
+				</Data>
+			</Variant>
+			<Variant Value="Wrong" VariantID="88">
+				<Data>
+					второй
+				</Data>
+			</Variant>
+			<Variant Value="Right" VariantID="46">
+				<Data>
+					<i>третий</i>
+				</Data>
+			</Variant>
+			<Variant Value="Wrong" VariantID="12">
+				<Data>
+					еще какой-то <b>вариант</b>
+				</Data>
+			</Variant>
+		</Close>
+	</TestFrame>
+</FrameIndex>

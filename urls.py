@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^courses/', include('courses.urls', namespace='courses', app_name='courses')),
     url(r'^accounts/', include('accounts.urls', namespace='accounts', app_name='accounts')),
     url(r'^lections/', include('lections.urls', namespace='lections', app_name='lections')),
+    url(r'^tests/', include('tests.urls', namespace='tests', app_name='tests')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

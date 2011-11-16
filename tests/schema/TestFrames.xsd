@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="FrameIndex" type="TestFramesFrameIndexes">
+		<xs:annotation>
+			<xs:documentation>Указатель на фрейм электронного конспекта.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TestFramesFrameIndexes">
+		<xs:annotation>
+			<xs:documentation>Указатель на тест-кадр.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TestFrame" type="TestFrames">
+				<xs:annotation>
+					<xs:documentation>Тест-кадр.</xs:documentation>
+				</xs:annotation>
+				<xs:key name="CloseVariantIDKey">
+					<xs:selector xpath=".//Close/Variant"/>
+					<xs:field xpath="@VariantID"/>
+				</xs:key>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Scheme" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор схемы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FrameID" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор тест-кадра</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FrameType" type="xs:string" fixed="Test">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestFrames">
+		<xs:annotation>
+			<xs:documentation>Набор тест-кадров.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Data" type="Flow">
+				<xs:annotation>
+					<xs:documentation>Содержит символьную информацию</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Close" type="CloseType">
+					<xs:annotation>
+						<xs:documentation>Вопрос закрытого типа</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Open" type="OpenType">
+					<xs:annotation>
+						<xs:documentation>Вопрос открытого типа</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Inform" type="InformType">
+					<xs:annotation>
+						<xs:documentation>Информационный кадр</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Название кадра</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="CloseType">
+		<xs:sequence>
+			<xs:element name="Variant" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Вариант ответа</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Data" type="Flow">
+							<xs:annotation>
+								<xs:documentation>Символьная информация с описанием вариата ответа</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="VariantID" type="xs:int" use="required">
+						<xs:annotation>
+							<xs:documentation>Идентификатор варианта ответа</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Value" default="Wrong">
+						<xs:annotation>
+							<xs:documentation>Признак правильности ответа</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="Wrong"/>
+								<xs:enumeration value="Right"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="MinChoices" type="xs:int" default="-1">
+			<xs:annotation>
+				<xs:documentation>Минимум выбранных вариантов</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="MaxChoices" type="xs:int" default="-1">
+			<xs:annotation>
+				<xs:documentation>Максимум выбранных вариантов</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="RandomSequence" type="YesNo" default="Yes">
+			<xs:annotation>
+				<xs:documentation>Случайное расположение вариантов</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FrameType" type="xs:string" fixed="TestClose">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="OpenType">
+		<xs:choice>
+			<xs:element name="Integer">
+				<xs:annotation>
+					<xs:documentation>Целочисленный ответ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Value" type="xs:int" use="required">
+						<xs:annotation>
+							<xs:documentation>Значение ответа</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FrameType" type="xs:string" fixed="TestOpenInteger">
+						<xs:annotation>
+							<xs:documentation>(для служебного использования)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Float">
+				<xs:annotation>
+					<xs:documentation>Ответ – число с плавающей запятой</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Value" type="xs:float" use="required">
+						<xs:annotation>
+							<xs:documentation>Значение ответа</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="Error" type="xs:float" default="0">
+						<xs:annotation>
+							<xs:documentation>Процент допустимой ошибки</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FrameType" type="xs:string" fixed="TestOpenFloat">
+						<xs:annotation>
+							<xs:documentation>(для служебного использования)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="String">
+				<xs:annotation>
+					<xs:documentation>Строковый ответ</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Value" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>Значение ответа</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="MatchCase" type="YesNo" default="No">
+						<xs:annotation>
+							<xs:documentation>Признак проверки регистра символов</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="OrdinaryChars" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Перечисление знаков-разделителей</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="FrameType" type="xs:string" fixed="TestOpenString">
+						<xs:annotation>
+							<xs:documentation>(для служебного использования)</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="InformType">
+		<xs:attribute name="FrameType" type="xs:string" fixed="Inform">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="YesNo">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Yes"/>
+			<xs:enumeration value="No"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Flow" mixed="true">
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />
+		</xs:sequence>
+		<xs:attribute name="contentType" type="xs:string" default="xhtml"/>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameIndex Scheme="100" FrameID="111">
+	<TestFrame Name="Dummy вопрос - написать слово">
+		<Data>
+			Введите слово: <b>каша</b>.
+		</Data>
+		<Open>
+			<String Value="каша" />
+		</Open>
+	</TestFrame>
+</FrameIndex>

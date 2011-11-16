@@ -1,0 +1,32 @@
+<html>
+<body>
+<h1>{{ frame.name }}</h1>
+<div>
+{{ frame.data }}
+</div>
+{% if answered %}
+	<p>Результат проверки:
+	{% if answer_result %}
+		верно
+	{% else %}
+		неверно
+	{% endif %}
+	(балл: {{ answer_result }})
+	</p>
+{% endif %}
+{% if form.non_field_errors %}
+	<p>
+	{{ form.non_field_errors }}
+	</p>
+{% endif %}
+{% if form.answer.errors %}
+	<p>При ответе допущена ошибка:</p>
+	{{ form.answer.errors }}
+{% endif %}
+<form method="post" action="{% url tests:debug_frame scheme=frame_index.scheme frame_id=frame_index.frame_id %}">
+{% csrf_token %}
+{{ form.answer }}
+<input type="submit" value="Отправить" />
+</form>
+</body>
+</html>

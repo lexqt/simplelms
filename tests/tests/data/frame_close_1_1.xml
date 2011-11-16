@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameIndex Scheme="100" FrameID="101">
+	<TestFrame Name="Dummy вопрос - выбрать один ответ">
+		<Data>
+			Выберите <b>первый</b> вариант.
+		</Data>
+		<Close>
+			<Variant Value="Right" VariantID="1">
+				<Data>
+					первый
+				</Data>
+			</Variant>
+			<Variant Value="Wrong" VariantID="2">
+				<Data>
+					второй
+				</Data>
+			</Variant>
+		</Close>
+	</TestFrame>
+</FrameIndex>
