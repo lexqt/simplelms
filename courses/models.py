@@ -156,4 +156,4 @@ class Element(models.Model):
     element_object = generic.GenericForeignKey('element_type', 'object_id')
     
     def __unicode__(self):
-        return '{0}. {1}'.format(self.num, self.title)
+        return u'{0}. {1}'.format(self.num, self.title)

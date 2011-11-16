@@ -38,7 +38,7 @@ class LectionPage(models.Model):
     num        = models.PositiveIntegerField('номер страницы')
 
     def __unicode__(self):
-        return '{0} - "{1}"'.format(self.lection.title, self.title)
+        return u'{0} - "{1}"'.format(self.lection.title, self.title)
 
 
 
