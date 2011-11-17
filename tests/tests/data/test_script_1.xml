@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptIndex Scheme="100" ScriptID="101">
+	<Test Name="Тестовый тест" Mode="Exam"
+		LimitOnScript="10" TimeScale="Minute">
+		<Description>
+			Аттествующий тест по ... Вам предстоит ответить на три вопроса.
+		</Description>
+		<TestGroup GroupID="1">
+			<FrameIndex Scheme="100" FrameID="101">
+				<TestGroupItem GroupItemID="1" Weight="2" />
+			</FrameIndex>
+			<FrameIndex Scheme="100" FrameID="102">
+				<TestGroupItem GroupItemID="2" Weight="1" />
+			</FrameIndex>
+			<FrameIndex Scheme="100" FrameID="111">
+				<TestGroupItem GroupItemID="3" Weight="3" />
+			</FrameIndex>
+		</TestGroup>
+		<TestRules>
+			<TestRule Percent="60" />
+		</TestRules>
+	</Test>
+</ScriptIndex>

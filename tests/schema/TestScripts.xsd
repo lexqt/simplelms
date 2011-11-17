@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="ScriptIndex" type="TestsScriptIndexes">
+		<xs:annotation>
+			<xs:documentation>Указатель на сценарий теста</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="TestsScriptIndexes">
+		<xs:sequence>
+			<xs:element name="Test" type="Tests">
+				<xs:annotation>
+					<xs:documentation>Электронный тест</xs:documentation>
+				</xs:annotation>
+				<xs:key name="TestsGroupIDKey">
+					<xs:selector xpath="TestGroup"/>
+					<xs:field xpath="@GroupID"/>
+				</xs:key>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Scheme" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор схемы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ScriptType" type="xs:string" fixed="Test">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ScriptID" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор электронного теста</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestsFrameIndexes">
+		<xs:sequence>
+			<xs:element name="TestGroupItem" type="TestGroupsItems">
+				<xs:annotation>
+					<xs:documentation>Ссылка на тест-кадр</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Scheme" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор схемы</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FrameType" type="xs:string" fixed="Test">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FrameID" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор тест-кадра</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="IsKey" type="xs:string" fixed="No">
+			<xs:annotation>
+				<xs:documentation>(для служебного использования)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Tests">
+		<xs:annotation>
+			<xs:documentation>Электронные тесты.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="Flow">
+				<xs:annotation>
+					<xs:documentation>Описание электронного теста</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestGroup" type="TestGroups" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Тест-набор</xs:documentation>
+				</xs:annotation>
+				<xs:key name="TestsFrameIDKey">
+					<xs:selector xpath="FrameIndex"/>
+					<xs:field xpath="@FrameID"/>
+					<xs:field xpath="@Scheme"/>
+				</xs:key>
+			</xs:element>
+			<xs:element name="TestRules" type="TestRulesType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Совокупность правил оценивания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Название электронного теста</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Mode" use="required">
+			<xs:annotation>
+				<xs:documentation>Режим тестирования</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Learning"/>
+					<xs:enumeration value="Exam"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="LimitOnScript" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>Ограничение по времени на весь тест, задаваемое в единицах, указанных в атрибуте TimeScale</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TimeScale" type="TimeScales" default="Minute">
+			<xs:annotation>
+				<xs:documentation>Единица измерения времени</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestGroups">
+		<xs:annotation>
+			<xs:documentation>Группа заданий сценария тестирования.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FrameIndex" type="TestsFrameIndexes" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Указатель на тест-кадр</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="GroupID" type="xs:int" use="required">
+			<xs:annotation>
+				<xs:documentation>Идентификатор тест-набора</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Number" default="1">
+			<xs:annotation>
+				<xs:documentation>Количество вопросов из группы, задаваемых при одном тестировании</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="1"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestGroupsItems">
+		<xs:annotation>
+			<xs:documentation>Ссылка на тест-кадр.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="GroupItemID" type="xs:int" use="required"/>
+		<xs:attribute name="Weight" default="1">
+			<xs:annotation>
+				<xs:documentation>Коэффициент сложности теста</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="TestRulesType">
+		<xs:annotation>
+			<xs:documentation>Совокупность применяемых правил оценивания.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TestRule" type="TestRules" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Правило оценивания</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TestRules">
+		<xs:annotation>
+			<xs:documentation>Совокупность применяемых правил оценивания.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Percent" use="required">
+			<xs:annotation>
+				<xs:documentation>Процент выполнения задания. Правило используется в случае набора более этого процента</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="0"/>
+					<xs:maxInclusive value="100"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Result" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Оценка за тест, выставляемая согласно правилу</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Flow" mixed="true">
+		<xs:sequence>
+			<xs:any maxOccurs="unbounded" minOccurs="0" processContents="lax" />
+		</xs:sequence>
+		<xs:attribute name="contentType" type="xs:string" default="xhtml"/>
+	</xs:complexType>
+	<xs:simpleType name="TimeScales">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Day"/>
+			<xs:enumeration value="Hour"/>
+			<xs:enumeration value="Minute"/>
+			<xs:enumeration value="Second"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

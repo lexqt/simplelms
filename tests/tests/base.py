@@ -7,7 +7,7 @@ sys.path.append(os.path.abspath(CURRENT_DIR+'/../../..'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'simplelms.settings'
 
 import unittest
-from tests.xml import TestFrameXml, CloseType, OpenType
+from tests.xml import TestFrameXml, CloseType, OpenType, TestScriptXml
 
 
 def assertXmlEqual(result, expect):
@@ -33,13 +33,20 @@ class TestFrameTests(unittest.TestCase):
             xml = f.read()
         frame = TestFrameXml(CloseType, xml)
         assertXmlEqual(frame.to_xml(), xml)
-
+    
     def test_load_and_dump_string_open_type_frame(self):
         '''PARSE AND DUMP STRING OPEN TEST FRAME'''
         with file(CURRENT_DIR + '/data/frame_open_1_1.xml') as f:
             xml = f.read()
         frame = TestFrameXml(OpenType, xml)
         assertXmlEqual(frame.to_xml(), xml)
+    
+    def test_load_and_dump_single_group_test_script(self):
+        '''PARSE AND DUMP SINGLE GROUP TEST SCRIPT'''
+        with file(CURRENT_DIR + '/data/test_script_1.xml') as f:
+            xml = f.read()
+        script = TestScriptXml(xml)
+        assertXmlEqual(script.to_xml(), xml)
 
 if __name__=='__main__':
     unittest.main()

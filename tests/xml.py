@@ -3,6 +3,7 @@
 from lxml import etree
 from lxml import objectify
 from django.utils.safestring import mark_safe
+from django.utils.datastructures import SortedDict
 
 
 
@@ -23,6 +24,14 @@ class FrameIndex(object):
     def __init__(self, scheme, frame_id):
         self.scheme   = scheme
         self.frame_id = frame_id
+
+class ScriptIndex(object):
+    
+    def __init__(self, scheme, script_id):
+        self.scheme    = scheme
+        self.script_id = script_id
+
+
 
 class TestFrameXml(object):
     
@@ -99,6 +108,9 @@ class FrameType(object):
     def get_answer_data(self):
         raise NotImplementedError
 
+    def get_for_answer_store(self, answer):
+        raise NotImplementedError
+
 
 
 class CloseType(FrameType):
@@ -149,7 +161,6 @@ class CloseType(FrameType):
         return ii
     
     def check_answer(self, answer):
-#        answer = map(str, answer)
         cnt = len(self.right_vars)
         if 1 == cnt and self.right_vars.has_key(answer):
             return 1
@@ -161,6 +172,11 @@ class CloseType(FrameType):
             elif a < r:
                 return float(len(a)) / cnt
         return 0
+    
+    def get_for_answer_store(self, answer):
+        if not hasattr(answer, '__iter__'):
+            answer = (answer,)
+        return '\n'.join(map(lambda a: u'VariantID={0}: "{1}"'.format(a, self.variants[a]), answer))
     
     def to_xml(self):
         E = objectify.ElementMaker(annotate=False)
@@ -186,10 +202,10 @@ class OpenType(FrameType):
     def __init__(self, dom):
         super(OpenType, self).__init__(dom)
         self._dom = dom.Open
-        self._type = None
+        self.type = None
     
     def get_type(self):
-        return self._type
+        return self.type
     
     def parse_xml(self):
         o = self._dom
@@ -197,27 +213,43 @@ class OpenType(FrameType):
         for t in types:
             node = o.find(t)
             if node is not None:
-                self._type = t.lower()
+                self.type = t.lower()
                 break
         
-#        if self._type == 'string':
-        self.value  = o.String.get('Value', '')
-        self.default = o.String.get('Default', '')
+        if self.type == 'string':
+            obj          = o.String
+            self.match_case = False if obj.get('MatchCase', 'No') == 'No' else True
+        
+        self.default = ''
+        self.value   = obj.get('Value', '')
+        self.obj = obj
     
     def get_answer_data(self):
         return self.default
     
     def check_answer(self, answer):
-        if answer == self.value:
+        check = False
+        if self.type == 'string':
+            if self.match_case:
+                check = answer == self.value
+            else:
+                check = answer.lower() == self.value.lower()
+        if check:
             return 1
         else:
             return 0
     
+    def get_for_answer_store(self, answer):
+        return answer
+    
     def to_xml(self):
         E = objectify.ElementMaker(annotate=False)
         
-        if self._type == 'string':
-            frame_type = E.String(Value=self.value)
+        if self.type == 'string':
+            frame_type = E.String(
+                Value=self.value,
+                MatchCase='Yes' if self.match_case else 'No'
+            )
         
         e = E.Open(
             frame_type
@@ -232,3 +264,123 @@ FRAME_TYPE_CLASSES = {
     'close': CloseType,
     'open': OpenType,
 }
+
+
+
+class TestScriptXml(object):
+    
+    TIME_SCALE_TYPES = {
+        'Second': 'seconds',
+        'Minute': 'minutes',
+        'Hour': 'hours',
+        'Day': 'days'
+    }
+    
+    def __init__(self, xml=None, script_index=None, name=None, mode=None, time_limit=None):
+        
+        self.script_index = script_index
+        self.name         = name
+        self.mode         = mode
+        self.time_limit   = time_limit
+        if xml is not None:
+            self.parse_xml(xml)
+    
+    def parse_xml(self, xml):
+        self._xml = xml
+        
+        # prepare schema
+        from django.conf import settings
+        import os
+        xsd_path = os.path.join(settings.CURRENT_APP_DIR, 'tests/schema/TestScripts.xsd')
+        with file(xsd_path) as f:
+            xsd = f.read()
+        schema_root = etree.fromstring(xsd)
+        schema = etree.XMLSchema(schema_root)
+        parser = objectify.makeparser(schema = schema)
+        
+        dom = objectify.fromstring(xml, parser)
+        self._dom = dom
+        
+        self.script_index = ScriptIndex(dom.get('Scheme'), dom.get('ScriptID'))
+        
+        test = dom.Test
+        
+        self.description = get_mixed_content(test.Description)
+        self.name = test.get('Name')
+        self.mode = test.get('Mode', 'Learning')
+        
+        from datetime import timedelta
+        self._time_scale = test.get('TimeScale', 'Minute')
+        arg = self.TIME_SCALE_TYPES[self._time_scale]
+        self._time_limit = test.get('LimitOnScript')
+        self.time_limit  = timedelta(**{arg: int(self._time_limit)})
+        
+        # TODO: randomize groups and frames support, etc
+        
+        groups = SortedDict()
+        for group in test.TestGroup:
+            gid = group.get('GroupID')
+            frames = SortedDict()
+            for item in group.FrameIndex:
+                frame_index = FrameIndex(item.get('Scheme'), item.get('FrameID'))
+                gi     = item.TestGroupItem
+                giid   = gi.get('GroupItemID')
+                weight = int(gi.get('Weight', 1))
+                frames[giid] = {'index': frame_index, 'weight': weight}
+            groups[gid] = frames
+        self.groups = groups
+        
+        # TODO: multiple rules support
+        
+        self.rating_limit = test.TestRules.TestRule.get('Percent')
+    
+    def get_frames(self):
+        # TODO: randomize groups and frames support, etc
+        
+        frames = SortedDict()
+        for group_frames in self.groups.values():
+            frames += group_frames
+        
+        return frames
+    
+    def to_xml(self):
+        E = objectify.ElementMaker(annotate=False)
+        
+        groups = [E.TestGroup(
+                *[E.FrameIndex(
+                    E.TestGroupItem(
+                        GroupItemID=giid,
+                        Weight=unicode(frame['weight'])
+                    ),
+                    Scheme=frame['index'].scheme,
+                    FrameID=frame['index'].frame_id
+                )
+                for giid, frame in group.items()],
+                GroupID=gid
+            )
+            for gid, group in self.groups.items()
+        ]
+        
+        args = groups + [
+            E.TestRules(
+                E.TestRule(
+                    Percent=self.rating_limit
+                )
+            )
+        ]
+        
+        e = E.ScriptIndex(
+            E.Test(
+                prepare_mixed_content('Description', self.description),
+                *args,
+                Name=self.name,
+                Mode=self.mode,
+                LimitOnScript=self._time_limit,
+                TimeScale=self._time_scale
+            ),
+            Scheme=self.script_index.scheme,
+            ScriptID=self.script_index.script_id
+        )
+        
+        return etree.tostring(e, xml_declaration=True, encoding='utf-8', pretty_print=True)
+

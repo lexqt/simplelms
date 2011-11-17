@@ -28,7 +28,7 @@ CREATE TABLE `accounts_userprofile` (
   `middle_name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `accounts_userprofile` (
 
 LOCK TABLES `accounts_userprofile` WRITE;
 /*!40000 ALTER TABLE `accounts_userprofile` DISABLE KEYS */;
-INSERT INTO `accounts_userprofile` VALUES (1,2,'Отчествович'),(5,1,'Рутович');
+INSERT INTO `accounts_userprofile` VALUES (1,2,'Учителевич'),(5,1,'Рутович'),(6,8,'Студентович');
 /*!40000 ALTER TABLE `accounts_userprofile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +134,7 @@ CREATE TABLE `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   KEY `auth_permission_e4470c6e` (`content_type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add permission',1,'add_permission'),(2,'Can change permission',1,'change_permission'),(3,'Can delete permission',1,'delete_permission'),(4,'Can add group',2,'add_group'),(5,'Can change group',2,'change_group'),(6,'Can delete group',2,'delete_group'),(7,'Can add user',3,'add_user'),(8,'Can change user',3,'change_user'),(9,'Can delete user',3,'delete_user'),(10,'Can add message',4,'add_message'),(11,'Can change message',4,'change_message'),(12,'Can delete message',4,'delete_message'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add site',7,'add_site'),(20,'Can change site',7,'change_site'),(21,'Can delete site',7,'delete_site'),(22,'Can add log entry',8,'add_logentry'),(23,'Can change log entry',8,'change_logentry'),(24,'Can delete log entry',8,'delete_logentry'),(25,'Can add article',9,'add_article'),(26,'Can change article',9,'change_article'),(27,'Can delete article',9,'delete_article'),(28,'Can add user profile',10,'add_userprofile'),(29,'Can change user profile',10,'change_userprofile'),(30,'Can delete user profile',10,'delete_userprofile'),(31,'Can add migration history',11,'add_migrationhistory'),(32,'Can change migration history',11,'change_migrationhistory'),(33,'Can delete migration history',11,'delete_migrationhistory'),(34,'Can add курс',12,'add_course'),(35,'Can change курс',12,'change_course'),(36,'Can delete курс',12,'delete_course'),(37,'Can add запись на курсы',13,'add_enrollment'),(38,'Can change запись на курсы',13,'change_enrollment'),(39,'Can delete запись на курсы',13,'delete_enrollment'),(40,'Can add заявка на курсы',14,'add_application'),(41,'Can change заявка на курсы',14,'change_application'),(42,'Can delete заявка на курсы',14,'delete_application'),(43,'Can add аттестат',15,'add_certificate'),(44,'Can change аттестат',15,'change_certificate'),(45,'Can delete аттестат',15,'delete_certificate'),(46,'Can add раздел',16,'add_part'),(47,'Can change раздел',16,'change_part'),(48,'Can delete раздел',16,'delete_part'),(49,'Can add элемент',17,'add_element'),(50,'Can change элемент',17,'change_element'),(51,'Can delete элемент',17,'delete_element'),(52,'Право принятия заявок',14,'accept_application'),(53,'Право отклонения заявок',14,'reject_application'),(54,'Can add лекция',18,'add_lection'),(55,'Can change лекция',18,'change_lection'),(56,'Can delete лекция',18,'delete_lection'),(57,'Can add страница',19,'add_lectionpage'),(58,'Can change страница',19,'change_lectionpage'),(59,'Can delete страница',19,'delete_lectionpage'),(60,'Can add результат',20,'add_lectionresult'),(61,'Can change результат',20,'change_lectionresult'),(62,'Can delete результат',20,'delete_lectionresult'),(63,'Can add тестовое задание',21,'add_testframe'),(64,'Can change тестовое задание',21,'change_testframe'),(65,'Can delete тестовое задание',21,'delete_testframe');
+INSERT INTO `auth_permission` VALUES (1,'Can add permission',1,'add_permission'),(2,'Can change permission',1,'change_permission'),(3,'Can delete permission',1,'delete_permission'),(4,'Can add group',2,'add_group'),(5,'Can change group',2,'change_group'),(6,'Can delete group',2,'delete_group'),(7,'Can add user',3,'add_user'),(8,'Can change user',3,'change_user'),(9,'Can delete user',3,'delete_user'),(10,'Can add message',4,'add_message'),(11,'Can change message',4,'change_message'),(12,'Can delete message',4,'delete_message'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add site',7,'add_site'),(20,'Can change site',7,'change_site'),(21,'Can delete site',7,'delete_site'),(22,'Can add log entry',8,'add_logentry'),(23,'Can change log entry',8,'change_logentry'),(24,'Can delete log entry',8,'delete_logentry'),(25,'Can add article',9,'add_article'),(26,'Can change article',9,'change_article'),(27,'Can delete article',9,'delete_article'),(28,'Can add user profile',10,'add_userprofile'),(29,'Can change user profile',10,'change_userprofile'),(30,'Can delete user profile',10,'delete_userprofile'),(31,'Can add migration history',11,'add_migrationhistory'),(32,'Can change migration history',11,'change_migrationhistory'),(33,'Can delete migration history',11,'delete_migrationhistory'),(34,'Can add курс',12,'add_course'),(35,'Can change курс',12,'change_course'),(36,'Can delete курс',12,'delete_course'),(37,'Can add запись на курсы',13,'add_enrollment'),(38,'Can change запись на курсы',13,'change_enrollment'),(39,'Can delete запись на курсы',13,'delete_enrollment'),(40,'Can add заявка на курсы',14,'add_application'),(41,'Can change заявка на курсы',14,'change_application'),(42,'Can delete заявка на курсы',14,'delete_application'),(43,'Can add аттестат',15,'add_certificate'),(44,'Can change аттестат',15,'change_certificate'),(45,'Can delete аттестат',15,'delete_certificate'),(46,'Can add раздел',16,'add_part'),(47,'Can change раздел',16,'change_part'),(48,'Can delete раздел',16,'delete_part'),(49,'Can add элемент',17,'add_element'),(50,'Can change элемент',17,'change_element'),(51,'Can delete элемент',17,'delete_element'),(52,'Право принятия заявок',14,'accept_application'),(53,'Право отклонения заявок',14,'reject_application'),(54,'Can add лекция',18,'add_lection'),(55,'Can change лекция',18,'change_lection'),(56,'Can delete лекция',18,'delete_lection'),(57,'Can add страница',19,'add_lectionpage'),(58,'Can change страница',19,'change_lectionpage'),(59,'Can delete страница',19,'delete_lectionpage'),(60,'Can add результат',20,'add_lectionresult'),(61,'Can change результат',20,'change_lectionresult'),(62,'Can delete результат',20,'delete_lectionresult'),(63,'Can add тестовое задание',21,'add_testframe'),(64,'Can change тестовое задание',21,'change_testframe'),(65,'Can delete тестовое задание',21,'delete_testframe'),(66,'Can add сценарий теста',22,'add_testscript'),(67,'Can change сценарий теста',22,'change_testscript'),(68,'Can delete сценарий теста',22,'delete_testscript'),(69,'Can add фрейм сессии прохождения теста',23,'add_sessionframe'),(70,'Can change фрейм сессии прохождения теста',23,'change_sessionframe'),(71,'Can delete фрейм сессии прохождения теста',23,'delete_sessionframe'),(72,'Can add сессия прохождения теста',24,'add_session'),(73,'Can change сессия прохождения теста',24,'change_session'),(74,'Can delete сессия прохождения теста',24,'delete_session'),(75,'Can add результат прохождения теста',25,'add_testresult'),(76,'Can change результат прохождения теста',25,'change_testresult'),(77,'Can delete результат прохождения теста',25,'delete_testresult');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +168,7 @@ CREATE TABLE `auth_user` (
   `date_joined` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'root','Рут','Рутовый','root@localhost.loc','sha1$add68$cfae9514cb782c6604297496647546df672ce098',1,1,1,'2011-11-15 10:43:20','2011-10-07 16:32:28'),(2,'lex','Алексей','Фамилиев','lex.the.almighty@gmail.com','sha1$e97e2$4a100be2136f96cc62af6900c3d76b100a907f27',1,1,0,'2011-11-02 20:06:11','2011-10-07 17:11:52');
+INSERT INTO `auth_user` VALUES (1,'root','Рут','Рутовый','root@localhost.local','sha1$add68$cfae9514cb782c6604297496647546df672ce098',1,1,1,'2011-11-17 22:44:51','2011-10-07 16:32:28'),(2,'teacher','Учитель','Учителев','teacher@localhost.local','sha1$f49ac$5050797de79e328e83e6f4c268ed3288e0c83d86',1,1,0,'2011-11-17 23:25:41','2011-10-07 17:11:52'),(8,'student','Студент','Студентов','student@localhost.local','sha1$35521$9e598d8fe2174944bfd6b5ea2e69356fd6950d1c',0,1,0,'2011-11-17 23:25:13','2011-11-17 22:18:26');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +196,7 @@ CREATE TABLE `auth_user_groups` (
   UNIQUE KEY `user_id` (`user_id`,`group_id`),
   KEY `auth_user_groups_fbfc09f1` (`user_id`),
   KEY `auth_user_groups_bda51c3c` (`group_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `auth_user_groups` (
 
 LOCK TABLES `auth_user_groups` WRITE;
 /*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
-INSERT INTO `auth_user_groups` VALUES (3,1,2),(5,2,2);
+INSERT INTO `auth_user_groups` VALUES (7,1,2),(6,2,2);
 /*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,7 +370,7 @@ CREATE TABLE `courses_enrollment` (
   UNIQUE KEY `courses_enrollment_course_id_4b1872c6edb05115_uniq` (`course_id`,`user_id`),
   KEY `courses_enrollment_ff48d8e5` (`course_id`),
   KEY `courses_enrollment_fbfc09f1` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +379,7 @@ CREATE TABLE `courses_enrollment` (
 
 LOCK TABLES `courses_enrollment` WRITE;
 /*!40000 ALTER TABLE `courses_enrollment` DISABLE KEYS */;
-INSERT INTO `courses_enrollment` VALUES (7,3,2,'2011-10-27'),(12,3,1,'2011-11-03');
+INSERT INTO `courses_enrollment` VALUES (13,3,8,'2011-11-17');
 /*!40000 ALTER TABLE `courses_enrollment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +398,7 @@ CREATE TABLE `courses_managers` (
   UNIQUE KEY `courses_managers_course_id_2e44c079c2cfe713_uniq` (`course_id`,`user_id`),
   KEY `courses_managers_ff48d8e5` (`course_id`),
   KEY `courses_managers_fbfc09f1` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +407,7 @@ CREATE TABLE `courses_managers` (
 
 LOCK TABLES `courses_managers` WRITE;
 /*!40000 ALTER TABLE `courses_managers` DISABLE KEYS */;
-INSERT INTO `courses_managers` VALUES (2,1,1),(3,2,2),(4,3,2);
+INSERT INTO `courses_managers` VALUES (3,2,2),(5,3,2);
 /*!40000 ALTER TABLE `courses_managers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +459,7 @@ CREATE TABLE `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `django_admin_log_fbfc09f1` (`user_id`),
   KEY `django_admin_log_e4470c6e` (`content_type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +468,7 @@ CREATE TABLE `django_admin_log` (
 
 LOCK TABLES `django_admin_log` WRITE;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
-INSERT INTO `django_admin_log` VALUES (1,'2011-10-07 17:11:52',1,3,'2','lex',1,''),(2,'2011-10-07 17:13:21',1,3,'2','lex',2,'Changed first_name and last_name.'),(3,'2011-10-07 17:13:43',1,3,'2','lex',2,'Changed is_staff.'),(4,'2011-10-13 00:35:29',1,9,'1','Article object',1,''),(5,'2011-10-13 01:47:09',1,9,'2','Открыта регистрация',1,''),(6,'2011-10-13 03:42:52',1,9,'2','Открыта регистрация',2,'Изменен published.'),(7,'2011-10-13 03:43:05',1,9,'2','Открыта регистрация',2,'Изменен published.'),(8,'2011-10-14 23:46:53',1,9,'2','Открыта регистрация',2,'Изменен content.'),(9,'2011-10-14 23:54:14',1,9,'2','Открыта регистрация',2,'Изменен content.'),(10,'2011-10-14 23:58:23',1,9,'2','Открыта регистрация',2,'Изменен content.'),(11,'2011-10-15 01:34:41',1,3,'2','lex',2,'Изменен email.'),(12,'2011-10-15 01:38:23',1,3,'2','lex',2,'Добавлен профиль \"UserProfile object\".'),(13,'2011-10-23 13:11:39',1,3,'3','qwe',3,''),(14,'2011-10-23 17:30:41',1,3,'6','lexqt',3,''),(15,'2011-10-23 17:30:41',1,3,'5','lol',3,''),(16,'2011-10-23 17:30:41',1,3,'4','qwe',3,''),(17,'2011-10-23 17:30:41',1,3,'7','re',3,''),(18,'2011-10-23 18:08:37',1,12,'1','Пробный курс',1,''),(19,'2011-10-23 19:18:10',1,12,'2','Test 2',1,''),(20,'2011-10-23 19:22:32',1,12,'2','Еще один пробный курс',2,'Изменен title и description.'),(21,'2011-10-23 19:23:17',1,12,'3','Основы jQuery',1,''),(22,'2011-10-23 19:23:53',1,12,'1','Пробный курс',2,'Изменен is_active.'),(23,'2011-10-23 21:50:37',1,12,'1','Пробный курс',2,'Изменен description.'),(24,'2011-10-24 00:47:14',1,14,'3','Application object',3,''),(25,'2011-10-24 00:47:14',1,14,'2','Application object',3,''),(26,'2011-10-24 00:47:14',1,14,'1','Application object',3,''),(27,'2011-10-24 00:47:59',1,13,'1','Enrollment object',1,''),(28,'2011-10-24 00:53:59',1,14,'5','Application object',3,''),(29,'2011-10-26 19:25:44',1,2,'1','student',1,''),(30,'2011-10-26 19:34:13',1,2,'1','registered',2,'Изменен name.'),(31,'2011-10-26 20:02:55',1,2,'1','newcomers',2,'Изменен name.'),(32,'2011-10-26 21:53:37',1,2,'2','managers',1,''),(33,'2011-10-26 21:54:09',1,3,'1','root',2,'Изменен groups.'),(34,'2011-10-26 23:59:22',1,3,'1','root',2,'Добавлен профиль \"  Рутович\".'),(35,'2011-10-27 00:38:58',1,3,'1','root',2,'Изменен first_name и last_name.'),(36,'2011-10-27 16:37:31',1,13,'2','Enrollment object',3,''),(37,'2011-10-27 16:37:31',1,13,'1','Enrollment object',3,''),(38,'2011-10-27 16:50:23',1,13,'3','Enrollment object',3,''),(39,'2011-10-27 16:52:40',1,13,'4','Enrollment object',3,''),(40,'2011-10-27 16:53:59',1,13,'5','Enrollment object',3,''),(41,'2011-10-27 16:55:57',1,13,'6','Enrollment object',3,''),(42,'2011-10-27 19:31:17',1,3,'2','lex',2,'Изменен groups.'),(43,'2011-10-27 19:32:08',1,2,'2','managers',2,'Изменен permissions.'),(44,'2011-10-27 20:40:32',1,2,'2','managers',2,'Изменен permissions.'),(45,'2011-10-27 20:43:31',1,13,'7','Enrollment object',1,''),(46,'2011-10-27 20:52:20',1,13,'7','Enrollment object',2,'Ни одно поле не изменено.'),(47,'2011-10-27 21:40:00',1,13,'8','Enrollment object',1,''),(48,'2011-10-27 21:40:33',1,13,'8','Enrollment object',3,''),(49,'2011-10-27 21:40:51',1,13,'9','Enrollment object',1,''),(50,'2011-10-27 21:41:10',1,13,'9','Enrollment object',3,''),(51,'2011-10-27 21:46:41',1,13,'10','Enrollment object',1,''),(52,'2011-10-27 21:55:52',1,13,'10','Enrollment object',3,''),(53,'2011-10-27 21:58:38',1,13,'11','Enrollment object',1,''),(54,'2011-10-27 22:42:26',1,13,'11','Enrollment object',3,''),(55,'2011-10-30 19:28:31',1,3,'2','lex',2,'Изменен groups.'),(56,'2011-10-30 21:08:00',1,2,'2','managers',2,'Изменен permissions.'),(57,'2011-10-30 21:08:19',1,3,'2','lex',2,'Изменен groups.'),(58,'2011-10-30 21:10:02',1,12,'2','Еще один пробный курс',2,'Изменен managers.'),(59,'2011-10-30 21:26:06',1,16,'1','Вводная часть',1,''),(60,'2011-10-30 22:25:14',1,12,'3','Основы jQuery',2,'Изменен managers. Добавлен раздел \"Базовая часть\".'),(61,'2011-10-31 15:40:49',1,17,'1','1. Вводная лекция',1,''),(62,'2011-10-31 19:49:25',1,18,'1','Вводная лекция',1,''),(63,'2011-10-31 20:20:47',1,18,'1','Вводная лекция',2,'Добавлен страница \"Вводная лекция - \"Глава 1\"\".'),(64,'2011-10-31 20:23:38',1,16,'1','Вводная часть',2,'Изменены num,element_type и object_id для элемент \"0. Вводная лекция\".'),(65,'2011-11-02 18:22:13',1,18,'2','Еще одна лекция',1,''),(66,'2011-11-02 20:05:28',1,18,'2','Еще одна лекция',2,'Добавлен страница \"Еще одна лекция - \"Просто страница\"\". Добавлен страница \"Еще одна лекция - \"Просто вторая страница\"\".'),(67,'2011-11-03 20:42:28',1,16,'1','Вводная часть',2,'Добавлен элемент \"0. Вводная лекция\".'),(68,'2011-11-03 20:43:08',1,16,'1','Вводная часть',2,'Добавлен элемент \"1. Вторая лекция\".'),(69,'2011-11-03 20:43:22',1,16,'1','Вводная часть',2,'Изменен num.'),(70,'2011-11-03 20:43:22',1,16,'2','Базовая часть',2,'Изменен num.'),(71,'2011-11-03 20:43:51',1,13,'12','root - Основы jQuery',1,''),(72,'2011-11-07 22:27:59',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(73,'2011-11-07 22:42:22',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(74,'2011-11-07 22:50:42',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(75,'2011-11-07 22:55:02',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(76,'2011-11-07 23:12:38',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(77,'2011-11-07 23:13:11',1,18,'2','Еще одна лекция',2,'Изменены num и title для страница \"Еще одна лекция - \"Просто еще страница\"\". Изменены num и title для страница \"Еще одна лекция - \"Просто первая страница\"\".'),(78,'2011-11-07 23:13:47',1,18,'2','Еще одна лекция',2,'Ни одно поле не изменено.'),(79,'2011-11-07 23:14:24',1,18,'2','Еще одна лекция',2,'Изменены content для страница \"Еще одна лекция - \"Просто еще страница\"\".'),(80,'2011-11-07 23:15:28',1,18,'2','Еще одна лекция',2,'Ни одно поле не изменено.'),(81,'2011-11-14 20:17:03',1,21,'1','Dummy вопрос - выбрать один ответ',1,''),(82,'2011-11-14 22:01:52',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Ни одно поле не изменено.'),(83,'2011-11-14 22:02:46',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Ни одно поле не изменено.'),(84,'2011-11-14 22:06:42',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Изменен frame_data.'),(85,'2011-11-14 22:08:40',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Изменен frame_data.'),(86,'2011-11-14 23:13:23',1,21,'2','Dummy вопрос - выбрать несколько ответов',1,''),(87,'2011-11-15 14:31:37',1,21,'3','Dummy вопрос - написать слово',1,'');
+INSERT INTO `django_admin_log` VALUES (1,'2011-10-07 17:11:52',1,3,'2','lex',1,''),(2,'2011-10-07 17:13:21',1,3,'2','lex',2,'Changed first_name and last_name.'),(3,'2011-10-07 17:13:43',1,3,'2','lex',2,'Changed is_staff.'),(4,'2011-10-13 00:35:29',1,9,'1','Article object',1,''),(5,'2011-10-13 01:47:09',1,9,'2','Открыта регистрация',1,''),(6,'2011-10-13 03:42:52',1,9,'2','Открыта регистрация',2,'Изменен published.'),(7,'2011-10-13 03:43:05',1,9,'2','Открыта регистрация',2,'Изменен published.'),(8,'2011-10-14 23:46:53',1,9,'2','Открыта регистрация',2,'Изменен content.'),(9,'2011-10-14 23:54:14',1,9,'2','Открыта регистрация',2,'Изменен content.'),(10,'2011-10-14 23:58:23',1,9,'2','Открыта регистрация',2,'Изменен content.'),(11,'2011-10-15 01:34:41',1,3,'2','lex',2,'Изменен email.'),(12,'2011-10-15 01:38:23',1,3,'2','lex',2,'Добавлен профиль \"UserProfile object\".'),(13,'2011-10-23 13:11:39',1,3,'3','qwe',3,''),(14,'2011-10-23 17:30:41',1,3,'6','lexqt',3,''),(15,'2011-10-23 17:30:41',1,3,'5','lol',3,''),(16,'2011-10-23 17:30:41',1,3,'4','qwe',3,''),(17,'2011-10-23 17:30:41',1,3,'7','re',3,''),(18,'2011-10-23 18:08:37',1,12,'1','Пробный курс',1,''),(19,'2011-10-23 19:18:10',1,12,'2','Test 2',1,''),(20,'2011-10-23 19:22:32',1,12,'2','Еще один пробный курс',2,'Изменен title и description.'),(21,'2011-10-23 19:23:17',1,12,'3','Основы jQuery',1,''),(22,'2011-10-23 19:23:53',1,12,'1','Пробный курс',2,'Изменен is_active.'),(23,'2011-10-23 21:50:37',1,12,'1','Пробный курс',2,'Изменен description.'),(24,'2011-10-24 00:47:14',1,14,'3','Application object',3,''),(25,'2011-10-24 00:47:14',1,14,'2','Application object',3,''),(26,'2011-10-24 00:47:14',1,14,'1','Application object',3,''),(27,'2011-10-24 00:47:59',1,13,'1','Enrollment object',1,''),(28,'2011-10-24 00:53:59',1,14,'5','Application object',3,''),(29,'2011-10-26 19:25:44',1,2,'1','student',1,''),(30,'2011-10-26 19:34:13',1,2,'1','registered',2,'Изменен name.'),(31,'2011-10-26 20:02:55',1,2,'1','newcomers',2,'Изменен name.'),(32,'2011-10-26 21:53:37',1,2,'2','managers',1,''),(33,'2011-10-26 21:54:09',1,3,'1','root',2,'Изменен groups.'),(34,'2011-10-26 23:59:22',1,3,'1','root',2,'Добавлен профиль \"  Рутович\".'),(35,'2011-10-27 00:38:58',1,3,'1','root',2,'Изменен first_name и last_name.'),(36,'2011-10-27 16:37:31',1,13,'2','Enrollment object',3,''),(37,'2011-10-27 16:37:31',1,13,'1','Enrollment object',3,''),(38,'2011-10-27 16:50:23',1,13,'3','Enrollment object',3,''),(39,'2011-10-27 16:52:40',1,13,'4','Enrollment object',3,''),(40,'2011-10-27 16:53:59',1,13,'5','Enrollment object',3,''),(41,'2011-10-27 16:55:57',1,13,'6','Enrollment object',3,''),(42,'2011-10-27 19:31:17',1,3,'2','lex',2,'Изменен groups.'),(43,'2011-10-27 19:32:08',1,2,'2','managers',2,'Изменен permissions.'),(44,'2011-10-27 20:40:32',1,2,'2','managers',2,'Изменен permissions.'),(45,'2011-10-27 20:43:31',1,13,'7','Enrollment object',1,''),(46,'2011-10-27 20:52:20',1,13,'7','Enrollment object',2,'Ни одно поле не изменено.'),(47,'2011-10-27 21:40:00',1,13,'8','Enrollment object',1,''),(48,'2011-10-27 21:40:33',1,13,'8','Enrollment object',3,''),(49,'2011-10-27 21:40:51',1,13,'9','Enrollment object',1,''),(50,'2011-10-27 21:41:10',1,13,'9','Enrollment object',3,''),(51,'2011-10-27 21:46:41',1,13,'10','Enrollment object',1,''),(52,'2011-10-27 21:55:52',1,13,'10','Enrollment object',3,''),(53,'2011-10-27 21:58:38',1,13,'11','Enrollment object',1,''),(54,'2011-10-27 22:42:26',1,13,'11','Enrollment object',3,''),(55,'2011-10-30 19:28:31',1,3,'2','lex',2,'Изменен groups.'),(56,'2011-10-30 21:08:00',1,2,'2','managers',2,'Изменен permissions.'),(57,'2011-10-30 21:08:19',1,3,'2','lex',2,'Изменен groups.'),(58,'2011-10-30 21:10:02',1,12,'2','Еще один пробный курс',2,'Изменен managers.'),(59,'2011-10-30 21:26:06',1,16,'1','Вводная часть',1,''),(60,'2011-10-30 22:25:14',1,12,'3','Основы jQuery',2,'Изменен managers. Добавлен раздел \"Базовая часть\".'),(61,'2011-10-31 15:40:49',1,17,'1','1. Вводная лекция',1,''),(62,'2011-10-31 19:49:25',1,18,'1','Вводная лекция',1,''),(63,'2011-10-31 20:20:47',1,18,'1','Вводная лекция',2,'Добавлен страница \"Вводная лекция - \"Глава 1\"\".'),(64,'2011-10-31 20:23:38',1,16,'1','Вводная часть',2,'Изменены num,element_type и object_id для элемент \"0. Вводная лекция\".'),(65,'2011-11-02 18:22:13',1,18,'2','Еще одна лекция',1,''),(66,'2011-11-02 20:05:28',1,18,'2','Еще одна лекция',2,'Добавлен страница \"Еще одна лекция - \"Просто страница\"\". Добавлен страница \"Еще одна лекция - \"Просто вторая страница\"\".'),(67,'2011-11-03 20:42:28',1,16,'1','Вводная часть',2,'Добавлен элемент \"0. Вводная лекция\".'),(68,'2011-11-03 20:43:08',1,16,'1','Вводная часть',2,'Добавлен элемент \"1. Вторая лекция\".'),(69,'2011-11-03 20:43:22',1,16,'1','Вводная часть',2,'Изменен num.'),(70,'2011-11-03 20:43:22',1,16,'2','Базовая часть',2,'Изменен num.'),(71,'2011-11-03 20:43:51',1,13,'12','root - Основы jQuery',1,''),(72,'2011-11-07 22:27:59',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(73,'2011-11-07 22:42:22',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(74,'2011-11-07 22:50:42',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(75,'2011-11-07 22:55:02',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(76,'2011-11-07 23:12:38',1,19,'4','Еще одна лекция - \"Просто вторая страница\"',2,'Изменен content.'),(77,'2011-11-07 23:13:11',1,18,'2','Еще одна лекция',2,'Изменены num и title для страница \"Еще одна лекция - \"Просто еще страница\"\". Изменены num и title для страница \"Еще одна лекция - \"Просто первая страница\"\".'),(78,'2011-11-07 23:13:47',1,18,'2','Еще одна лекция',2,'Ни одно поле не изменено.'),(79,'2011-11-07 23:14:24',1,18,'2','Еще одна лекция',2,'Изменены content для страница \"Еще одна лекция - \"Просто еще страница\"\".'),(80,'2011-11-07 23:15:28',1,18,'2','Еще одна лекция',2,'Ни одно поле не изменено.'),(81,'2011-11-14 20:17:03',1,21,'1','Dummy вопрос - выбрать один ответ',1,''),(82,'2011-11-14 22:01:52',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Ни одно поле не изменено.'),(83,'2011-11-14 22:02:46',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Ни одно поле не изменено.'),(84,'2011-11-14 22:06:42',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Изменен frame_data.'),(85,'2011-11-14 22:08:40',1,21,'1','Dummy вопрос - выбрать один ответ',2,'Изменен frame_data.'),(86,'2011-11-14 23:13:23',1,21,'2','Dummy вопрос - выбрать несколько ответов',1,''),(87,'2011-11-15 14:31:37',1,21,'3','Dummy вопрос - написать слово',1,''),(88,'2011-11-17 22:16:50',1,3,'2','teacher',2,'Изменен username,first_name,last_name и email. Изменены middle_name для профиль \"Учителев Учитель Учителевич\".'),(89,'2011-11-17 22:18:26',1,3,'8','student',1,''),(90,'2011-11-17 22:18:57',1,3,'8','student',2,'Изменен first_name,last_name и email.'),(91,'2011-11-17 22:19:15',1,3,'1','root',2,'Изменен email.'),(92,'2011-11-17 22:41:59',1,13,'12','root - Основы jQuery',3,''),(93,'2011-11-17 22:42:18',1,12,'3','Основы jQuery',2,'Ни одно поле не изменено.'),(94,'2011-11-17 22:42:45',1,12,'1','Пробный курс',2,'Изменен managers.'),(95,'2011-11-17 22:44:15',2,13,'7','teacher - Основы jQuery',3,''),(96,'2011-11-17 22:45:11',1,13,'13','student - Основы jQuery',1,'');
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,7 +486,7 @@ CREATE TABLE `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_label` (`app_label`,`model`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -495,7 +495,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'permission','auth','permission'),(2,'group','auth','group'),(3,'user','auth','user'),(4,'message','auth','message'),(5,'content type','contenttypes','contenttype'),(6,'session','sessions','session'),(7,'site','sites','site'),(8,'log entry','admin','logentry'),(9,'article','news','article'),(10,'user profile','accounts','userprofile'),(11,'migration history','south','migrationhistory'),(12,'курс','courses','course'),(13,'запись на курсы','courses','enrollment'),(14,'заявка на курсы','courses','application'),(15,'аттестат','courses','certificate'),(16,'раздел','courses','part'),(17,'элемент','courses','element'),(18,'лекция','lections','lection'),(19,'страница','lections','lectionpage'),(20,'результат','lections','lectionresult'),(21,'тестовое задание','tests','testframe');
+INSERT INTO `django_content_type` VALUES (1,'permission','auth','permission'),(2,'group','auth','group'),(3,'user','auth','user'),(4,'message','auth','message'),(5,'content type','contenttypes','contenttype'),(6,'session','sessions','session'),(7,'site','sites','site'),(8,'log entry','admin','logentry'),(9,'article','news','article'),(10,'user profile','accounts','userprofile'),(11,'migration history','south','migrationhistory'),(12,'курс','courses','course'),(13,'запись на курсы','courses','enrollment'),(14,'заявка на курсы','courses','application'),(15,'аттестат','courses','certificate'),(16,'раздел','courses','part'),(17,'элемент','courses','element'),(18,'лекция','lections','lection'),(19,'страница','lections','lectionpage'),(20,'результат','lections','lectionresult'),(21,'тестовое задание','tests','testframe'),(22,'сценарий теста','tests','testscript'),(23,'фрейм сессии прохождения теста','tests','sessionframe'),(24,'сессия прохождения теста','tests','session'),(25,'результат прохождения теста','tests','testresult');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,7 +521,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('9453e25b2928923a7d4250d572e6a330','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-10-21 17:10:33'),('f82d3dcad284c143e64d341e96f691d8','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-11-10 20:41:33'),('f5c2c2ee87794745ce8d8a7ed8439ed2','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-11-25 01:11:38'),('b3fca3476334585bc1dc9b44d72f9d08','ZmFkYTQ0OTdiZTBmMTI1ZjFhMjgyNzY5NzI5YzM1MmVjM2QyYjk0OTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQJ1Lg==\n','2011-11-13 19:28:56'),('c46aab5edf5f0b0e5075f5b644b9a994','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-11-29 10:43:20');
+INSERT INTO `django_session` VALUES ('9453e25b2928923a7d4250d572e6a330','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-10-21 17:10:33'),('f82d3dcad284c143e64d341e96f691d8','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-11-10 20:41:33'),('f5c2c2ee87794745ce8d8a7ed8439ed2','MTQ3ODZhZjJjYzZmNWJkODY4NmJlMmUyMGE5NDZiNGJjNzZjM2NmMTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQF1Lg==\n','2011-11-25 01:11:38'),('b3fca3476334585bc1dc9b44d72f9d08','ZmFkYTQ0OTdiZTBmMTI1ZjFhMjgyNzY5NzI5YzM1MmVjM2QyYjk0OTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQJ1Lg==\n','2011-11-13 19:28:56'),('d6a0ea2eb7f7c7d8d23d7433ede2eb80','ZmFkYTQ0OTdiZTBmMTI1ZjFhMjgyNzY5NzI5YzM1MmVjM2QyYjk0OTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQSKAQJ1Lg==\n','2011-12-01 23:25:41');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -675,7 +675,7 @@ CREATE TABLE `south_migrationhistory` (
   `migration` varchar(255) NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -684,8 +684,74 @@ CREATE TABLE `south_migrationhistory` (
 
 LOCK TABLES `south_migrationhistory` WRITE;
 /*!40000 ALTER TABLE `south_migrationhistory` DISABLE KEYS */;
-INSERT INTO `south_migrationhistory` VALUES (1,'accounts','0001_initial','2011-10-22 14:57:53'),(2,'news','0001_initial','2011-10-22 14:59:56'),(3,'courses','0001_initial','2011-10-23 14:04:31'),(4,'courses','0002_auto__del_field_course_active__add_field_course_is_active__chg_field_e','2011-10-23 14:37:13'),(5,'courses','0003_auto__add_field_course_date_created','2011-10-23 15:10:53'),(6,'courses','0004_auto__add_unique_enrollment_course_user__add_unique_application_course','2011-10-26 17:46:10'),(7,'courses','0005_auto__chg_field_part_num__chg_field_element_num','2011-10-30 19:03:40'),(8,'lections','0001_initial','2011-10-31 14:45:59'),(9,'courses','0006_auto__add_field_element_max_rating','2011-10-31 14:47:21'),(10,'tests','0001_initial','2011-11-14 16:12:46'),(11,'tests','0002_auto__add_field_testframe_frame_type','2011-11-14 19:09:31');
+INSERT INTO `south_migrationhistory` VALUES (1,'accounts','0001_initial','2011-10-22 14:57:53'),(2,'news','0001_initial','2011-10-22 14:59:56'),(3,'courses','0001_initial','2011-10-23 14:04:31'),(4,'courses','0002_auto__del_field_course_active__add_field_course_is_active__chg_field_e','2011-10-23 14:37:13'),(5,'courses','0003_auto__add_field_course_date_created','2011-10-23 15:10:53'),(6,'courses','0004_auto__add_unique_enrollment_course_user__add_unique_application_course','2011-10-26 17:46:10'),(7,'courses','0005_auto__chg_field_part_num__chg_field_element_num','2011-10-30 19:03:40'),(8,'lections','0001_initial','2011-10-31 14:45:59'),(9,'courses','0006_auto__add_field_element_max_rating','2011-10-31 14:47:21'),(10,'tests','0001_initial','2011-11-14 16:12:46'),(11,'tests','0002_auto__add_field_testframe_frame_type','2011-11-14 19:09:31'),(12,'tests','0003_auto__add_testresult__add_testscript__add_unique_testscript_scheme_scr','2011-11-17 18:04:58');
 /*!40000 ALTER TABLE `south_migrationhistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tests_session`
+--
+
+DROP TABLE IF EXISTS `tests_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tests_session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `cur_session_frame_id` int(11) DEFAULT NULL,
+  `script_id` int(11) NOT NULL,
+  `num_passed` int(11) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `is_finished` tinyint(1) NOT NULL DEFAULT '0',
+  `date_started` datetime DEFAULT NULL,
+  `date_ended` datetime DEFAULT NULL,
+  `date_limit` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  UNIQUE KEY `cur_session_frame_id` (`cur_session_frame_id`),
+  KEY `tests_session_ff48d8e5` (`course_id`),
+  KEY `tests_session_c0ece17f` (`script_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tests_session`
+--
+
+LOCK TABLES `tests_session` WRITE;
+/*!40000 ALTER TABLE `tests_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tests_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tests_sessionframe`
+--
+
+DROP TABLE IF EXISTS `tests_sessionframe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tests_sessionframe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `frame_id` int(11) NOT NULL,
+  `is_passed` tinyint(1) NOT NULL DEFAULT '0',
+  `answer` longtext NOT NULL,
+  `weight` int(11) NOT NULL DEFAULT '1',
+  `rating` double NOT NULL DEFAULT '0',
+  `next_sframe_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tests_sessionframe_7b89a14a` (`frame_id`),
+  KEY `tests_sessionframe_4a441015` (`next_sframe_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tests_sessionframe`
+--
+
+LOCK TABLES `tests_sessionframe` WRITE;
+/*!40000 ALTER TABLE `tests_sessionframe` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tests_sessionframe` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -716,6 +782,59 @@ LOCK TABLES `tests_testframe` WRITE;
 INSERT INTO `tests_testframe` VALUES (1,100,101,'Dummy вопрос - выбрать один ответ','<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameIndex Scheme=\"100\" FrameID=\"101\">\r\n	<TestFrame Name=\"Dummy вопрос - выбрать один ответ\">\r\n		<Data>\r\n			Выберите <b>первый</b> вариант.\r\n		</Data>\r\n		<Close>\r\n			<Variant Value=\"Right\" VariantID=\"1\">\r\n				<Data>\r\n					первый\r\n				</Data>\r\n			</Variant>\r\n			<Variant Value=\"Wrong\" VariantID=\"2\">\r\n				<Data>\r\n					второй\r\n				</Data>\r\n			</Variant>\r\n		</Close>\r\n	</TestFrame>\r\n</FrameIndex>','close'),(2,100,102,'Dummy вопрос - выбрать несколько ответов','<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameIndex Scheme=\"100\" FrameID=\"102\">\r\n	<TestFrame Name=\"Dummy вопрос - выбрать несколько ответов\">\r\n		<Data>\r\n			<p>Выберите <b>первый</b> и <b>третий</b> вариант.</p>\r\n		</Data>\r\n		<Close>\r\n			<Variant Value=\"Right\" VariantID=\"75\">\r\n				<Data>\r\n					первый\r\n				</Data>\r\n			</Variant>\r\n			<Variant Value=\"Wrong\" VariantID=\"88\">\r\n				<Data>\r\n					второй\r\n				</Data>\r\n			</Variant>\r\n			<Variant Value=\"Right\" VariantID=\"46\">\r\n				<Data>\r\n					<i>третий</i>\r\n				</Data>\r\n			</Variant>\r\n			<Variant Value=\"Wrong\" VariantID=\"12\">\r\n				<Data>\r\n					еще какой-то <b>вариант</b>\r\n				</Data>\r\n			</Variant>\r\n		</Close>\r\n	</TestFrame>\r\n</FrameIndex>\r\n','close'),(3,100,111,'Dummy вопрос - написать слово','<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameIndex Scheme=\"100\" FrameID=\"111\">\r\n	<TestFrame Name=\"Dummy вопрос - написать слово\">\r\n		<Data>\r\n			Введите слово: <b>каша</b>.\r\n		</Data>\r\n		<Open>\r\n			<String Value=\"каша\" />\r\n		</Open>\r\n	</TestFrame>\r\n</FrameIndex>\r\n','open');
 /*!40000 ALTER TABLE `tests_testframe` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `tests_testresult`
+--
+
+DROP TABLE IF EXISTS `tests_testresult`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tests_testresult` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` int(11) NOT NULL,
+  `rating` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `try_number` smallint(6) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `session_id` (`session_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tests_testresult`
+--
+
+LOCK TABLES `tests_testresult` WRITE;
+/*!40000 ALTER TABLE `tests_testresult` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tests_testresult` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tests_testscript`
+--
+
+DROP TABLE IF EXISTS `tests_testscript`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tests_testscript` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `scheme` int(10) unsigned NOT NULL,
+  `script_id` int(10) unsigned NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `script_data` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tests_testscript_scheme_26a61b096bcecc86_uniq` (`scheme`,`script_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tests_testscript`
+--
+
+LOCK TABLES `tests_testscript` WRITE;
+/*!40000 ALTER TABLE `tests_testscript` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tests_testscript` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -726,4 +845,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-16 16:12:46
+-- Dump completed on 2011-11-17 23:29:21

@@ -5,7 +5,7 @@
 			Введите слово: <b>каша</b>.
 		</Data>
 		<Open>
-			<String Value="каша" />
+			<String Value="каша" MatchCase="No" />
 		</Open>
 	</TestFrame>
 </FrameIndex>
