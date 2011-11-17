@@ -4,6 +4,9 @@
 
 {% block content %}
 <h2>Учебные курсы</h2>
+{% if not course_list %}
+<p>Отсутствуют курсы для отображения в текущем списке.</p>
+{% endif %}
 <ul>
 {% with nexturl=next|urlencode %}
 {% for course in course_list %}

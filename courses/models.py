@@ -4,7 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404
+from common.http import Http403
 
 class Course(models.Model):
     
@@ -40,7 +41,7 @@ class Course(models.Model):
         return self.title
     
     @classmethod
-    def get_or_fail(cls, cid, check_existence=True, user=None, check_student=False, check_manager=False, queryset=None):
+    def get_or_fail(cls, cid, check_existence=True, user=None, check_student=True, check_manager=True, queryset=None):
         if queryset is None:
             queryset = cls.objects
         try:
@@ -50,12 +51,25 @@ class Course(models.Model):
                 raise Http404('Курс не найден')
             else:
                 return None
+        
+        if user.is_superuser:
+            return course
+        
         if check_student:
-            if not course.has_student(user):
-                raise HttpResponseForbidden('Вы не записаны на данный курс')
+            cs = course.has_student(user)
         if check_manager:
-            if not course.has_course_manager(user):
-                raise HttpResponseForbidden('Вы не являетесь управляющим данного курса')
+            cm = course.has_course_manager(user)
+        if check_student and check_manager:
+            if not cs and not cm:
+                raise Http403('Вы не записаны на данный курс и не являетесь его управляющим')
+        else:
+            if check_student:
+                if not cs:
+                    raise Http403('Вы не записаны на данный курс')
+            elif check_manager:
+                if not cm:
+                    raise Http403('Вы не являетесь управляющим данного курса')
+        
         return course
 
 

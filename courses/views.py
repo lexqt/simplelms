@@ -32,8 +32,7 @@ class CourseView(DetailView):
     context_object_name = 'course'
 
     def get_object(self):
-        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user,
-                                             check_student=True)
+        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user)
         
         parts = Part.objects.filter(course=self.course).all()
 #        id_lection = ContentType.objects.get(app_label='lections', model='lection').id
@@ -63,17 +62,35 @@ class CourseView(DetailView):
 
 
 
-class MyCoursesListView(ListView):
+class LearningCoursesListView(ListView):
     context_object_name = 'course_list'
     template_name = 'mycourses_list.html'
     
     def get_queryset(self):
-        queryset = self.request.user.courses_learning.all()
-        return queryset
+        user = self.request.user
+        if user.is_superuser:
+            return Course.objects.filter(is_active=True).order_by('-date_created')
+        return user.courses_learning.all()
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(MyCoursesListView, self).dispatch(*args, **kwargs)
+        return super(LearningCoursesListView, self).dispatch(*args, **kwargs)
+
+
+
+class ManagingCoursesListView(ListView):
+    context_object_name = 'course_list'
+    template_name = 'mycourses_list.html'
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Course.objects.filter(is_active=True).order_by('-date_created')
+        return user.courses_managing.all()
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ManagingCoursesListView, self).dispatch(*args, **kwargs)
 
 
 

@@ -15,8 +15,7 @@ class LectionView(DetailView):
     context_object_name = 'lection'
 
     def get_object(self):
-        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user,
-                                             check_student=True)
+        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user)
         
         if self.kwargs['overview']:
             self.lection = get_object_or_404(Lection, id=self.kwargs['lection_id'])
@@ -63,7 +62,7 @@ class LectionView(DetailView):
 
 @login_required
 def finish_lection_view(request, course_id, lection_id):
-    course = Course.get_or_fail(course_id, user=request.user, check_student=True,
+    course = Course.get_or_fail(course_id, user=request.user,
                                 queryset=Course.objects.only('id'))
     lection = get_object_or_404(Lection.objects.only('title'), id=lection_id)
     if not lection.in_course(course):

@@ -4,9 +4,10 @@
 
 {% block appmenu %}
 	<li><a href="{% url courses:list %}">Доступные курсы</a></li>
-	<li><a href="{% url courses:my_courses %}">Мои курсы</a></li>
+	<li><a href="{% url courses:learning_courses %}">Мои курсы (учащийся)</a></li>
 {% endblock %}
 
 {% block appmenu_manager %}
+	<li><a href="{% url courses:managing_courses %}">Мои курсы (учитель)</a></li>
 	<li><a href="{% url courses:apps_overview %}">Заявки на курсы</a></li>
 {% endblock %}
