@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Http 404 — Не найдено — SimpleLMS</title>
+</head>
+<body>
+	<h1>Не найдено</h1>
+	<p>
+	{% if exception.message %}
+		{{ exception.message }}
+	{% else %}
+		Сожалеем, но действие или данные по запросу <a href="{{ request.path }}">{{ request.path }}</a> не найдены.
+	{% endif %}
+	</p>
+</body>
+</html>

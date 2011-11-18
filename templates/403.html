@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Http 403 — Доступ запрещен — SimpleLMS</title>
+</head>
+<body>
+	<h1>Доступ запрещен</h1>
+	<p>
+	{% if exception.message %}
+		{{ exception.message }}
+	{% else %}
+		Сожалеем, но действие по запросу <a href="{{ request.path }}">{{ request.path }}</a> запрещено.
+	{% endif %}
+	</p>
+</body>
+</html>
