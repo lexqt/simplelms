@@ -13,10 +13,11 @@
 	{% for element in part.part_elements %}
 		<h5>{{ element.num }}. {{ element.title }}</h5>
 		<p>{{ element.description|safe }}</p>
-		{% if element.element_type.model == 'lection' %}
-			<a href="{% url lections:lection_view course.id element.object_id %}">открыть</a>
-		{% else %}
-		{% endif %}
+		{% if element.element_type.model == 'lecture' %}
+			<a href="{% url lectures:lecture_view course_id=course.id lecture_id=element.object_id %}">открыть</a>
+		{% else %}{% if element.element_type.model == 'test' %}
+			<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">открыть</a>
+		{% endif %}{% endif %}
 	{% endfor %}
 {% endfor %}
 

@@ -1,0 +1,17 @@
+{% extends 'test_frame_base.html' %}
+
+{% block page_title %}Статистика{% endblock %}
+
+{% block frame_title %}Статистика по тесту "{{ test.title }}"{% endblock %}
+
+{% block frame_content %}
+{% if message %}
+<p><strong>Системное сообщение</strong>: {{ message }}</p>
+{% endif %}
+<p>Вопросы (верно / пройдено / всего): {{ count.right }} / {{ count.passed }} / {{ count.total }}</p>
+<p>Баллы: {{ rating.got }} / {{ rating.total }}</p>
+<p>Зачтено: {% if is_passed %} да {% else %} нет {% endif %}</p>
+<p>
+<a href="{% url courses:course_view course.id %}">Вернуться к курсу</a>
+</p>
+{% endblock %}

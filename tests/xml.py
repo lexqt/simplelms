@@ -332,16 +332,35 @@ class TestScriptXml(object):
         
         # TODO: multiple rules support
         
-        self.rating_limit = test.TestRules.TestRule.get('Percent')
+        try:
+            import decimal
+            decimal.getcontext().prec = 2
+            threshold = decimal.Decimal(test.TestRules.TestRule.get('Percent'))
+        except AttributeError:
+            threshold = 0
+        self.rating_threshold = threshold
     
     def get_frames(self):
+        '''
+        Returns sorted dict with frames:
+        {
+            <group item id>: {
+                'index': <FrameIndex>,
+                'weight': <weight>
+            },
+            ...
+        }
+        '''
         # TODO: randomize groups and frames support, etc
         
         frames = SortedDict()
         for group_frames in self.groups.values():
-            frames += group_frames
+            frames.update(group_frames)
         
         return frames
+    
+    def is_exam(self):
+        return self.mode == 'Exam'
     
     def to_xml(self):
         E = objectify.ElementMaker(annotate=False)
@@ -364,7 +383,7 @@ class TestScriptXml(object):
         args = groups + [
             E.TestRules(
                 E.TestRule(
-                    Percent=self.rating_limit
+                    Percent=unicode(self.rating_threshold).replace('.00', '')
                 )
             )
         ]

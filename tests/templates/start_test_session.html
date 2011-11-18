@@ -1,0 +1,12 @@
+{% extends 'test_frame_base.html' %}
+
+{% block page_title %}{{ script.name }}{% endblock %}
+
+{% block frame_title %}{{ script.name }}{% endblock %}
+
+{% block frame_content %}
+<p>{{ script.description }}</p>
+<p>
+<a href="{% url tests:run_test course_id=course.id scheme=script.script_index.scheme script_id=script.script_index.script_id %}">Перейти к первому вопросу</a>
+</p>
+{% endblock %}

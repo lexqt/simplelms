@@ -19,6 +19,10 @@ class OpenTypeForm(forms.Form):
         self.fields['answer'].initial = default_value
     
     answer = forms.CharField()
+    
+    def clean_answer(self):
+        data = self.cleaned_data['answer']
+        return data.strip()
 
 
 

@@ -123,6 +123,13 @@ class EnrollmentAdmin(admin.ModelAdmin):
 
 
 
+COURSE_ELEMENT_TYPES = (
+    (Q(app_label='lectures') & Q(model='lecture')) |
+    (Q(app_label='tests')    & Q(model='test'))
+)
+
+
+
 class CourseElementInline(LinkedStackedInline):
     model = Element
     
@@ -143,7 +150,7 @@ class CourseElementInline(LinkedStackedInline):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'element_type':
-            kwargs['queryset'] = ContentType.objects.filter(Q(app_label='lections') & Q(model='lection'))
+            kwargs['queryset'] = ContentType.objects.filter(COURSE_ELEMENT_TYPES)
         return super(CourseElementInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
@@ -179,7 +186,7 @@ class CourseElementAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'element_type':
-            kwargs['queryset'] = ContentType.objects.filter(Q(app_label='lections') & Q(model='lection'))
+            kwargs['queryset'] = ContentType.objects.filter(COURSE_ELEMENT_TYPES)
         return super(CourseElementInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 

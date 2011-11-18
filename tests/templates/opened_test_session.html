@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Открытая сессия тестирования — SimpleLMS</title>
+</head>
+<body>
+<p>У вас уже имеется одна открытая сессия тестирования в рамках курса "{{ course.title }}". Вы можете:</p>
+<ul>
+<li><a href="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">продолжить тест</a></li>
+<li><a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">завершить тест</a></li>
+</ul>
+</body>
+</html>
