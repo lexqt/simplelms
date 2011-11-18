@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from django.views.generic import DetailView, TemplateView
-from .models import Lection, LectionResult
+from .models import Lecture, LectureResult
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from courses.models import Course
@@ -10,22 +10,22 @@ from django.core.paginator import Paginator, InvalidPage
 from django.http import Http404
 from django.shortcuts import render
 
-class LectionView(DetailView):
+class LectureView(DetailView):
 
-    context_object_name = 'lection'
+    context_object_name = 'lecture'
 
     def get_object(self):
         self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user)
         
         if self.kwargs['overview']:
-            self.lection = get_object_or_404(Lection, id=self.kwargs['lection_id'])
-            self.pages = self.lection.pages.only('title')
+            self.lecture = get_object_or_404(Lecture, id=self.kwargs['lecture_id'])
+            self.pages = self.lecture.pages.only('title')
         else:
-            self.lection = get_object_or_404(Lection.objects.only('title'), id=self.kwargs['lection_id'])
-            if not self.lection.in_course(self.course):
+            self.lecture = get_object_or_404(Lecture.objects.only('title'), id=self.kwargs['lecture_id'])
+            if not self.lecture.in_course(self.course):
                 raise Http404('Запрошенная лекция отсутствует в составе курса')
             
-            paginator = Paginator(self.lection.pages.all(), 1)
+            paginator = Paginator(self.lecture.pages.all(), 1)
             self.paginator = paginator
             cur_page_num = self.kwargs['page']
             try:
@@ -33,41 +33,41 @@ class LectionView(DetailView):
             except InvalidPage:
                 raise Http404('Запрошенный номер страницы отсутствует')
             
-        return self.lection
+        return self.lecture
     
     def get_template_names(self):
         if self.kwargs['overview']:
-            return 'lection_view_overview.html'
+            return 'lecture_view_overview.html'
         else:
-            return 'lection_view_page.html'
+            return 'lecture_view_page.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(LectionView, self).dispatch(*args, **kwargs)
+        return super(LectureView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(LectionView, self).get_context_data(**kwargs)
+        context = super(LectureView, self).get_context_data(**kwargs)
 
         context['course'] = self.course
-        context['lection'] = self.lection
+        context['lecture'] = self.lecture
         if self.kwargs['overview']:
-            context['lection_pages'] = self.pages
+            context['lecture_pages'] = self.pages
         else:
             context['page'] = self.page
-            context['lection_page'] = self.page.object_list[0]
+            context['lecture_page'] = self.page.object_list[0]
             context['page_cnt'] = self.paginator.num_pages
         return context
 
 
 
 @login_required
-def finish_lection_view(request, course_id, lection_id):
+def finish_lecture_view(request, course_id, lecture_id):
     course = Course.get_or_fail(course_id, user=request.user,
                                 queryset=Course.objects.only('id'))
-    lection = get_object_or_404(Lection.objects.only('title'), id=lection_id)
-    if not lection.in_course(course):
+    lecture = get_object_or_404(Lecture.objects.only('title'), id=lecture_id)
+    if not lecture.in_course(course):
         raise Http404('Запрошенная лекция отсутствует в составе курса')
     
-    LectionResult.pass_lection(lection, course, request.user)
+    LectureResult.pass_lecture(lecture, course, request.user)
     
-    return render(request, 'lection_finished.html', {'course': course, 'lection': lection})
+    return render(request, 'lecture_finished.html', {'course': course, 'lecture': lecture})

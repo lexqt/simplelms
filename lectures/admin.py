@@ -2,15 +2,15 @@
 
 from django.contrib import admin
 from django.db import models
-from .models import Lection, LectionPage, LectionResult
+from .models import Lecture, LecturePage, LectureResult
 from tinymce.widgets import TinyMCE
 from common.admin import LinkedStackedInline
 from django.conf import settings
 
 
 
-class LectionPageInline(LinkedStackedInline):
-    model = LectionPage
+class LecturePageInline(LinkedStackedInline):
+    model = LecturePage
     
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE},
@@ -25,7 +25,7 @@ class LectionPageInline(LinkedStackedInline):
 
     
 
-class LectionAdmin(admin.ModelAdmin):
+class LectureAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE},
     }
@@ -35,11 +35,11 @@ class LectionAdmin(admin.ModelAdmin):
     list_per_page = 20
     
     
-    inlines = (LectionPageInline,)
+    inlines = (LecturePageInline,)
 
 
 
-class LectionPageAdmin(admin.ModelAdmin):
+class LecturePageAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE},
     }
@@ -48,19 +48,19 @@ class LectionPageAdmin(admin.ModelAdmin):
             'fields': (('num', 'title'), 'content')
         }),
     )
-    list_display       = ('id', 'lection', 'num', 'title')
-    list_display_links = ('id',                  'title')
-    list_editable      =                 ('num',)
-    list_filter        =       ('lection',)
-    search_fields      = ('title', 'lection__title',)
-    ordering = ('lection', 'num')
+    list_display       = ('id', 'lecture', 'num', 'title')
+    list_display_links = ('id',                   'title')
+    list_editable      =                  ('num',)
+    list_filter        =       ('lecture',)
+    search_fields      = ('title', 'lecture__title',)
+    ordering = ('lecture', 'num')
     list_per_page = 20
     
 
 
 
-admin.site.register(Lection, LectionAdmin)
-admin.site.register(LectionPage, LectionPageAdmin)
+admin.site.register(Lecture, LectureAdmin)
+admin.site.register(LecturePage, LecturePageAdmin)
 
 if settings.DEBUG:
-    admin.site.register(LectionResult, admin.ModelAdmin)
+    admin.site.register(LectureResult, admin.ModelAdmin)

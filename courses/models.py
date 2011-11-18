@@ -41,9 +41,11 @@ class Course(models.Model):
         return self.title
     
     @classmethod
-    def get_or_fail(cls, cid, check_existence=True, user=None, check_student=True, check_manager=True, queryset=None):
+    def get_or_fail(cls, cid, check_existence=True, user=None, check_student=True, check_manager=True, queryset=None, only_id=True):
         if queryset is None:
             queryset = cls.objects
+            if only_id:
+                queryset = queryset.only('id')
         try:
             course = queryset.get(id=cid)
         except cls.DoesNotExist:
@@ -171,3 +173,17 @@ class Element(models.Model):
     
     def __unicode__(self):
         return u'{0}. {1}'.format(self.num, self.title)
+
+
+
+class ElementObject(models.Model):
+    
+    class Meta:
+        abstract = True
+    
+    course_elements = generic.GenericRelation(Element,
+                                              content_type_field='element_type',
+                                              object_id_field='object_id')
+    
+    def in_course(self, course):
+        return 0 != self.course_elements.filter(part__course=course).count()

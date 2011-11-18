@@ -8,45 +8,45 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'Lection'
-        db.create_table('lections_lection', (
+        # Adding model 'lecture'
+        db.create_table('lectures_lecture', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=150)),
             ('description', self.gf('django.db.models.fields.TextField')(default='')),
         ))
-        db.send_create_signal('lections', ['Lection'])
+        db.send_create_signal('lectures', ['lecture'])
 
-        # Adding model 'LectionPage'
-        db.create_table('lections_lectionpage', (
+        # Adding model 'lecturePage'
+        db.create_table('lectures_lecturepage', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('lection', self.gf('django.db.models.fields.related.ForeignKey')(related_name='pages', to=orm['lections.Lection'])),
+            ('lecture', self.gf('django.db.models.fields.related.ForeignKey')(related_name='pages', to=orm['lectures.lecture'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=150)),
             ('content', self.gf('django.db.models.fields.TextField')(default='')),
             ('num', self.gf('django.db.models.fields.PositiveIntegerField')()),
         ))
-        db.send_create_signal('lections', ['LectionPage'])
+        db.send_create_signal('lectures', ['lecturePage'])
 
-        # Adding model 'LectionResult'
-        db.create_table('lections_lectionresult', (
+        # Adding model 'lectureResult'
+        db.create_table('lectures_lectureresult', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('lection', self.gf('django.db.models.fields.related.ForeignKey')(related_name='results', to=orm['lections.Lection'])),
+            ('lecture', self.gf('django.db.models.fields.related.ForeignKey')(related_name='results', to=orm['lectures.lecture'])),
             ('course', self.gf('django.db.models.fields.related.ForeignKey')(related_name='+', to=orm['courses.Course'])),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='+', to=orm['auth.User'])),
             ('is_passed', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
-        db.send_create_signal('lections', ['LectionResult'])
+        db.send_create_signal('lectures', ['lectureResult'])
 
 
     def backwards(self, orm):
         
-        # Deleting model 'Lection'
-        db.delete_table('lections_lection')
+        # Deleting model 'lecture'
+        db.delete_table('lectures_lecture')
 
-        # Deleting model 'LectionPage'
-        db.delete_table('lections_lectionpage')
+        # Deleting model 'lecturePage'
+        db.delete_table('lectures_lecturepage')
 
-        # Deleting model 'LectionResult'
-        db.delete_table('lections_lectionresult')
+        # Deleting model 'lectureResult'
+        db.delete_table('lectures_lectureresult')
 
 
     models = {
@@ -122,28 +122,28 @@ class Migration(SchemaMigration):
             'num': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '150'})
         },
-        'lections.lection': {
-            'Meta': {'object_name': 'Lection'},
+        'lectures.lecture': {
+            'Meta': {'object_name': 'lecture'},
             'description': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '150'})
         },
-        'lections.lectionpage': {
-            'Meta': {'object_name': 'LectionPage'},
+        'lectures.lecturepage': {
+            'Meta': {'object_name': 'lecturePage'},
             'content': ('django.db.models.fields.TextField', [], {'default': "''"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lection': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'pages'", 'to': "orm['lections.Lection']"}),
+            'lecture': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'pages'", 'to': "orm['lectures.lecture']"}),
             'num': ('django.db.models.fields.PositiveIntegerField', [], {}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '150'})
         },
-        'lections.lectionresult': {
-            'Meta': {'object_name': 'LectionResult'},
+        'lectures.lectureresult': {
+            'Meta': {'object_name': 'lectureResult'},
             'course': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'+'", 'to': "orm['courses.Course']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_passed': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'lection': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'results'", 'to': "orm['lections.Lection']"}),
+            'lecture': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'results'", 'to': "orm['lectures.lecture']"}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'+'", 'to': "orm['auth.User']"})
         }
     }
 
-    complete_apps = ['lections']
+    complete_apps = ['lectures']

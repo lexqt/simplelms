@@ -1,11 +1,10 @@
 # coding: utf-8
 
 from django.db import models
-from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
-from courses.models import Element, Course
+from courses.models import ElementObject, Course
 
-class Lection(models.Model):
+class Lecture(ElementObject):
     
     class Meta:
         verbose_name        = 'лекция'
@@ -13,49 +12,43 @@ class Lection(models.Model):
     
     title           = models.CharField('название', max_length=150)
     description     = models.TextField('описание', default='')
-    course_elements = generic.GenericRelation(Element,
-                                              content_type_field='element_type',
-                                              object_id_field='object_id')
-    
-    def in_course(self, course):
-        return 0 != self.course_elements.filter(part__course=course).count()
     
     def __unicode__(self):
         return self.title
 
 
 
-class LectionPage(models.Model):
+class LecturePage(models.Model):
     
     class Meta:
         verbose_name        = 'страница'
         verbose_name_plural = 'страницы'
-        ordering = ('lection', 'num')
+        ordering = ('lecture', 'num')
     
-    lection    = models.ForeignKey(Lection, related_name='pages')
+    lecture    = models.ForeignKey(Lecture, related_name='pages')
     title      = models.CharField('название', max_length=150)
     content    = models.TextField('текст лекции')
     num        = models.PositiveIntegerField('номер страницы')
 
     def __unicode__(self):
-        return u'{0} - "{1}"'.format(self.lection.title, self.title)
+        return u'{0} - "{1}"'.format(self.lecture.title, self.title)
 
 
 
-class LectionResult(models.Model):
+class LectureResult(models.Model):
     
     class Meta:
         verbose_name        = 'результат'
         verbose_name_plural = 'результаты'
     
-    lection    = models.ForeignKey(Lection, related_name='results')
+    lecture    = models.ForeignKey(Lecture, related_name='results')
     course     = models.ForeignKey(Course, related_name='+')
     user       = models.ForeignKey(User, related_name='+')
     is_passed  = models.BooleanField('пройдено', default=True)
 
     @classmethod
-    def pass_lection(cls, lection, course, user):
-        result, created = cls.objects.get_or_create(lection=lection, course=course, user=user, defaults={'is_passed': True})
+    def pass_lecture(cls, lecture, course, user):
+        result, created = cls.objects.get_or_create(lecture=lecture, course=course, user=user, defaults={'is_passed': True})
         if not created and not result.is_passed:
             result.is_passed = True
             result.save()

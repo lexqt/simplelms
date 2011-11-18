@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from .models import Course, Enrollment, Application
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.utils import simplejson as json
@@ -32,17 +32,14 @@ class CourseView(DetailView):
     context_object_name = 'course'
 
     def get_object(self):
-        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user)
+        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user, only_id=False)
         
         parts = Part.objects.filter(course=self.course).all()
-#        id_lection = ContentType.objects.get(app_label='lections', model='lection').id
         
         for part in parts:
             elements = []
             for element in part.elements.select_related('element_type').defer('element_type__name').all():
                 element.num += 1
-#                if element.element_type.id == id_lection:
-#                    element.type_name = 'lection'
                 elements.append(element)
             part.part_elements = elements
         
@@ -145,10 +142,6 @@ def submit_application_view(request, course_id):
     
     course_id = int(course_id)
     try:
-#        if 'course_id' not in request.GET:
-#            messages.error(request, 'Не выбран курс!')
-#            raise AnyError()
-        
         try:
             course = Course.objects.only('id', 'title', 'is_active').get(id=course_id)
         except Course.DoesNotExist:

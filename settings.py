@@ -146,7 +146,7 @@ INSTALLED_APPS = (
     'news',
     'accounts',
     'courses',
-    'lections',
+    'lectures',
     'tests',
 )
 
