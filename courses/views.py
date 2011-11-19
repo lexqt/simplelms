@@ -4,18 +4,18 @@ from django.views.generic import ListView, DetailView
 from .models import Course, Enrollment, Application
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.utils import simplejson as json
 from django.shortcuts import render
 from courses.models import Part
-from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
+from django.contrib.auth.models import Group
 
 class CourseListView(ListView):
     queryset = Course.objects.filter(is_active=True).order_by('-date_created')
-    paginate_by = 2
+    paginate_by = 10
     context_object_name = 'course_list'
     template_name = 'course_list.html'
     
@@ -96,8 +96,13 @@ class ApplicationsOverviewListView(ListView):
     template_name = 'apps_overview_list.html'
     
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            queryset = Course.objects.filter(is_active=True)
+        else:
+            queryset = self.request.user.courses_managing
+        
         from django.db.models import Count
-        queryset = self.request.user.courses_managing.only(
+        queryset = queryset.only(
             'id', 'title', 'date_created').annotate(
             apps_count=Count('applications_submitted')).filter(
             apps_count__gt=0)
@@ -109,15 +114,14 @@ class ApplicationsOverviewListView(ListView):
 
 
 
+# functionality for accepting / rejecting apps moved to courses.admin.ApplicationAdmin.actions
 class CourseApplicationsListView(ListView):
     context_object_name = 'app_list'
     template_name = 'course_apps_list.html'
     
     def get_queryset(self):
-        try:
-            self.course = Course.objects.only('id', 'title').get(id=self.kwargs['course_id'])
-        except Course.DoesNotExist:
-            raise Http404('Курс не найден')
+        queryset = Course.objects.only('id', 'title')
+        self.course = Course.get_or_fail(self.kwargs['course_id'], user=self.request.user, check_student=False, queryset=queryset)
         
         queryset = self.course.applications_submitted.order_by('date_submitted').select_related(
             'user', 'user__userprofile').only('id', 'date_submitted',
@@ -173,6 +177,7 @@ def submit_application_view(request, course_id):
 
 
 
+# functionality for accepting / rejecting apps moved to courses.admin.ApplicationAdmin.actions
 def accept_application_view(request, app_id, accept):
     class AnyError:
         pass
@@ -186,7 +191,7 @@ def accept_application_view(request, app_id, accept):
     
     try:
         perm = 'courses.accept_application' if accept else 'courses.reject_application' 
-        if not request.user.has_perm(perm):
+        if not request.user.has_perm(perm) and not request.user.is_superuser:
             msgs.append('У вас не хватает прав')
             raise AnyError
         
@@ -197,11 +202,18 @@ def accept_application_view(request, app_id, accept):
             msgs.append('Указанная заявка не существует')
             raise AnyError
         
-        if not app.course.has_course_manager(request.user):
+        if not app.course.has_course_manager(request.user) and not request.user.is_superuser:
             msgs.append('Вы не являетесь менеджером данного курса')
             raise AnyError
         
         if accept:
+            gr_students  = Group.objects.get(name='students')
+            gr_newcomers = Group.objects.get(name='newcomers')
+            groups = app.user.groups.all()
+            if gr_newcomers in groups:
+                app.user.groups.remove(gr_newcomers)
+            if gr_students not in groups:
+                app.user.groups.add(gr_students)
             enrollment, created = Enrollment.objects.get_or_create(course=app.course, user=app.user)
         
         app.delete()

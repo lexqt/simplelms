@@ -9,7 +9,7 @@ class UserProfile(models.Model):
         verbose_name = 'профиль'
         verbose_name_plural = 'профили'
     
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, related_name='profile')
     
     middle_name = models.CharField('отчество', max_length=30, blank=True)
     

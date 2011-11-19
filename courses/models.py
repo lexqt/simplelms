@@ -54,7 +54,10 @@ class Course(models.Model):
             else:
                 return None
         
-        if user.is_superuser:
+        if user and user.is_superuser:
+            return course
+        
+        if not user:
             return course
         
         if check_student:
@@ -83,8 +86,8 @@ class Enrollment(models.Model):
         verbose_name_plural = 'записи на курсы'
         unique_together = ('course', 'user')
     
-    course        = models.ForeignKey(Course, related_name='enrollments')
-    user          = models.ForeignKey(User, related_name='enrollments')
+    course        = models.ForeignKey(Course, verbose_name='курс', related_name='enrollments')
+    user          = models.ForeignKey(User, verbose_name='пользователь', related_name='enrollments')
     date_enrolled = models.DateField('дата зачисления', auto_now_add=True)
     
     @classmethod
@@ -108,8 +111,8 @@ class Application(models.Model):
             ("reject_application", "Право отклонения заявок"),
         )
     
-    course         = models.ForeignKey(Course, related_name='applications_submitted')
-    user           = models.ForeignKey(User, related_name='applications_submitted')
+    course         = models.ForeignKey(Course, verbose_name='курс', related_name='applications_submitted')
+    user           = models.ForeignKey(User, verbose_name='пользователь', related_name='applications_submitted')
     date_submitted = models.DateField('дата подачи', auto_now_add=True)
 
     @classmethod
@@ -127,8 +130,8 @@ class Certificate(models.Model):
         verbose_name        = 'аттестат'
         verbose_name_plural = 'аттестаты'
     
-    course        = models.ForeignKey(Course)
-    user          = models.ForeignKey(User)
+    course        = models.ForeignKey(Course, verbose_name='курс')
+    user          = models.ForeignKey(User, verbose_name='пользователь')
     date_enrolled = models.DateField('дата зачисления')
     date_finished = models.DateField('дата завершения')
     rating        = models.DecimalField('рейтинг', max_digits=5, decimal_places=2)
@@ -143,7 +146,7 @@ class Part(models.Model):
         unique_together     = ('course', 'num')
         ordering = ('course', 'num')
         
-    course      = models.ForeignKey(Course, related_name='parts')
+    course      = models.ForeignKey(Course, verbose_name='курс', related_name='parts')
     num         = models.PositiveIntegerField('номер')
     title       = models.CharField('название', max_length=150)
     description = models.TextField('описание', blank=True)

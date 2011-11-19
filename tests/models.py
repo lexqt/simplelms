@@ -12,6 +12,10 @@ class TestFrame(models.Model):
         verbose_name        = 'тестовое задание'
         verbose_name_plural = 'тестовые задания'
         unique_together = ('scheme', 'frame_id')
+        
+        permissions = (
+            ('debug_frame', 'Право тестировать фреймы'),
+        )
 
     scheme    = models.PositiveIntegerField('индекс схемы')
     frame_id  = models.PositiveIntegerField('индекс фрейма')
@@ -21,13 +25,11 @@ class TestFrame(models.Model):
         ('close', 'Закрытый вопрос'),
         ('open', 'Открытый вопрос'),
     )
+    FRAME_TYPES_DICT = dict(FRAME_TYPES)
     
     frame_type = models.CharField('тип вопроса', max_length=30, choices=FRAME_TYPES)
     frame_data = models.TextField('xml сценарий')
 
-    def __unicode__(self):
-        return self.title
-    
     def get_xml(self):
         xml = self.frame_data
         if isinstance(xml, unicode):
@@ -36,6 +38,13 @@ class TestFrame(models.Model):
     
     def get_absolute_url(self):
         return reverse('tests:debug_frame', kwargs={'scheme': self.scheme, 'frame_id': self.frame_id})
+    
+    def __unicode__(self):
+        return u'Фрейм[{0}][{1}] тип[{2}] "{3}"'.format(
+            self.scheme, self.frame_id,
+            self.FRAME_TYPES_DICT[self.frame_type],
+            self.title,
+            )
 
 
 
@@ -52,14 +61,17 @@ class Test(ElementObject):
     
     script_data = models.TextField('xml сценарий')
 
-    def __unicode__(self):
-        return self.title
-    
     def get_xml(self):
         xml = self.script_data
         if isinstance(xml, unicode):
             xml = xml.encode('utf-8')
         return xml
+    
+    def __unicode__(self):
+        return u'Тест[{0}][{1}] "{2}"'.format(
+            self.scheme, self.script_id,
+            self.title,
+            )
 
 
     
@@ -76,9 +88,24 @@ class SessionFrame(models.Model):
     weight    = models.IntegerField('вес фрейма', default=1)
     rating    = models.FloatField('полученные баллы', default=0)
     
-    session   = models.ForeignKey('Session', related_name='frames')
+    session   = models.ForeignKey('Session', verbose_name='сессия прохождения теста', related_name='frames')
     
-    next_sframe = models.OneToOneField('SessionFrame', related_name='previous', null=True, blank=True)
+    next_sframe = models.OneToOneField('SessionFrame', verbose_name='следующий фрейм', related_name='previous', null=True, blank=True)
+    
+    def get_absolute_url(self):
+        try:
+            frame = TestFrame.objects.get(scheme=self.scheme, frame_id=self.frame_id)
+            return frame.get_absolute_url()
+        except TestFrame.DoesNotExist:
+            return ''
+    
+    def __unicode__(self):
+        return u'{0} || фрейм[{1}][{2}] - [{3}] [{4} x {5:.2f}]'.format(
+            self.session,
+            self.scheme, self.frame_id,
+            '>>' if self.is_passed else '--',
+            self.weight, self.rating,
+            )
 
 
 
@@ -88,15 +115,15 @@ class Session(models.Model):
         verbose_name        = 'сессия прохождения теста'
         verbose_name_plural = 'сессии прохождения теста'
     
-    course            = models.ForeignKey(Course, related_name='+')
-    user              = models.ForeignKey(User, related_name='test_sessions')
+    course            = models.ForeignKey(Course, verbose_name='курс', related_name='+')
+    user              = models.ForeignKey(User, verbose_name='пользователь', related_name='test_sessions')
     cur_session_frame = models.OneToOneField(SessionFrame, related_name='test_session', null=True, blank=True)
     
     scheme      = models.PositiveIntegerField('индекс схемы')
     script_id   = models.PositiveIntegerField('индекс сценария')
     num_passed  = models.IntegerField('число пройденных вопросов', default=0)
     is_active   = models.BooleanField('активная сессия', default=False)
-    is_finished = models.BooleanField('тест пройден', default=False)
+    is_finished = models.BooleanField('сессия завершена', default=False)
     
     is_exam = models.BooleanField('аттестующий тест', default=False)
     
@@ -156,6 +183,15 @@ class Session(models.Model):
                         total=rate_total,
                         got=rate_got
                     ))
+    
+    def __unicode__(self):
+        return u'{0} - {1} - тест[{2}][{3}] - открыто {4} [{5}] [{6}]'.format(
+            self.course, self.user,
+            self.scheme, self.script_id,
+            self.date_started,
+            'активно'   if self.is_active   else 'остановлено',
+            'завершено' if self.is_finished else 'не завершено',
+            )
 
 
 
@@ -167,8 +203,8 @@ class TestResult(models.Model):
         unique_together = ('course', 'user', 'scheme', 'script_id', 'try_number')
         ordering        = ['course', 'user', 'scheme', 'script_id', 'try_number']
     
-    course = models.ForeignKey(Course, related_name='+')
-    user   = models.ForeignKey(User, related_name='test_results')
+    course = models.ForeignKey(Course, verbose_name='курс', related_name='+')
+    user   = models.ForeignKey(User, verbose_name='пользователь', related_name='test_results')
 
     scheme    = models.PositiveIntegerField('индекс схемы')
     script_id = models.PositiveIntegerField('индекс сценария')
@@ -193,3 +229,49 @@ class TestResult(models.Model):
             return res[0].try_number + 1
         else:
             return 1
+    
+    def __unicode__(self):
+        return u'{0} - {1} - тест[{2}][{3}] - #{4} [{5}]'.format(
+            self.course, self.user,
+            self.scheme, self.script_id,
+            self.try_number,
+            'зачтено' if self.is_passed else 'не зачтено',
+            )
+
+
+
+class SchemeCourseRelation(models.Model):
+    
+    class Meta:
+        verbose_name        = 'отношение Курс - Схема'
+        verbose_name_plural = 'отношения Курс - Схема'
+        unique_together = ('course', 'scheme')
+        ordering        = ['course', 'scheme']
+    
+    course = models.ForeignKey(Course, verbose_name='курс', related_name='alowed_test_schemes')
+    scheme = models.PositiveIntegerField('индекс схемы')
+    
+    def __unicode__(self):
+        return u'{0} - {1}'.format(self.course, self.scheme)
+    
+    @classmethod
+    def get_courses_schemes(cls, courses=None, only_scheme_list=False, get_all=False):
+        qs = cls.objects.all()
+        if not get_all:
+            if not hasattr(courses, '__iter__'):
+                courses = (courses,)
+            qs = qs.filter(course__in=courses)
+        if only_scheme_list:
+            return list(qs.order_by('scheme').values_list('scheme', flat=True))
+        else:
+            vl = qs.values_list('course__title', 'scheme')
+            d = {}
+            for pair in vl:
+                title = pair[0]
+                num   = pair[1]
+                if d.has_key(num):
+                    d[num].append(title)
+                else:
+                    d[num] = [title]
+            return map(lambda pair: (pair[0], u', '.join(pair[1])), d.items())
+

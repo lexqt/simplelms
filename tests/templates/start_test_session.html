@@ -6,6 +6,7 @@
 
 {% block frame_content %}
 <p>{{ script.description }}</p>
+<p>Время окончания тестирования: {{ date_limit }}</p>
 <p>
 <a href="{% url tests:run_test course_id=course.id scheme=script.script_index.scheme script_id=script.script_index.script_id %}">Перейти к первому вопросу</a>
 </p>

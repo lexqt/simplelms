@@ -72,7 +72,13 @@ class DebugFrameView(FormView):
     
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        # TODO: restrict access
+        request = args[0]
+        user = request.user
+        
+        if not user.has_perm('tests.debug_frame') and not user.is_superuser:
+            raise Http403('У Вас нет права тестировать фреймы')
+        
+        # TODO: restrict access to schemes
         
         self.frame_db = get_object_or_404(TestFrame, scheme=kwargs['scheme'], frame_id=kwargs['frame_id'])
         cls = FRAME_TYPE_CLASSES[self.frame_db.frame_type]
@@ -142,6 +148,7 @@ class TestView(FormView):
                 pass
         
         context['cnt_passed'] = self.session.num_passed
+        context['date_limit'] = self.session.date_limit
 
         context['course'] = self.course
         context['test']   = self.test
@@ -231,7 +238,8 @@ class TestView(FormView):
         # render start frame
         context = {
             'course': self.course,
-            'script': self.script
+            'script': self.script,
+            'date_limit': self.session.date_limit
         }
         return render_to_response('start_test_session.html', context)
     
