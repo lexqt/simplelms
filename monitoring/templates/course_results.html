@@ -1,0 +1,17 @@
+{% extends 'monitoring_base.html' %}
+
+{% block title %}Результаты по курсу "{{ course.title }}" | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2>Результаты по курсу "{{ course.title }}"</h2>
+{% if not users %}
+<p>Отсутствуют пользователи, записанные на выбранный курс.</p>
+{% endif %}
+<ul>
+{% for user in users %}
+    <li>{{ user.last_name }} {{ user.first_name }} {{ user.profile.middle_name }} |
+    	<a href="{% url monitoring:user_results user.id course.id %}">мониторинг</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

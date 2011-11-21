@@ -61,7 +61,7 @@ class CourseView(DetailView):
 
 class LearningCoursesListView(ListView):
     context_object_name = 'course_list'
-    template_name = 'mycourses_list.html'
+    template_name = 'courses_learning_list.html'
     
     def get_queryset(self):
         user = self.request.user
@@ -77,7 +77,7 @@ class LearningCoursesListView(ListView):
 
 class ManagingCoursesListView(ListView):
     context_object_name = 'course_list'
-    template_name = 'mycourses_list.html'
+    template_name = 'courses_managing.html'
     
     def get_queryset(self):
         user = self.request.user

@@ -1,0 +1,23 @@
+{% extends 'courses_base.html' %}
+
+{% block title %}Список моих курсов | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2>Учебные курсы</h2>
+{% if not course_list %}
+<p>Отсутствуют курсы для отображения в текущем списке.</p>
+{% endif %}
+<ul>
+{% for course in course_list %}
+    <li>
+    <h3>{{ course.title }}</h3>
+    <p>{{ course.date_created }}</p>
+    <div>{{ course.description|safe }}</div>
+    <div class="controls">
+    	<a href="{% url courses:course_view course.id %}">открыть курс</a> |
+    	<a href="{% url monitoring:user_results user.id course.id %}">мониторинг</a>
+    </div>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

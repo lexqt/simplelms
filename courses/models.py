@@ -66,14 +66,14 @@ class Course(models.Model):
             cm = course.has_course_manager(user)
         if check_student and check_manager:
             if not cs and not cm:
-                raise Http403('Вы не записаны на данный курс и не являетесь его управляющим')
+                raise Http403('Выбранный пользователь не записан на данный курс и не является его управляющим')
         else:
             if check_student:
                 if not cs:
-                    raise Http403('Вы не записаны на данный курс')
+                    raise Http403('Выбранный пользователь не записан на данный курс')
             elif check_manager:
                 if not cm:
-                    raise Http403('Вы не являетесь управляющим данного курса')
+                    raise Http403('Выбранный пользователь не является управляющим данного курса')
         
         return course
 

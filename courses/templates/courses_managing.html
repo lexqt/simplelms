@@ -13,7 +13,10 @@
     <h3>{{ course.title }}</h3>
     <p>{{ course.date_created }}</p>
     <div>{{ course.description|safe }}</div>
-    <div class="controls"><a href="{% url courses:course_view course.id %}">открыть курс</a></div>
+    <div class="controls">
+    	<a href="{% url courses:course_view course.id %}">открыть курс</a> |
+    	<a href="{% url monitoring:course_results course.id %}">мониторинг</a>
+    </div>
     </li>
 {% endfor %}
 </ul>

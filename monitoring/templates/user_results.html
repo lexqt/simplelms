@@ -1,0 +1,31 @@
+{% extends 'monitoring_base.html' %}
+
+{% block title %}{{ user }} — Результаты по курсу "{{ course.title }}" | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h3>{{ user }} — Результаты по курсу "{{ course.title }}"</h3>
+
+<table>
+	<tr>
+		<th rowspan="2">Название элемента</th>
+		<th colspan="2">Рейтинг</th>
+	</tr>
+	<tr>
+		<th>Макс.</th>
+		<th>Набранный</th>
+	</tr>
+{% for part in course_parts %}
+	<tr>
+		<td colspan="3" style="text-align: center">{{ part.title }}</td>
+	</tr>
+	{% for element in part.part_elements %}
+	<tr>
+		<td>{{ element.num }}. {{ element.title }}</td>
+		<td>{{ element.max_rating|stringformat:".2f" }}</td>
+		<td>{{ element.cur_rating|stringformat:".2f" }}</td>
+	</tr>
+	{% endfor %}
+{% endfor %}
+</table>
+
+{% endblock %}

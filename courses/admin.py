@@ -260,7 +260,7 @@ class CourseElementAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'element_type':
             kwargs['queryset'] = ContentType.objects.filter(COURSE_ELEMENT_TYPES)
-        return super(CourseElementInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
+        return super(CourseElementAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 
