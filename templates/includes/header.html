@@ -1,0 +1,63 @@
+{% load i18n grp_tags %}
+
+<div id="header">
+	<!-- Branding -->
+	<div class="branding">&nbsp;</div>
+	
+	<!-- Title -->
+	<div class="admin-title">
+		Добро пожаловать
+		{% if user.is_authenticated %}
+			, {{ user.username }}.
+		{% else %}
+		    !
+		{% endif %}
+	</div>
+	
+	<!-- Main Title -->
+	<div class="main-title">
+		< < SimpleLMS > >
+	</div>
+	
+	<!-- Account -->
+	<ul id="user-tools">
+		{% if user.is_authenticated %}
+			<!-- Username -->
+			<li class="user-options-container collapse closed">
+				<a href="javascript://" class="user-options-handler collapse-handler">
+					{{ user.username }}
+				</a>
+				<ul class="user-options">
+					<!-- Logout -->
+					<li>
+						<a href="{% url accounts:logout %}">
+							Выход
+						</a>
+					</li>
+				</ul>
+			</li>
+			
+			<!-- Userlinks -->
+			{% block userlinks %}
+				<!-- Temp -->
+			{% endblock %}
+		{% else %}
+			<!-- Login && Register -->
+			<li class="user-options-container collapse opened">
+				<a href="{% url accounts:login %}">Вход</a> | <a href="{% url accounts:register %}">Регистрация</a>
+			</li>
+		{% endif %}
+	</ul>
+	
+	{% block nav-global %}
+	{% endblock %}
+	
+</div>
+
+<script type="text/javascript" charset="utf-8">
+	(function($) {
+		$(document).ready(function() {
+			$("div#header .collapse").grp_collapsible();
+		});
+	})(django.jQuery);
+</script>

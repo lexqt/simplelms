@@ -88,7 +88,7 @@ class UserResultsView(DetailView):
         request = args[0]
         user = request.user
         
-        self.is_self_mon = user.id == kwargs['user_id']
+        self.is_self_mon = user.id == int(kwargs['user_id'])
         if self.is_self_mon:
             self.user_mon = user
         else:

@@ -1,62 +1,163 @@
 {% load user_extras %}
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>{% block title %}Главная{% endblock %} — SimpleLMS</title>
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.6.4.min.js"></script>
-</head>
-<body>
-	{% if messages %}
-	<ul id="messages">
-	    {% for message in messages %}
-	    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
-	    {% endfor %}
-	</ul>
-	{% endif %}
+{% load simplelms_extras %}
 
-	<div id="sidebar">
-		<ul id="mainmenu">
-			{% block mainmenu %}
-			<li><a href="/">Главная</a></li>
-			<li><a href="{% url courses:list %}">Курсы</a></li>
+{% captureas title %}
+	{% spaceless %}
+		
+		{% block title %}
+			Главная
+		{% endblock %}
+		
+	{% endspaceless %}
+{% endcaptureas %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+<head>
+	
+	<meta charset="UTF-8">
+	<title>{{ title }} — SimpleLMS</title>
+	
+	<!-- STYLESHEETS -->
+	{% block stylesheets %}
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}jquery/ui/css/custom-theme/jquery-ui-1.8.custom.css" media="screen" title="no title" charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-grappelli-extensions.css" />
+	{% endblock %}
+	
+	<!-- EXTRASTYLES -->
+	{% block extrastyle %}
+	{% endblock %}
+	
+	<!-- JAVASCRIPTS -->
+	{% block javascripts %}
+		<!-- jQuery -->
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery/jquery-1.6.4.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}jquery/ui/js/jquery-ui-1.8.15.custom.min.js"></script>
+		<!-- Grappelli Main JS -->
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/grappelli.js"></script>
+		<!-- Grappelli jQuery Plugins, Widgets -->
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_collapsible.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_collapsible_group.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_timepicker.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_related_fk.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_related_m2m.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_related_generic.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_fk.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_m2m.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_generic.js"></script>
+	{% endblock %}
+	
+	<!-- EXTRAHEAD -->
+	{% block extrahead %}
+	{% endblock %}
+	
+</head>
+<body class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}">
+	
+	<div id="container">
+		
+		<!-- HEADER -->
+		{% if not is_popup %}
+			{% include "includes/header.html" %}
+			
+			<!-- BREADCRUMBS -->
+			{% block breadcrumbs %}
+				<div id="breadcrumbs">
+					
+					<!-- MAIN MENU -->
+					{% block mainmenu %}
+						<a href="/">Главная</a>
+						|
+						<a href="{% url courses:list %}">Курсы</a>
+					{% endblock %}
+					
+					{% ifusergroup managers %}
+						{% block mainmenu_manager %}
+							|
+							<a href="/admin/">Админка</a>
+						{% endblock %}
+					{% endifusergroup %}
+					
+				</div>
+				
+				<div id="breadcrumbs" class="sub-level">
+					
+					<!-- TITLE -->
+					<a href="/">На родину</a>
+					{% if title %}
+						&rsaquo;&rsaquo;
+						{{ title }}
+					{% endif %}
+					
+					<!-- APP MENU -->
+					{% block appmenu %}
+					{% endblock %}
+					
+					<!-- MANAGER MENU -->
+					{% ifusergroup managers %}
+						{% block appmenu_manager %}
+						{% endblock %}
+					{% endifusergroup %}
+					
+				</div>
+				
 			{% endblock %}
-			{% ifusergroup managers %}
-				{% block mainmenu_manager %}
-				<li><a href="/admin/">Админка</a></li>
-				{% endblock %}
-			{% endifusergroup %}
-		</ul>
-		<ul id="appmenu">
-			{% block appmenu %}
+		{% endif %}
+		
+		<!-- MESSAGES -->
+		{% if messages %}
+			<ul id="messages" class="messagelist">
+				{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		
+		<!-- CONTENT -->
+		<div id="content" class="{% block content-class %}{% endblock %}">
+			<!-- Pretitle -->
+			{% block pretitle %}
 			{% endblock %}
-			{% ifusergroup managers %}
-				{% block appmenu_manager %}
+			<!-- Content Title -->
+			{% block content_title %}
+				{% if title %}
+					<h1>{{ title }}</h1>
+				{% endif %}
+			{% endblock %}
+			<!-- Object-Tools -->
+			{% block object-tools %}
+			{% endblock %}
+			<!-- Content -->
+			{% block content %}
+				{{ content }}
+				{% block filters %}
 				{% endblock %}
-			{% endifusergroup %}
-		</ul>
+			{% endblock %}
+			
+			<br class="clear" />
+		</div>
+		
+		<!-- DEBUG -->
+		{% if debug and false %} {# TO DELETE "FALSE" #}
+			<div id="debug">
+				<ol>
+					{% for q in sql_queries %}
+						<li>
+							<b>{{ q.time }}s</b>: {{ q.sql }};
+						</li>
+					{% endfor %}
+				</ol>
+			</div>
+		{% endif %}
+		
+		<!-- FOOTER -->
+		{% block footer %}
+			<div id="footer">
+			</div>
+		{% endblock %}
+		
 	</div>
 	
-	<div id="account">
-		{% if user.is_authenticated %}
-		    <p>Добро пожаловать, {{ user.username }}. <a href="{% url accounts:logout %}">Выход</a></p>
-		{% else %}
-		    <p><a href="{% url accounts:login %}">Вход</a> | <a href="{% url accounts:register %}">Регистрация</a></p>
-		{% endif %}
-	</div>
-
-	<div id="content">
-		{% block content %}{% endblock %}
-	</div>
-
-{% if debug %}
-<div id="debug">
-    <ol>
-    {% for q in sql_queries %}
-        <li><b>{{ q.time }}s</b>: {{ q.sql }};
-    {% endfor %}
-    </ol>
-</div>
-{% endif %}
 </body>
 </html>
