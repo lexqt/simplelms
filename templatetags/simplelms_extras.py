@@ -1,5 +1,5 @@
 #http://djangosnippets.org/snippets/545/
-#Created on 22.12.2011
+#Created on 24.12.2011
 #@author: strider
 
 from django import template

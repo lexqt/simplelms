@@ -1,15 +1,16 @@
 {% if hidden_fields %}
-<div style="display:none">
-	{% for field in hidden_fields %}
-		{{ field }}
-	{% endfor %}
-</div>
+	<div style="display:none">
+		{% for field in hidden_fields %}
+			{{ field }}
+		{% endfor %}
+	</div>
 {% endif %}
+
 {% if visible_fields %}
-{% for field in visible_fields %}
-    <div class="form-field">
-        {{ field.label_tag }}: {{ field }}
-        {{ field.errors }}
-    </div>
-{% endfor %}
+	{% for field in visible_fields %}
+		<div class="form-field">
+			{{ field.label_tag }}: {{ field }}
+			{{ field.errors }}
+		</div>
+	{% endfor %}
 {% endif %}

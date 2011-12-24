@@ -1,4 +1,11 @@
 
+/*  Body
+------------------------------------------------------------------------------------------------------ */
+
+body {
+	padding: 103px 20px 0;
+}
+
 /*  Header
 ------------------------------------------------------------------------------------------------------ */
 
@@ -18,25 +25,54 @@
 ------------------------------------------------------------------------------------------------------ */
 
 div#breadcrumbs {
-	top: 40px;
+	top: 38px;
 	padding: 12px 10px 10px 20px;
 	font-size: 16px;
 	font-weight: bold;
 }
 
+/*  Login Form
+------------------------------------------------------------------------------------------------------ */
+
+div.login {
+	top: -63px;
+}
+
 /*  Custom
 ------------------------------------------------------------------------------------------------------ */
 
-.main-title {
-	position: absolute;
-	right: 45%;
-	padding: 12px 20px;
-	font-size: 22px;
+#main-title {
+	position: fixed;
+	top: 0;
+	margin: 0 0 0 -20px;
+	padding: 12px 0;
+	width: 100%;
+	font-family: Agency FB;
+	font-size: 34px;
 	color: #FF9900;
+	text-align: center;
 }
 
 div#breadcrumbs.sub-level {
-	top: 80px;
+	top: 78px;
 	padding: 4px 10px 3px 20px;
 	font-size: 14px;
+}
+
+hr.separator {
+	margin-top: 20px;
+	clear: both;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #000000;
+}
+
+div#footer {
+	clear: both;
+	padding: 20px 0;
+	font-family: Agency FB;
+	font-weight: bold;
+	font-size: 16px;
+	color: #000000;
+	text-align: center;
 }

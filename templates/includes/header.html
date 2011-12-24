@@ -1,10 +1,13 @@
 {% load i18n grp_tags %}
 
 <div id="header">
-	<!-- Branding -->
-	<div class="branding">&nbsp;</div>
 	
-	<!-- Title -->
+	<!-- BRANDING -->
+	<div class="branding">
+		&nbsp;
+	</div>
+	
+	<!-- GREETING -->
 	<div class="admin-title">
 		Добро пожаловать
 		{% if user.is_authenticated %}
@@ -14,15 +17,16 @@
 		{% endif %}
 	</div>
 	
-	<!-- Main Title -->
-	<div class="main-title">
+	<!-- MAIN TITLE -->
+	<div id="main-title">
 		< < SimpleLMS > >
 	</div>
 	
-	<!-- Account -->
+	<!-- ACCOUNT -->
 	<ul id="user-tools">
 		{% if user.is_authenticated %}
-			<!-- Username -->
+			
+			<!-- USERNAME -->
 			<li class="user-options-container collapse closed">
 				<a href="javascript://" class="user-options-handler collapse-handler">
 					{{ user.username }}
@@ -31,21 +35,29 @@
 					<!-- Logout -->
 					<li>
 						<a href="{% url accounts:logout %}">
-							Выход
+							{% trans 'Log out' %}
 						</a>
 					</li>
 				</ul>
 			</li>
 			
-			<!-- Userlinks -->
+			<!-- USERLINKS -->
 			{% block userlinks %}
-				<!-- Temp -->
 			{% endblock %}
+			
 		{% else %}
-			<!-- Login && Register -->
+			
+			<!-- LOGIN && REGISTER -->
 			<li class="user-options-container collapse opened">
-				<a href="{% url accounts:login %}">Вход</a> | <a href="{% url accounts:register %}">Регистрация</a>
+				<a href="{% url accounts:login %}">
+					{% trans 'Log in' %}
+				</a>
+				|
+				<a href="{% url accounts:register %}">
+					Регистрация
+				</a>
 			</li>
+			
 		{% endif %}
 	</ul>
 	

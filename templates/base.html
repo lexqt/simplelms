@@ -1,3 +1,5 @@
+<!-- LOADING -->
+{% load i18n %}
 {% load user_extras %}
 {% load simplelms_extras %}
 
@@ -11,7 +13,9 @@
 	{% endspaceless %}
 {% endcaptureas %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
 <head>
 	
@@ -67,7 +71,9 @@
 					
 					<!-- MAIN MENU -->
 					{% block mainmenu %}
-						<a href="/">Главная</a>
+						<a href="/">
+							Главная
+						</a>
 						|
 						<a href="{% url courses:list %}">Курсы</a>
 					{% endblock %}
@@ -83,12 +89,10 @@
 				
 				<div id="breadcrumbs" class="sub-level">
 					
-					<!-- TITLE -->
-					<a href="/">На родину</a>
-					{% if title %}
-						&rsaquo;&rsaquo;
-						{{ title }}
-					{% endif %}
+					<!-- HOME -->
+					<a href="/">
+						{% trans 'Home' %}
+					</a>
 					
 					<!-- APP MENU -->
 					{% block appmenu %}
@@ -99,6 +103,12 @@
 						{% block appmenu_manager %}
 						{% endblock %}
 					{% endifusergroup %}
+					
+					<!-- TITLE -->
+					{% if title %}
+						&rsaquo;&rsaquo;
+						{{ title }}
+					{% endif %}
 					
 				</div>
 				
@@ -116,18 +126,22 @@
 		
 		<!-- CONTENT -->
 		<div id="content" class="{% block content-class %}{% endblock %}">
+			
 			<!-- Pretitle -->
 			{% block pretitle %}
 			{% endblock %}
+			
 			<!-- Content Title -->
 			{% block content_title %}
 				{% if title %}
 					<h1>{{ title }}</h1>
 				{% endif %}
 			{% endblock %}
+			
 			<!-- Object-Tools -->
 			{% block object-tools %}
 			{% endblock %}
+			
 			<!-- Content -->
 			{% block content %}
 				{{ content }}
@@ -136,24 +150,44 @@
 			{% endblock %}
 			
 			<br class="clear" />
+			
+			<!-- DEBUG -->
+			{% if debug %}
+				<div id="debug">
+					
+					<hr class="separator" />
+					
+					<h1>[ Debug ]</h1>
+					
+					<!-- TEMP -->
+					<h2>Temp:</h1>
+					{% block temp %}
+						[ Reserved ]
+					{% endblock %}
+					
+					<!-- SQL QUERIES -->
+					<h2>SQL Queries:</h1>
+					<ol>
+						{% for q in sql_queries %}
+							<li>
+								<b>{{ q.time }}s</b>: {{ q.sql }};
+							</li>
+						{% endfor %}
+					</ol>
+					
+					<hr class="separator" />
+					
+				</div>
+			{% endif %}
+			
+			<br class="clear" />
+			
 		</div>
-		
-		<!-- DEBUG -->
-		{% if debug and false %} {# TO DELETE "FALSE" #}
-			<div id="debug">
-				<ol>
-					{% for q in sql_queries %}
-						<li>
-							<b>{{ q.time }}s</b>: {{ q.sql }};
-						</li>
-					{% endfor %}
-				</ol>
-			</div>
-		{% endif %}
 		
 		<!-- FOOTER -->
 		{% block footer %}
 			<div id="footer">
+				| © SimpleLMS 2011 |
 			</div>
 		{% endblock %}
 		
