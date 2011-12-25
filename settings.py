@@ -129,6 +129,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 INSTALLED_APPS = (
+    'simplelms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

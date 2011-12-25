@@ -1,68 +1,305 @@
-{% extends "base.html" %}
-{% load url from future %}
+{% extends "base_site.html" %}
+
+<!-- LOADING -->
+{% load i18n %}
+{% load url from future %}<!-- NEED OR NOT? -->
+
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	auth-user change-form
+{% endblock %}
+
+{% block content-class %}
+	content-flexible
+{% endblock %}
+
+<!-- EXTRAHEAD-->
+{% block extrahead %}
+	<script type="text/javascript">
+		(function($) {
+			$(window).load(function() {
+				$('#id_username').focus();
+			});
+		})(django.jQuery);
+	</script>
+{% endblock %}
+
+{% block title %}
+	Регистрация
+{% endblock %}
+
+{% block content_title %}
+	<h1>
+		Вход на сайт
+		{% if title %}
+			— {{ title }}
+		{% endif %}
+	</h1>
+{% endblock %}
 
 {% block content %}
-<h2>Вход на сайт</h2>
-
-{% with uf=user_form pf=profile_form %}
-
-{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
-{% if errs1 or errs2 %}
-	<h3>Ошибки:</h3>
-	{% firstof errs1 errs2 %}
-{% endif %}
-{% endwith %}
-
-<form method="post" action="{% url 'accounts:register' %}">
-{% csrf_token %}
-<div style="display:none">
-	<input type="hidden" name="next" value="{{ next }}" />
-	{% for field in uf.hidden_fields %}
-		{{ field }}
-	{% endfor %}
-	{% for field in pf.hidden_fields %}
-		{{ field }}
-	{% endfor %}
-</div>
-<fieldset>
-	<legend>Данные для авторизации</legend>
-	<div class="form-field">
-	    {{ uf.username.label_tag }}: {{ uf.username }}
-	    {{ uf.username.errors }}
+	
+	<!--  -->
+	<div class="container-flexible">
+		
+		<div class="form-container">
+			
+			{% with uf=user_form pf=profile_form %}
+				
+				{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
+					{% if errs1 or errs2 %}
+						<h3>Ошибки:</h3>
+						{% firstof errs1 errs2 %}
+					{% endif %}
+				{% endwith %}
+				
+				<form id="user_form" action="{% url 'accounts:register' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+					
+					<div style="display:none">
+						<input type="hidden" name="next" value="{{ next }}" />
+						{% for field in uf.hidden_fields %}
+							{{ field }}
+						{% endfor %}
+						{% for field in pf.hidden_fields %}
+							{{ field }}
+						{% endfor %}
+					</div>
+					
+					<div>
+<!-- TODO OR NOT?
+						{% for fieldset in adminform %}
+							{% include "admin/includes/fieldset.html" %}
+						{% endfor %}
+						OET -->
+						{% comment %}
+							<p>
+								{% trans "First, enter a username and password. Then, you'll be able to edit more user options." %}
+							</p>
+						{% endcomment %}
+						
+						<!-- DATA FOR AUTH -->
+						<fieldset class="module aligned">
+							
+							<h2 class="collapse-handler">
+								Данные для авторизации
+							</h2>
+							
+							<!-- USERNAME -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_username" class="required">
+										{% trans 'Username' %}: {# {{ uf.username.label_tag }} #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.username }}
+									{{ uf.username.errors }}
+									<p class="help">
+										{{ uf.username.help_text }}
+									</p>
+								</div>
+							</div>
+							
+							<!-- PASSWORD -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_password1" class="required">
+										{% trans 'Password' %}: {# {{ uf.password1.label_tag }} #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.password1 }}
+									{{ uf.password1.errors }}
+								</div>
+							</div>
+							
+							<!-- PASSWORD (AGAIN) -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_password2" class="required">
+										{% trans 'Password (again)' %}: {# {{ uf.password2.label_tag }} #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.password2 }}
+									{{ uf.password2.errors }}
+									<p class="help">
+										{% trans 'Enter the same password as above, for verification.' %} {# {{ uf.password2.help_text }} #}
+									</p>
+								</div>
+							</div>
+							
+						</fieldset>
+						
+						<!-- PERSONAL INFORMATION -->
+						<fieldset class="module aligned">
+							
+							<h2 class="collapse-handler">
+								Персональная информация
+							</h2>
+							
+							<!-- LAST NAME -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_last_name" class="required">
+<!-- TODO: fucking not understand "Last name" with Capital first letter -->
+										{% trans 'last name' %}: {# {{ uf.last_name.label_tag }}: #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.last_name }}
+									{{ uf.last_name.errors }}
+								</div>
+							</div>
+							
+							<!-- FIRST NAME -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_first_name" class="required">
+										{% trans 'Name' %}: {# {{ uf.first_name.label_tag }} #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.first_name }}
+									{{ uf.first_name.errors }}
+								</div>
+							</div>
+							
+							<!-- MIDDLE NAME -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_middle_name" class="required">
+										{# {% trans 'middle name' %}: #} {{ pf.middle_name.label_tag }}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ pf.middle_name }}
+									{{ pf.middle_name.errors }}
+								</div>
+							</div>
+							
+							<!-- E-MAIL -->
+							<div class="row">
+								<div class="column span-5">
+									<label for="id_email" class="required">
+										{% trans 'E-mail' %}: {# {{ uf.email.label_tag }} #}
+									</label>
+								</div>
+								<div class="column span-flexible">
+									{{ uf.email }}
+									{{ uf.email.errors }}
+								</div>
+							</div>
+							
+						</fieldset>
+							
+						<!-- SUBMIT -->
+						<div class="module submit-row">
+							<ul class="submit-row">
+								<li class="submit-button-container">
+									<input type="submit" class="default" value="Отправить" />
+								</li>
+							</ul>
+						</div>
+						
+					</div>
+					
+				</form>
+				
+			{% endwith %}{# uf pf #}
+			
+		</div>
+		
 	</div>
-	<div class="form-field">
-	    {{ uf.password1.label_tag }}: {{ uf.password1 }}
-	    {{ uf.password1.errors }}
-	</div>
-	<div class="form-field">
-	    {{ uf.password2.label_tag }}: {{ uf.password2 }}
-	    {{ uf.password2.errors }}
-	</div>
-</fieldset>
-<fieldset>
-	<legend>Контактные данные</legend>
-	<div class="form-field">
-	    {{ uf.email.label_tag }}: {{ uf.email }}
-	    {{ uf.email.errors }}
-	</div>
-</fieldset>
-<fieldset>
-	<legend>Личные данные</legend>
-	<div class="form-field">
-	    {{ uf.last_name.label_tag }}: {{ uf.last_name }}
-	    {{ uf.last_name.errors }}
-	</div>
-	<div class="form-field">
-	    {{ uf.first_name.label_tag }}: {{ uf.first_name }}
-	    {{ uf.first_name.errors }}
-	</div>
-	<div class="form-field">
-	    {{ pf.middle_name.label_tag }}: {{ pf.middle_name }}
-	    {{ pf.middle_name.errors }}
-	</div>
-</fieldset>
-<input type="submit" value="Отправить" />
-</form>
-
-{% endwith %}{# uf pf #}
+	
+	<!-- {# OLD #}
+	<br class="clear" />
+	
+	{% with uf=user_form pf=profile_form %}
+		
+		{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
+			{% if errs1 or errs2 %}
+				<h3>Ошибки:</h3>
+				{% firstof errs1 errs2 %}
+			{% endif %}
+		{% endwith %}
+		
+		<form action="{% url 'accounts:register' %}" method="post">{% csrf_token %}
+			
+			<div style="display:none">
+				<input type="hidden" name="next" value="{{ next }}" />
+				{% for field in uf.hidden_fields %}
+					{{ field }}
+				{% endfor %}
+				{% for field in pf.hidden_fields %}
+					{{ field }}
+				{% endfor %}
+			</div>
+			
+			<fieldset>
+				
+				<legend>
+					Данные для авторизации
+				</legend>
+				
+				<div class="form-field">
+				    {{ uf.username.label_tag }}: {{ uf.username }}
+				    {{ uf.username.errors }}
+				</div>
+				
+				<div class="form-field">
+				    {{ uf.password1.label_tag }}: {{ uf.password1 }}
+				    {{ uf.password1.errors }}
+				</div>
+				
+				<div class="form-field">
+				    {{ uf.password2.label_tag }}: {{ uf.password2 }}
+				    {{ uf.password2.errors }}
+				</div>
+				
+			</fieldset>
+			
+			<fieldset>
+				
+				<legend>
+					Контактные данные
+				</legend>
+				
+				<div class="form-field">
+				    {{ uf.email.label_tag }}: {{ uf.email }}
+				    {{ uf.email.errors }}
+				</div>
+				
+			</fieldset>
+			
+			<fieldset>
+				
+				<legend>
+					Личные данные
+				</legend>
+				
+				<div class="form-field">
+				    {{ uf.last_name.label_tag }}: {{ uf.last_name }}
+				    {{ uf.last_name.errors }}
+				</div>
+				
+				<div class="form-field">
+				    {{ uf.first_name.label_tag }}: {{ uf.first_name }}
+				    {{ uf.first_name.errors }}
+				</div>
+				
+				<div class="form-field">
+				    {{ pf.middle_name.label_tag }}: {{ pf.middle_name }}
+				    {{ pf.middle_name.errors }}
+				</div>
+				
+			</fieldset>
+			
+			<input type="submit" value="Отправить" />
+			
+		</form>
+		
+	{% endwith %}{# uf pf #}
+	{# EOO #} -->
+	
 {% endblock %}

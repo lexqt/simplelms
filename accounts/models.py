@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField(User, related_name='profile')
     
-    middle_name = models.CharField('отчество', max_length=30, blank=True)
+    middle_name = models.CharField('Отчество:', max_length=30, blank=True)
     
     def __unicode__(self):
         return ' '.join((self.user.last_name, self.user.first_name, self.middle_name))

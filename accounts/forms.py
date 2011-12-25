@@ -10,11 +10,11 @@ class UserForm(forms.ModelForm):
         model  = User
         fields = ('username', 'last_name', 'first_name', 'email')
         
-    username = forms.RegexField(label="Логин", max_length=30, regex=r'^[\w.@+-]+$',
+    username = forms.RegexField(label="Логин:", max_length=30, regex=r'^[\w.@+-]+$',
         help_text = "Обязательно для заполнения. Не более 30 символов: латинские буквы, цифры и знаки @/./+/-/_.",
         error_messages = {'invalid': "Логин может состоять только из латинских букв, цифр и знаков @/./+/-/_."})
-    password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Повторите пароль", widget=forms.PasswordInput,
+    password1 = forms.CharField(label="Пароль:", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Повторите пароль:", widget=forms.PasswordInput,
         help_text = "Введите пароль еще раз для проверки правильности заполнения поля.")
     
     def __init__(self, *args, **kwargs):

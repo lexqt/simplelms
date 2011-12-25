@@ -13,9 +13,6 @@
 	content-flexible
 {% endblock %}
 
-{% block content_title %}
-{% endblock %}
-
 <!-- EXTRAHEAD-->
 {% block extrahead %}
 	<script type="text/javascript">
@@ -34,6 +31,10 @@
 <!-- TITLE -->
 {% block title %}
 	Вход на сайт
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content_title %}
 {% endblock %}
 
 <!-- CONTENT -->
@@ -60,13 +61,11 @@
 					</p>
 				{% endfor %}
 				
-				<!-- TEMP -->
 				{% for error in form.non_field_errors %}
 					<p class="errornote">
 						{{ error }}
 					</p>
 				{% endfor %}
-				<!-- EOT -->
 			{% endif %}
 			
 			{% if error_message %}
@@ -75,7 +74,7 @@
 				</p>
 			{% endif %}
 			
-			<form action="{% url 'accounts:login' %}" method="post" id="login-form">{% csrf_token %}
+			<form id="login-form" action="{% url 'accounts:login' %}" method="post">{% csrf_token %}
 				
 				<fieldset class="module">
 					
