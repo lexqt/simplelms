@@ -1,0 +1,61 @@
+{% spaceless %}
+	
+	<div class="module pagination">
+		
+		<ul class="pagination">
+			
+			<!-- PREVIOUS -->
+			{% if page_obj.has_previous %}
+				
+				<li>
+					<span>
+						<a href="?page={{ page_obj.previous_page_number }}">
+							Предыдущая
+						</a>
+					</span>
+				</li>
+				
+				<li class="separator">
+					<span>
+						&lsaquo;&lsaquo;
+					</span>
+				</li>
+				
+			{% endif %}
+			
+			<!-- CURRENT -->
+			<li class="current-of-total">
+				<span>
+					Страница
+					{{ page_obj.number }}
+					из
+					{{ paginator.num_pages }}
+				</span>
+			</li>
+			
+			<!-- NEXT -->
+			{% if page_obj.has_next %}
+				
+				<li class="separator">
+					<span>
+						&rsaquo;&rsaquo;
+					</span>
+				</li>
+				
+				<li>
+					<span>
+						<a href="?page={{ page_obj.next_page_number }}">
+							Следующая
+						</a>
+					</span>
+				</li>
+				
+			{% endif %}
+			
+		</ul>
+		
+		<br clear="all" />
+		
+	</div>
+	
+{% endspaceless %}

@@ -1,40 +1,106 @@
 {% extends 'courses_base.html' %}
 
-{% block title %}Список курсов | {{ block.super }}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	Список курсов
+	—
+	{{ block.super }}
+{% endblock %}
 
+<!-- CONTENT-TITLE -->
+{% block content_title %}
+	<h1>
+		Список курсов — Учебные курсы
+	</h1>
+{% endblock %}
+
+<!-- CONTENT -->
 {% block content %}
-<h2>Учебные курсы</h2>
-{% if not course_list %}
-<p>Отсутствуют курсы для отображения в текущем списке.</p>
-{% endif %}
-<ul>
-{% with nexturl=next|urlencode %}
-{% for course in course_list %}
-    <li>
-    <h3>{{ course.title }}</h3>
-    <p>{{ course.date_created }}</p>
-    <div>{{ course.description|safe }}</div>
-    <div class="controls"><a href="{% url courses:submit_app course.id %}?next={{ nexturl }}">записаться на курс</a></div>
-    </li>
-{% endfor %}
-{% endwith %}
-</ul>
-
-{% if is_paginated %}
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a> |
-        {% endif %}
-
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            | <a href="?page={{ page_obj.next_page_number }}">следующая</a>
-        {% endif %}
-    </span>
-</div>
-{% endif %}
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<!-- COURSE LIST -->
+		{% if not course_list %}
+			
+			<div class="module aligned">
+				
+				<div class="row">
+					Отсутствуют курсы для отображения в текущем списке.
+				</div>
+				
+			</div>
+			
+		{% endif %}
+		
+		{% with nexturl=next|urlencode %}
+			
+			{% for course in course_list %}
+				
+				<div class="module aligned">
+					
+					<h2 class="collapse-handler">
+						
+						<div id="module-title">
+							{{ course.title }}
+						</div>
+						
+						<div id="module-info">
+							{{ course.date_created }}
+						</div>
+						
+					</h2>
+					
+					<table class="module changelist-results xfull">
+						
+						<tbody>
+							
+							<tr>
+								
+								<td>
+									{% if course.description %}
+										{{ course.description|safe }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</td>
+								
+								<th class="span-4">
+									<ul class="controls actions">
+										
+										<li class="add-link">
+											
+											<a href="{% url courses:submit_app course.id %}?next={{ nexturl }}">
+						    					Записаться на курс
+						    				</a>
+						    				
+										</li>
+										
+									</ul>
+								</th>
+								
+							</tr>
+							
+						</tbody>
+						
+					</table>
+					
+				</div>
+				
+				<br clear="all" />
+				
+			{% endfor %}
+			
+		{% endwith %}
+		
+		<!-- PAGINATION -->
+		{% if is_paginated %}
+			
+			{% include "includes/pagination.html" %}
+			
+		{% endif %}
+		
+	</div>
+	
 {% endblock %}

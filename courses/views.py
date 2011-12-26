@@ -37,6 +37,7 @@ class CourseView(DetailView):
         parts = Part.objects.filter(course=self.course).all()
         
         for part in parts:
+            part.num += 1
             elements = []
             for element in part.elements.select_related('element_type').defer('element_type__name').all():
                 element.num += 1

@@ -1,24 +1,152 @@
 {% extends 'courses_base.html' %}
 
-{% block title %}{{ course.title }} | {{ block.super }}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	{{ course.title }}
+	—
+	Мои курсы
+{% endblock %}
 
+<!-- CONTENT -->
 {% block content %}
-<h3>{{ course.title }}</h3>
-<p>{{ course.date_created }}</p>
-<p>{{ course.description|safe }}</p>
-
-{% for part in course_parts %}
-	<h4>{{ part.title }}</h4>
-	<p>{{ part.description|safe }}</p>
-	{% for element in part.part_elements %}
-		<h5>{{ element.num }}. {{ element.title }}</h5>
-		<p>{{ element.description|safe }}</p>
-		{% if element.element_type.model == 'lecture' %}
-			<a href="{% url lectures:lecture_view course_id=course.id lecture_id=element.object_id %}">открыть</a>
-		{% else %}{% if element.element_type.model == 'test' %}
-			<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">открыть</a>
-		{% endif %}{% endif %}
-	{% endfor %}
-{% endfor %}
-
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ course.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.date_created }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							{{ course.description|safe }}
+						</td>
+												
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+			{% for part in course_parts %}
+				
+				<h2 class="collapse-handler">
+					{{ part.num }}
+					{{ part.title }}
+				</h2>
+				
+				<table class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr>
+							
+							<td>
+								{% if part.description %}
+									{{ part.description|safe }}
+								{% else %}
+									&nbsp;
+								{% endif %}
+							</td>
+													
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+				<table class="module changelist-results xfull">
+					
+					<tbody>
+						
+						{% for element in part.part_elements %}
+							
+							<tr class="{% cycle 'row1' 'row2' %}">
+								
+								<td class="span-1">
+									<p>
+										<strong>
+											{{ part.num }}.{{ element.num }}
+										</strong>
+									</p>
+								</td>
+								
+								<td class="span-5">
+									<p>
+										<strong>
+											{{ element.title }}
+										</strong>
+									</p>
+								</td>
+								
+								<td>
+									{% if element.description %}
+										{{ element.description|safe }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</td>
+								
+								<th class="span-3">
+									
+									<ul class="controls actions">
+										
+										<li class="change-link">
+											
+											{% if element.element_type.model == 'lecture' %}
+												<a href="{% url lectures:lecture_view course_id=course.id lecture_id=element.object_id %}">
+											{% else %}
+												{% if element.element_type.model == 'test' %}		
+													<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">
+												{% endif %}
+											{% endif %}
+												
+												Открыть
+											</a>
+											
+										</li>
+										
+									</ul>
+									
+								</th>
+								
+							</tr>
+							
+						{% endfor %}
+						
+					</tbody>
+					
+				</table>
+				
+			{% endfor %}
+			
+		</div>
+		
+		<br clear="all" />
+		
+		<!-- PAGINATION -->
+		{% if is_paginated %}
+			
+			{% include "includes/pagination.html" %}
+			
+		{% endif %}
+		
+	</div>
+	
 {% endblock %}
