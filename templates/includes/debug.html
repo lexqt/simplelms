@@ -1,0 +1,103 @@
+{% spaceless %}
+	
+	<div id="debug" class="container-flexible">
+		
+		<hr class="separator" />
+		
+		<h1>[ Debug ]</h1>
+		
+		<!-- TEMP -->
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				Temp:
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							{% block temp %}
+								<strong>[</strong>
+								Reserved
+								<strong>]</strong>
+							{% endblock %}
+						</td>
+												
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+		</div>
+		
+		<br clear="all" />
+		
+		<!-- SQL QUERIES -->
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				SQL Queries:
+			</h2>
+			
+			<div id="changelist" class="module changelist-results">
+				
+				<table class="module changelist-results">
+					
+					<thead>
+						
+						<tr>
+							
+							<th class="span-2 sorted">
+								<a href="javascript:void(null);">
+									Time
+								</a>
+							</th>
+							
+							<th class="span-flexible">
+								<a href="javascript:void(null);">
+									SQL Query
+								</a>
+							</th>
+							
+						</tr>
+						
+					</thead>
+					
+					<tbody>
+						
+						{% for q in sql_queries %}
+							
+							<tr class="{% cycle 'row1' 'row2' %}">
+								
+								<td class="sorted centered">
+									{{ q.time }}s:
+								</td>
+								
+								<td>
+									 {{ q.sql }};
+								</td>
+								
+							</tr>
+							
+						{% endfor %}
+						
+					</tbody>
+					
+				</table>
+				
+			</div>
+		
+		</div>
+		
+		<br clear="all" />
+		
+		<hr class="separator" />
+		
+	</div>
+	
+{% endspaceless %}

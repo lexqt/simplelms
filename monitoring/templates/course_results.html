@@ -1,17 +1,147 @@
 {% extends 'monitoring_base.html' %}
 
-{% block title %}Результаты по курсу "{{ course.title }}" | {{ block.super }}{% endblock %}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list
+{% endblock %}
 
+{% block content-class %}
+	content-flexible
+{% endblock %}
+
+<!-- TITLE -->
+{% block title %}
+	"{{ course.title }}"
+	—
+	Результаты по курсу
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content_title %}
+	<h1>
+		"{{ course.title }}"
+		—
+		Результаты по курсу
+	</h1>
+{% endblock %}
+
+<!-- CONTENT -->
 {% block content %}
-<h2>Результаты по курсу "{{ course.title }}"</h2>
-{% if not users %}
-<p>Отсутствуют пользователи, записанные на выбранный курс.</p>
-{% endif %}
-<ul>
-{% for user in users %}
-    <li>{{ user.last_name }} {{ user.first_name }} {{ user.profile.middle_name }} |
-    	<a href="{% url monitoring:user_results user.id course.id %}">мониторинг</a>
-    </li>
-{% endfor %}
-</ul>
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ course.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.date_created }}
+				</div>
+				
+			</h2>
+			
+			{% if not users %}
+				
+				<div class="row">
+					Отсутствуют пользователи, записанные на выбранный курс.
+				</div>
+				
+			{% else %}
+				
+				<div id="changelist" class="module changelist-results">
+					
+					<table class="module changelist-results">
+						
+						<thead>
+							
+							<tr>
+								
+								<th class="span-4">
+									<a href="javascript:void(null);">
+										Фамилия
+									</a>
+								</th>
+								
+								<th class="span-4">
+									<a href="javascript:void(null);">
+										Имя
+									</a>
+								</th>
+								
+								<th class="span-4">
+									<a href="javascript:void(null);">
+										Отчество
+									</a>
+								</th>
+								
+								<th class="span-4">
+									<a href="javascript:void(null);">
+										Действия
+									</a>
+								</th>
+									
+							</tr>
+							
+						</thead>
+						
+						<tbody>
+							
+							{% for user in users %}
+								
+								<tr class="{% cycle 'row1' 'row2' %}">
+									
+									<td class="span-4">
+										{{ user.last_name }}
+									</td>
+									
+									<td class="span-4">
+										{{ user.first_name }}
+									</td>
+									
+									<td class="span-4">
+										{{ user.profile.middle_name }}
+									</td>
+									
+									<th class="span-4">
+										
+										<ul class="controls actions">
+											
+											<li class="change-link">
+												
+												<a href="{% url monitoring:user_results user.id course.id %}">
+													Мониторинг
+												</a>
+							    				
+											</li>
+											
+										</ul>
+										
+									</th>
+									
+								</tr>
+								
+							{% endfor %}
+							
+						</tbody>
+						
+					</table>
+					
+				</div>
+				
+			{% endif %}
+			
+		</div>
+		
+		<br clear="all" />
+		
+	</div>
+	
 {% endblock %}

@@ -1,31 +1,166 @@
 {% extends 'monitoring_base.html' %}
 
-{% block title %}{{ user }} — Результаты по курсу "{{ course.title }}" | {{ block.super }}{% endblock %}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list
+{% endblock %}
 
+{% block content-class %}
+	content-flexible
+{% endblock %}
+
+<!-- TITLE -->
+{% block title %}
+	{{ user }}
+	@
+	"{{ course.title }}"
+	—
+	Результаты по курсу
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content_title %}
+	<h1>
+		{{ user }}
+		@
+		"{{ course.title }}"
+		—
+		Результаты по курсу
+	</h1>
+{% endblock %}
+
+<!-- CONTENT -->
 {% block content %}
-<h3>{{ user }} — Результаты по курсу "{{ course.title }}"</h3>
-
-<table>
-	<tr>
-		<th rowspan="2">Название элемента</th>
-		<th colspan="2">Рейтинг</th>
-	</tr>
-	<tr>
-		<th>Макс.</th>
-		<th>Набранный</th>
-	</tr>
-{% for part in course_parts %}
-	<tr>
-		<td colspan="3" style="text-align: center">{{ part.title }}</td>
-	</tr>
-	{% for element in part.part_elements %}
-	<tr>
-		<td>{{ element.num }}. {{ element.title }}</td>
-		<td>{{ element.max_rating|stringformat:".2f" }}</td>
-		<td>{{ element.cur_rating|stringformat:".2f" }}</td>
-	</tr>
-	{% endfor %}
-{% endfor %}
-</table>
-
+	
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ course.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.date_created }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							{% if course.description %}
+								{{ course.description|safe }}
+							{% else %}
+								&nbsp;
+							{% endif %}
+						</td>
+												
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+			{% for part in course_parts %}
+				
+				<h2 class="collapse-handler">
+					{{ part.num }}
+					{{ part.title }}
+				</h2>
+				
+				<div id="changelist" class="module changelist-results">
+					
+					<table class="module changelist-results">
+						
+						<thead>
+							
+							<tr>
+								
+								<th class="span-1 sorted descending">
+									<a href="javascript:void(null);">
+										№
+									</a>
+								</th>
+								
+								<th class="span-5">
+									<a href="javascript:void(null);">
+										Название элемента
+									</a>
+								</th>
+								
+								<th class="span-5">
+									<a href="javascript:void(null);">
+										Набранный рейтинг
+									</a>
+								</th>
+								
+								<th class="span-5">
+									<a href="javascript:void(null);">
+										Максимальный рейтинг
+									</a>
+								</th>
+								
+							</tr>
+							
+						</thead>
+						
+						<tbody>
+							
+							{% for element in part.part_elements %}
+								
+								<tr class="{% cycle 'row1' 'row2' %}">
+									
+									<td class="sorted centered">
+										{{ part.num }}.{{ element.num }}
+									</td>
+									
+									<td>
+										{{ element.title }}
+									</td>
+									
+									<td>
+										{{ element.cur_rating|stringformat:".2f" }}
+									</td>
+									
+									<td>
+										{{ element.max_rating|stringformat:".2f" }}
+									</td>
+									
+								</tr>
+								
+							{% endfor %}
+							
+						</tbody>
+						
+					</table>
+					
+				</div>
+				
+			{% endfor %}
+			
+		</div>
+		
+		<br clear="all" />
+		
+		<!-- PAGINATION -->
+		{% if is_paginated %}
+			
+			{% include "includes/pagination.html" %}
+			
+		{% endif %}
+		
+	</div>
+	
 {% endblock %}

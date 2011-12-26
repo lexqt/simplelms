@@ -61,6 +61,7 @@ class UserResultsView(DetailView):
             test_results[res.test_id] = Decimal(res.is_passed) * res.rating
         
         for part in parts:
+            part.num += 1
             elements = []
             for element in part.elements.select_related('element_type').defer(
                                         'description', 'element_type__name').all():

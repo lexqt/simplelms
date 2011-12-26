@@ -151,64 +151,10 @@
 			
 			<!-- DEBUG -->
 			{% if debug %}
-				<!--  -->
-				<div id="debug" class="container-flexible">
-					
-					<hr class="separator" />
-					
-					<h1>[ Debug ]</h1>
-					
-					<!-- TEMP -->
-					<div class="module aligned">
-						
-						<h2 class="collapse-handler">
-							Temp:
-						</h2>
-						
-						<div class="row">
-							
-							<div class="column span-flexible normal">
-								{% block temp %}
-									<strong>[</strong>
-									Reserved
-									<strong>]</strong>
-								{% endblock %}
-							</div>
-							
-						</div>
-						
-					</div>
-					
-					<!-- SQL QUERIES -->
-					<div class="module aligned">
-						
-						<h2 class="collapse-handler">
-							SQL Queries:
-						</h2>
-						
-						{% for q in sql_queries %}
-							<div class="row">
-								
-								<div class="column span-2">
-									<b>{{ q.time }}s</b>:
-								</div>
-								
-								<div class="column span-flexible normal">
-									 {{ q.sql }};
-								</div>
-								
-							</div>
-						{% endfor %}
-						
-					</div>
-					
-					<hr class="separator" />
-					
-				</div>
+				
+				{% include "includes/debug.html" %}
 				
 			{% endif %}
-			
-			<br clear="all" />
 			
 		</div>
 		
