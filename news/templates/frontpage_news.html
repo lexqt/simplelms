@@ -1,10 +1,51 @@
-{% extends "base.html" %}
+{% extends "base_site.html" %}
+
+<!-- COLTYPE/BODYCLASS -->
+{% block content-class %}
+	content-flexible
+{% endblock %}
+
+{% block content_title %}
+	<h1>
+		Последние новости
+		{% if title %}
+			— {{ title }}
+		{% endif %}
+	</h1>
+{% endblock %}
 
 {% block content %}
-<h2>Последние новости</h2>
-{% for article in news_list %}
-    <h3>{{ article.title }}</h3>
-    <p>{{ article.created }} / {{ article.author.get_full_name }}</p>
-    <div>{{ article.content|safe }}</div>
-{% endfor %}
+	
+	<div class="container-flexible">
+		
+		{% for article in news_list %}
+			
+			<div class="module aligned">
+				
+				<h2 class="collapse-handler">
+					
+					<div id="module-title">
+						{{ article.title }}
+					</div>
+					
+					<div id="module-info">
+						{{ article.author.get_full_name }} / {{ article.created }}
+					</div>
+					
+				</h2>
+				
+				<div class="row">
+					
+					<div class="column span-flexible normal">
+						{{ article.content|safe }}
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		{% endfor %}
+		
+	</div>
+	
 {% endblock %}

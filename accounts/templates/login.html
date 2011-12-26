@@ -2,11 +2,11 @@
 
 <!-- LOADING -->
 {% load i18n %} {# grp_csrf #}
-<!-- {% load url from future %} -->
+{% load url from future %}<!-- NEED OR NOT? -->
 
 <!-- BODYCLASS -->
 {% block bodyclass %}
-	login
+	{# login #}<!-- {# Messes-up display of Debug section #} -->
 {% endblock %}
 
 {% block content-class %}
@@ -132,20 +132,5 @@
 		</div>
 		
 	</div>
-	
-	<!-- {# OLD #}
-	<br class="clear" />
-	
-	{% if form.non_field_errors %}
-		<h3>Ошибки:</h3>
-		{{ field.non_field_errors }}
-	{% endif %}
-	
-	<form method="post" action="{% url 'accounts:login' %}">{% csrf_token %}
-		{{ form.as_p }}
-		<input type="hidden" name="next" value="{{ next }}" />
-		<input type="submit" value="Войти" />
-	</form>
-	{# EOO #} -->
 	
 {% endblock %}

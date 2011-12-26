@@ -39,7 +39,6 @@
 
 {% block content %}
 	
-	<!--  -->
 	<div class="container-flexible">
 		
 		<div class="form-container">
@@ -211,95 +210,5 @@
 		</div>
 		
 	</div>
-	
-	<!-- {# OLD #}
-	<br class="clear" />
-	
-	{% with uf=user_form pf=profile_form %}
-		
-		{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
-			{% if errs1 or errs2 %}
-				<h3>Ошибки:</h3>
-				{% firstof errs1 errs2 %}
-			{% endif %}
-		{% endwith %}
-		
-		<form action="{% url 'accounts:register' %}" method="post">{% csrf_token %}
-			
-			<div style="display:none">
-				<input type="hidden" name="next" value="{{ next }}" />
-				{% for field in uf.hidden_fields %}
-					{{ field }}
-				{% endfor %}
-				{% for field in pf.hidden_fields %}
-					{{ field }}
-				{% endfor %}
-			</div>
-			
-			<fieldset>
-				
-				<legend>
-					Данные для авторизации
-				</legend>
-				
-				<div class="form-field">
-				    {{ uf.username.label_tag }}: {{ uf.username }}
-				    {{ uf.username.errors }}
-				</div>
-				
-				<div class="form-field">
-				    {{ uf.password1.label_tag }}: {{ uf.password1 }}
-				    {{ uf.password1.errors }}
-				</div>
-				
-				<div class="form-field">
-				    {{ uf.password2.label_tag }}: {{ uf.password2 }}
-				    {{ uf.password2.errors }}
-				</div>
-				
-			</fieldset>
-			
-			<fieldset>
-				
-				<legend>
-					Контактные данные
-				</legend>
-				
-				<div class="form-field">
-				    {{ uf.email.label_tag }}: {{ uf.email }}
-				    {{ uf.email.errors }}
-				</div>
-				
-			</fieldset>
-			
-			<fieldset>
-				
-				<legend>
-					Личные данные
-				</legend>
-				
-				<div class="form-field">
-				    {{ uf.last_name.label_tag }}: {{ uf.last_name }}
-				    {{ uf.last_name.errors }}
-				</div>
-				
-				<div class="form-field">
-				    {{ uf.first_name.label_tag }}: {{ uf.first_name }}
-				    {{ uf.first_name.errors }}
-				</div>
-				
-				<div class="form-field">
-				    {{ pf.middle_name.label_tag }}: {{ pf.middle_name }}
-				    {{ pf.middle_name.errors }}
-				</div>
-				
-			</fieldset>
-			
-			<input type="submit" value="Отправить" />
-			
-		</form>
-		
-	{% endwith %}{# uf pf #}
-	{# EOO #} -->
 	
 {% endblock %}
