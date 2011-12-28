@@ -1,9 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_site.html' %}
 
-{% block title %}
-	Курсы
-{% endblock %}
-
+<!-- APP MENU -->
 {% block appmenu %}
 	&rsaquo;&rsaquo;
 	<a href="{% url courses:list %}">Доступные курсы</a>
@@ -11,7 +8,23 @@
 	<a href="{% url courses:learning_courses %}">Мои курсы (учащийся)</a>
 {% endblock %}
 
+<!-- MANAGER MENU -->
 {% block appmenu_manager %}
 	|
 	<a href="{% url courses:managing_courses %}">Мои курсы (учитель)</a>
+{% endblock %}
+
+<!-- TITLE -->
+{% block title %}
+	Курсы
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url courses:list %}">
+			Курсы
+		</a>
+	</li>
+	{{ block.super }}
 {% endblock %}

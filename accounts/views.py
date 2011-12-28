@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from django.http import HttpResponseRedirect
+from django.template import *
 
 def logout_view(request):
     from django.contrib.auth import logout
@@ -51,5 +52,6 @@ def register_view(request):
     return render(request, 'register.html', {
         'user_form': user_form,
         'profile_form': profile_form,
-        }
+        },
+        context_instance = RequestContext(request)
     )

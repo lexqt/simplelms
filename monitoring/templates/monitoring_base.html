@@ -1,6 +1,33 @@
 {% extends 'courses_base.html' %}
 
+<!-- LOADING -->
+{% load user_extras %}
+
 <!-- TITLE -->
 {% block title %}
 	Мониторинг
+	|
+	{{ block.super }}
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url monitoring:user_results user.id course.id %}">
+			Мониторинг
+		</a>
+	</li>
+	{% ifusergroup managers %}
+		<li>
+			<a class="viewsite-handler focus" href="{% url courses:managing_courses %}">
+				Курсы учителя
+			</a>
+		</li>
+	{% endifusergroup %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url courses:learning_courses %}">
+			Курсы учащегося
+		</a>
+	</li>
+	{{ block.super }}
 {% endblock %}

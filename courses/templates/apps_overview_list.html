@@ -11,8 +11,16 @@
 
 <!-- TITLE -->
 {% block title %}
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
 	Заявки на курсы
-	—
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
 	{{ block.super }}
 {% endblock %}
 

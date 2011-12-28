@@ -11,8 +11,16 @@
 
 <!-- TITLE -->
 {% block title %}
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
 	Последние новости
-	—
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
 	{{ block.super }}
 {% endblock %}
 

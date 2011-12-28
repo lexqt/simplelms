@@ -1,5 +1,8 @@
 {% extends 'monitoring_base.html' %}
 
+<!-- LOADING -->
+{% load user_extras %}
+
 <!-- COLTYPE/BODYCLASS -->
 {% block bodyclass %}
 	change-list
@@ -11,24 +14,28 @@
 
 <!-- TITLE -->
 {% block title %}
-	{{ user }}
-	@
-	"{{ course.title }}"
-	—
-	Результаты по курсу
-	—
 	{{ block.super }}
 {% endblock %}
 
 <!-- CONTENT-TITLE -->
-{% block content_title %}
-	<h1>
-		{{ user }}
-		@
-		"{{ course.title }}"
-		—
-		Результаты по курсу
-	</h1>
+{% block content-title %}
+	{{ user }}
+	@
+	"{{ course.title }}"
+	|
+	Результаты по курсу
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	{% ifusergroup managers %}
+		<li>
+			<a class="viewsite-handler focus" href="{% url monitoring:course_results course.id %}">
+				"{{ course.title }}"
+			</a>
+		</li>
+	{% endifusergroup %}
+	{{ block.super }}
 {% endblock %}
 
 <!-- CONTENT -->

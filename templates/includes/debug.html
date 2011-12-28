@@ -10,7 +10,7 @@
 		<div class="module aligned">
 			
 			<h2 class="collapse-handler">
-				Temp:
+				Temp
 			</h2>
 			
 			<table class="module changelist-results xfull">
@@ -20,11 +20,15 @@
 					<tr>
 						
 						<td>
-							{% block temp %}
-								<strong>[</strong>
-								Reserved
-								<strong>]</strong>
-							{% endblock %}
+							{% if debug_temp %}
+								{{ debug_temp }}
+							{% else %}
+								{% block debug-temp %}
+									<strong>[</strong>
+									Reserved
+									<strong>]</strong>
+								{% endblock %}
+							{% endif %}
 						</td>
 												
 					</tr>

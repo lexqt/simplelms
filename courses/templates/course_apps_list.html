@@ -11,9 +11,18 @@
 
 <!-- TITLE -->
 {% block title %}
-	Список заявок на курс "
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Список заявок
+	|
 	{{ course.title }}
-	" —
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
 	{{ block.super }}
 {% endblock %}
 
@@ -24,7 +33,7 @@
 		
 		<br class="clear" />
 		
-		<!--  -->
+		<!-- TEMP -->
 		<table>
 			
 			<tbody>
@@ -58,8 +67,8 @@
 			</tbody>
 			
 		</table>
+		<!-- EOT -->
 		
-		<!--  -->
 		<br clear="all" />
 		
 		<!-- PAGINATION -->

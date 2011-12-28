@@ -11,18 +11,24 @@
 
 <!-- TITLE -->
 {% block title %}
-	Список моих курсов
-	—
+	Учитель
+	|
 	{{ block.super }}
 {% endblock %}
 
 <!-- CONTENT-TITLE -->
-{% block content_title %}
-	<h1>
-		Список моих курсов
-		—
-		Учебные курсы
-	</h1>
+{% block content-title %}
+	Список моих курсов
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url courses:managing_courses %}">
+			Курсы учителя
+		</a>
+	</li>
+	{{ block.super }}
 {% endblock %}
 
 <!-- CONTENT -->

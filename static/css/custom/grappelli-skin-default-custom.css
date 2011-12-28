@@ -1,0 +1,27 @@
+
+/* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ *  ../grappelli-skin-default.css
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ *  Custom
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/*  H1 + Tools
+------------------------------------------------------------------------------------------------------ */
+
+h1 + .tools a.viewsite-handler:link, h1 + .tools a.viewsite-handler:visited {
+	background-color: #444;
+	background: #444 0 50% no-repeat scroll;
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler.png'), -moz-linear-gradient(top, #666, #444);
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler.png'), -webkit-gradient(linear, left top, left bottom, from(#666), to(#444));
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler.png'), -o-linear-gradient(top, #666, #444);
+}
+
+h1 + .tools a.viewsite-handler:hover, h1 + .tools a.viewsite-handler:active {
+	background-color: #309bbf;
+	background: #309bbf 0 50% no-repeat scroll;
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler-hover.png'), -moz-linear-gradient(top, #39bae5, #309bbf);
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler-hover.png'), -webkit-gradient(linear, left top, left bottom, from(#39bae5), to(#309bbf));
+	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler-hover.png'), -o-linear-gradient(top, #39bae5, #309bbf);
+}

@@ -5,6 +5,7 @@
 ------------------------------------------------------------------------------------------------------ */
 
 @import url('reset.css');
+@import url('custom/reset-custom.css');
 
 
 
@@ -14,13 +15,28 @@
 ------------------------------------------------------------------------------------------------------ */
 
 @import url('typography.css');
+@import url('custom/typography-custom.css');
+
 @import url('structures.css');
+@import url('custom/structures-custom.css');
+
 @import url('components.css');
+@import url('custom/components-custom.css');
+
 @import url('tools.css');
+@import url('custom/tools-custom.css');
+
 @import url('forms.css');
+@import url('custom/forms-custom.css');
+
 @import url('buttons.css');
+@import url('custom/buttons-custom.css');
+
 @import url('tables.css');
+@import url('custom/tables-custom.css');
+
 @import url('admin-tools.css');
+@import url('custom/admin-tools-custom.css');
 
 
 
@@ -32,6 +48,8 @@
 
 /*  Grappelli Basic Skin: The Plain Version */
 /*@import url('grappelli-skin-basic.css');*/
+/*@import url('custom/grappelli-skin-basic-custom.css');*/
 
 /*  Grappelli Default Skin: Adds Border-Radius & Background-Gradients to the Grappelli Basic Skin */
 @import url('grappelli-skin-default.css');
+@import url('custom/grappelli-skin-default-custom.css');

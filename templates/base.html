@@ -1,11 +1,48 @@
 <!-- LOADING -->
 {% load i18n user_extras simplelms_tags %}
 
+<!-- VARIABLES -->
 {% captureas title %}
 	{% spaceless %}
 		
 		{% block title %}
 			Главная
+		{% endblock %}
+		
+	{% endspaceless %}
+{% endcaptureas %}
+
+{% captureas content_title %}
+	{% spaceless %}
+		
+		{% block content-title %}
+			{% if title %}
+				{{ title }}
+			{% endif %}
+		{% endblock %}
+		
+	{% endspaceless %}
+{% endcaptureas %}
+
+{% captureas object_tools %}
+	{% spaceless %}
+		
+		{% block object-tools %}
+			<li>
+				<a class="viewsite-handler focus" href="/">Главная</a>
+			</li>
+		{% endblock %}
+		
+	{% endspaceless %}
+{% endcaptureas %}
+
+{% captureas debug_temp %}
+	{% spaceless %}
+		
+		{% block debug-temp %}
+			<strong>[</strong>
+			Reserved
+			<strong>]</strong>
 		{% endblock %}
 		
 	{% endspaceless %}
@@ -18,7 +55,16 @@
 <head>
 	
 	<meta charset="UTF-8">
-	<title>{{ title }} | SimpleLMS</title>
+	
+	<title>
+		{% block no-head-content-title %}
+			{{ content_title }}
+			—
+		{% endblock %}
+		{{ title }}
+		|
+		SimpleLMS
+	</title>
 	
 	<!-- STYLESHEETS -->
 	{% block stylesheets %}
@@ -65,7 +111,7 @@
 			
 			<!-- BREADCRUMBS -->
 			{% block breadcrumbs %}
-				<div id="breadcrumbs">
+				<div id="breadcrumbs" class="main-level">
 					
 					<!-- MAIN MENU -->
 					{% block mainmenu %}
@@ -105,6 +151,10 @@
 					<!-- TITLE -->
 					{% if title %}
 						&rsaquo;&rsaquo;
+						{% if content_title %}
+							{{ content_title }}
+							—
+						{% endif %}
 						{{ title }}
 					{% endif %}
 					
@@ -130,14 +180,21 @@
 			{% endblock %}
 			
 			<!-- Content Title -->
-			{% block content_title %}
-				{% if title %}
-					<h1>{{ title }}</h1>
+			{% block no-content-title %}
+				{% if content_title %}
+					<h1>
+						{{ content_title }}
+					</h1>
 				{% endif %}
 			{% endblock %}
 			
 			<!-- Object-Tools -->
-			{% block object-tools %}
+			{% block no-object-tools %}
+				{% if object_tools %}
+					<ul class="tools">
+						{{ object_tools }}
+					</ul>
+				{% endif %}
 			{% endblock %}
 			
 			<!-- Content -->
@@ -152,7 +209,9 @@
 			<!-- DEBUG -->
 			{% if debug %}
 				
-				{% include "includes/debug.html" %}
+				{% block debug %}
+					{% include "includes/debug.html" %}
+				{% endblock %}
 				
 			{% endif %}
 			
