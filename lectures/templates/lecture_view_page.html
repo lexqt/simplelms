@@ -1,30 +1,67 @@
 {% extends 'lectures_base.html' %}
 
-{% block title %}{{ lecture.title }} | {{ block.super }}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	{{ block.super }}
+{% endblock %}
 
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	{{ lecture_page.title }}
+	|
+	{{ lecture.title }}
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id %}">
+			Лекции
+		</a>
+	</li>
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT -->
 {% block content %}
-<h3>{{ lecture_page.title }}</h3>
-<div>
-{{ lecture_page.content|safe }}
-</div>
-
-<div class="pagination">
-    <p>
-        Страница {{ page.number }} из {{ page_cnt }}
-    </p>
-    <p class="step-links">
-        {% if page.has_previous %}
-            <a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=page.previous_page_number %}">предыдущая</a>
-        {% endif %}
-        {% if page.has_next %}
-            <a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=page.next_page_number %}">следующая</a>
-        {% endif %}
-    </p>
-    {% if not page.has_next %}
-        <a href="{% url lectures:lecture_finish course_id=course.id lecture_id=lecture.id %}">Завершить</a>
-    {% endif %}
-    <p>
-    </p>
-</div>
-
+	
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ lecture_page.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ lecture.title }} / {{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<div class="row">
+				
+				<div class="column span-flexible normal">
+					{% if lecture_page.content %}
+						{{ lecture_page.content|safe }}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<br clear="all" />
+		
+		<!-- PAGINATION -->
+		{% include "includes/pagination_lectures.html" %}
+		
+	</div>
+	
 {% endblock %}

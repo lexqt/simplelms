@@ -1,23 +1,165 @@
 {% extends 'lectures_base.html' %}
 
-{% block title %}{{ lecture.title }} | {{ block.super }}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	{{ block.super }}
+{% endblock %}
 
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	{{ lecture.title }}
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT -->
 {% block content %}
-<h3>{{ lecture.title }}</h3>
-<p>{{ lecture.description|safe }}</p>
-
-<h4>Содержание лекции</h4>
-<ol>
-{% for page in lecture_pages %}
-	<li>
-		<span>{{ page.title }}</span>
-		<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=forloop.counter %}">читать с этой страницы</a>
-	</li>
-{% endfor %}
-</ol>
-
-<p>
-	<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=1 %}">читать лекцию</a>
-</p>
-
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ lecture.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							{% if lecture.description %}
+								{{ lecture.description|safe }}
+							{% else %}
+								&nbsp;
+							{% endif %}
+						</td>
+						
+						<th class="span-4">
+							
+							<ul class="controls actions">
+								
+								<li class="change-link">
+									<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=1 %}">
+										Читать лекцию
+									</a>
+								</li>
+								
+							</ul>
+							
+						</th>
+										
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+			<h2 class="collapse-handler">
+				Содержание лекции
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<thead>
+					
+					<tr>
+						
+						<th class="span-1 sorted descending">
+							<a href="javascript:void(null);">
+								№
+							</a>
+						</th>
+						
+						<th class="span-5">
+							<a href="javascript:void(null);">
+								Название элемента
+							</a>
+						</th>
+						
+						<th>
+							<a href="javascript:void(null);">
+								Описание
+							</a>
+						</th>
+						
+						<th class="span-5">
+							<a href="javascript:void(null);">
+								Действия
+							</a>
+						</th>
+						
+					</tr>
+					
+				</thead>
+				
+				<tbody>
+					
+					{% for page in lecture_pages %}
+						
+						<tr class="{% cycle 'row1' 'row2' %}">
+							
+							<th class="span-1 sorted centered">
+								<p>
+									{{ page.num }}
+								</p>
+							</th>
+							
+							<td class="span-5">
+								<p>
+									{{ page.title }}
+								</p>
+							</td>
+							
+							<td>
+								{% if page.description %}
+									{{ page.description|safe }}
+								{% else %}
+									&nbsp;
+								{% endif %}
+							</td>
+							
+							<th class="span-5">
+								
+								<ul class="controls actions">
+									
+									<li class="change-link">
+										<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=forloop.counter %}">
+											Читать с этой страницы
+										</a>
+									</li>
+									
+								</ul>
+								
+							</th>
+							
+						</tr>
+						
+					{% endfor %}
+					
+				</tbody>
+				
+			</table>
+			
+		</div>
+		
+		<br clear="all" />
+		
+	</div>
+	
 {% endblock %}

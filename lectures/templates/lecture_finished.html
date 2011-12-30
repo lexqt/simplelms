@@ -1,14 +1,94 @@
 {% extends 'lectures_base.html' %}
 
-{% block title %}{{ lecture.title }} | {{ block.super }}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	{{ block.super }}
+{% endblock %}
 
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Завершено
+	|
+	{{ lecture.title }}
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block object-tools %}
+	<li>
+		<a class="viewsite-handler focus" href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=1 %}">
+			{{ lecture.title }}
+		</a>
+	</li>
+	<li>
+		<a class="viewsite-handler focus" href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id %}">
+			Лекции
+		</a>
+	</li>
+	{{ block.super }}
+{% endblock %}
+
+
+<!-- CONTENT -->
 {% block content %}
-<h3>{{ lecture.title }}</h3>
-
-<p>Вы успешно завершили лекцию!</p>
-
-<p>
-	<a href="{% url courses:course_view course_id=course.id %}">Вернуться к курсу</a>
-</p>
-
+	
+	<div class="container-flexible">
+		
+		<br class="clear" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ lecture.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							<p>
+								Вы успешно завершили лекцию!
+							</p>
+						</td>
+						
+						<th class="span-8">
+							
+							<ul class="controls actions">
+								
+								<li class="change-link">
+									<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id %}">
+										Вернуться к лекции
+									</a>
+								</li>
+								
+								<li class="change-link">
+									<a href="{% url courses:course_view course_id=course.id %}">
+										Вернуться к курсу
+									</a>
+								</li>
+								
+							</ul>
+							
+						</th>
+										
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+		</div>
+		
+	</div>
+	
 {% endblock %}

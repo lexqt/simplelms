@@ -1,0 +1,69 @@
+{% spaceless %}
+	
+	<div class="module pagination">
+		
+		<ul class="pagination">
+			
+			<!-- PREVIOUS -->
+			{% if page.has_previous %}
+				
+				<li>
+					<span>
+						<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=page.previous_page_number %}">
+							Предыдущая
+						</a>
+					</span>
+				</li>
+				
+				<li class="separator">
+					<span>
+						&lsaquo;&lsaquo;
+					</span>
+				</li>
+				
+			{% endif %}
+			
+			<!-- CURRENT -->
+			<li class="current-of-total">
+				<span>
+					Страница
+					{{ page.number }}
+					из
+					{{ page_cnt }}
+				</span>
+			</li>
+			
+			<!-- NEXT OR FINISH -->
+			<li class="separator">
+				<span>
+					&rsaquo;&rsaquo;
+				</span>
+			</li>
+			
+			<li>
+				<span>
+					
+					{% if page.has_next %}
+						
+						<a href="{% url lectures:lecture_view course_id=course.id lecture_id=lecture.id page=page.next_page_number %}">
+							Следующая
+						</a>
+						
+					{% else %}
+						
+						<a href="{% url lectures:lecture_finish course_id=course.id lecture_id=lecture.id %}">
+							Завершить
+						</a>
+						
+					{% endif %}
+					
+				</span>
+			</li>
+			
+		</ul>
+		
+		<br clear="all" />
+		
+	</div>
+	
+{% endspaceless %}

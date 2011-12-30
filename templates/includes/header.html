@@ -9,11 +9,10 @@
 	
 	<!-- GREETING -->
 	<div class="admin-title">
-		Добро пожаловать
 		{% if user.is_authenticated %}
-			, {{ user.username }}.
+			Добро пожаловать, {{ user.username }}.
 		{% else %}
-		    !
+		    Добро пожаловать!
 		{% endif %}
 	</div>
 	

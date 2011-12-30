@@ -102,7 +102,7 @@
 									&nbsp;
 								{% endif %}
 							</td>
-													
+							
 						</tr>
 						
 					</tbody>
@@ -111,25 +111,53 @@
 				
 				<table class="module changelist-results xfull">
 					
+					<thead>
+						
+						<tr>
+							
+							<th class="span-1 sorted descending">
+								<a href="javascript:void(null);">
+									№
+								</a>
+							</th>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Название элемента
+								</a>
+							</th>
+							
+							<th>
+								<a href="javascript:void(null);">
+									Описание
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Действия
+								</a>
+							</th>
+							
+						</tr>
+						
+					</thead>
+					
 					<tbody>
 						
 						{% for element in part.part_elements %}
 							
 							<tr class="{% cycle 'row1' 'row2' %}">
 								
-								<td class="span-1 centered">
+								<th class="span-1 sorted centered">
 									<p>
-										<strong>
-											{{ part.num }}.{{ element.num }}
-										</strong>
+										{{ part.num }}.{{ element.num }}
 									</p>
-								</td>
+								</th>
 								
 								<td class="span-5">
 									<p>
-										<strong>
-											{{ element.title }}
-										</strong>
+										{{ element.title }}
 									</p>
 								</td>
 								
@@ -148,15 +176,22 @@
 										<li class="change-link">
 											
 											{% if element.element_type.model == 'lecture' %}
-												<a href="{% url lectures:lecture_view course_id=course.id lecture_id=element.object_id %}">
-											{% else %}
-												{% if element.element_type.model == 'test' %}		
-													<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">
-												{% endif %}
-											{% endif %}
 												
-												Открыть
-											</a>
+												<a href="{% url lectures:lecture_view course_id=course.id lecture_id=element.object_id %}">
+													Открыть
+												</a>
+												
+											{% else %}
+												
+												{% if element.element_type.model == 'test' %}		
+													
+													<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">
+														Открыть
+													</a>
+													
+												{% endif %}
+												
+											{% endif %}
 											
 										</li>
 										
@@ -181,7 +216,7 @@
 		<!-- PAGINATION -->
 		{% if is_paginated %}
 			
-			{% include "includes/pagination.html" %}
+			{% include "includes/pagination_courses.html" %}
 			
 		{% endif %}
 		

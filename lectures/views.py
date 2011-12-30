@@ -20,6 +20,10 @@ class LectureView(DetailView):
         if self.kwargs['overview']:
             self.lecture = get_object_or_404(Lecture, id=self.kwargs['lecture_id'])
             self.pages = self.lecture.pages.only('title')
+            
+            for page in self.pages:
+                page.num += 1
+            
         else:
             self.lecture = get_object_or_404(Lecture.objects.only('title'), id=self.kwargs['lecture_id'])
             if not self.lecture.in_course(self.course):

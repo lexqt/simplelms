@@ -133,15 +133,15 @@
 										{{ part.num }}.{{ element.num }}
 									</td>
 									
-									<td>
+									<td class="span-5">
 										{{ element.title }}
 									</td>
 									
-									<td>
+									<td class="span-5">
 										{{ element.cur_rating|stringformat:".2f" }}
 									</td>
 									
-									<td>
+									<td class="span-5">
 										{{ element.max_rating|stringformat:".2f" }}
 									</td>
 									
@@ -160,13 +160,6 @@
 		</div>
 		
 		<br clear="all" />
-		
-		<!-- PAGINATION -->
-		{% if is_paginated %}
-			
-			{% include "includes/pagination.html" %}
-			
-		{% endif %}
 		
 	</div>
 	
