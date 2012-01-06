@@ -1,7 +1,23 @@
 {% extends 'test_frame_base.html' %}
 
-{% block page_title %}Тест{% endblock %}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list
+{% endblock %}
 
-{% block frame_title %}{% endblock %}
+{% block content-class %}
+	content-flexible
+{% endblock %}
 
-{% block frame_content %}{% endblock %}
+<!-- TITLE -->
+{% block title %}
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+{% endblock %}

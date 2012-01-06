@@ -52,6 +52,5 @@ def register_view(request):
     return render(request, 'register.html', {
         'user_form': user_form,
         'profile_form': profile_form,
-        },
-        context_instance = RequestContext(request)
+        }
     )

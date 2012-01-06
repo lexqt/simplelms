@@ -37,12 +37,8 @@
 <!-- OBJECT-TOOLS -->
 {% block object-tools %}
 	<li>
-		<a class="viewsite-handler focus" href="{% url 'accounts:register' %}">{# {{ request.path }} #}
-			{% if title %}
-				{{ title }}
-			{% else %}
-				Was here:)
-			{% endif %}
+		<a class="viewsite-handler focus" href="{% url 'accounts:register' %}">
+			Регистрация
 		</a>
 	</li>
 	{{ block.super }}
@@ -79,11 +75,7 @@
 					</div>
 					
 					<div>
-<!-- TODO OR NOT?
-						{% for fieldset in adminform %}
-							{% include "admin/includes/fieldset.html" %}
-						{% endfor %}
-						OET -->
+						
 						{% comment %}
 							<p>
 								{% trans "First, enter a username and password. Then, you'll be able to edit more user options." %}

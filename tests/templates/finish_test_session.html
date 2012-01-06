@@ -1,17 +1,177 @@
 {% extends 'test_frame_base.html' %}
 
-{% block page_title %}Статистика{% endblock %}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list no-breadcrumbs
+{% endblock %}
 
-{% block frame_title %}Статистика по тесту "{{ test.title }}"{% endblock %}
+{% block content-class %}
+	content-flexible
+{% endblock %}
 
-{% block frame_content %}
-{% if message %}
-<p><strong>Системное сообщение</strong>: {{ message }}</p>
-{% endif %}
-<p>Вопросы (верно / пройдено / всего): {{ count.right }} / {{ count.passed }} / {{ count.total }}</p>
-<p>Баллы: {{ rating.got }} / {{ rating.total }}</p>
-<p>Зачтено: {% if is_passed %} да {% else %} нет {% endif %}</p>
-<p>
-<a href="{% url courses:course_view course.id %}">Вернуться к курсу</a>
-</p>
+<!-- TITLE -->
+{% block title %}
+	Статистика
+	|
+	{{ test.title }}
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if message %}
+		<ul id="messages" class="messagelist">
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+				<strong>
+					Системное сообщение:
+				</strong>
+				{{ message|safe }}
+			</li>
+		</ul>
+	{% endif %}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Статистика по тесту
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+	
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ test.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							<p>
+								&nbsp;
+							</p>
+						</td>
+						
+						<th class="span-4">
+							
+							<ul class="controls actions">
+								
+								<li class="change-link">
+									<a href="{% url courses:course_view course.id %}">
+										Вернуться к курсу
+									</a>
+								</li>
+								
+							</ul>
+							
+						</th>
+										
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+			<h2 class="collapse-handler">
+				Temp
+			</h2>
+			
+			<div id="changelist" class="module changelist-results">
+				
+				<table class="module changelist-results">
+					
+					<thead>
+						
+						<tr>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Temp
+								</a>
+							</th>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Temp
+								</a>
+							</th>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Temp
+								</a>
+							</th>
+							
+						</tr>
+						
+					</thead>
+					
+					<tbody>
+						
+						<tr class="{% cycle 'row1' 'row2' %}">
+							
+							<td class="span-5">
+								Temp
+							</td>
+							
+							<td class="span-5">
+								Temp
+							</td>
+							
+							<td class="span-5">
+								Temp
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+			</div>
+			
+		</div>
+		
+		<br clear="all" />
+		
+	</div>
+	
+	<!--  -->
+	<p>
+		Вопросы (верно / пройдено / всего):
+		{{ count.right }} / {{ count.passed }} / {{ count.total }}
+	</p>
+	
+	<p>
+		Баллы:
+		{{ rating.got }} / {{ rating.total }}
+	</p>
+	
+	<p>
+		Зачтено:
+		{% if is_passed %}
+			да
+		{% else %}
+			нет
+		{% endif %}
+	</p>
+	
 {% endblock %}

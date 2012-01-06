@@ -25,3 +25,27 @@ h1 + .tools a.viewsite-handler:hover, h1 + .tools a.viewsite-handler:active {
 	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler-hover.png'), -webkit-gradient(linear, left top, left bottom, from(#39bae5), to(#309bbf));
 	background-image: url('../../img/icons/custom/icon-object-tools-viewsite-handler-hover.png'), -o-linear-gradient(top, #39bae5, #309bbf);
 }
+
+/*  Modules
+------------------------------------------------------------------------------------------------------ */
+
+div#debug div.module {
+	border: 1px solid #bdbdbd;
+	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+	background: #eee;
+}
+
+div#debug div.module div.module {
+	border: 0;
+}
+
+/*  li.delete-link + a
+------------------------------------------------------------------------------------------------------ */
+
+li.delete-link a:link, li.delete-link a:visited {
+	color: #666;
+}
+
+li.delete-link a:hover, li.delete-link a:active {
+	color: #444;
+}

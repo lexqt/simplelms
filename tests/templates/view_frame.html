@@ -1,35 +1,68 @@
 {% extends 'test_frame_base.html' %}
 
-{% block page_title %}{{ test.title }}{% endblock %}
+<!-- FRAME-TITLE -->
+{% block frame-title %}
+	{{ test.title }}
+{% endblock %}
 
-{% block frame_title %}{{ test.title }}{% endblock %}
+<!-- FRAME-CONTENT-TITLE -->
+{% block frame-content-title %}
+	{{ test.title }}
+{% endblock %}
 
-{% block frame_content %}
-<p>Пройдено: {{ cnt_passed }}</p>
-{% if show_result and cnt_passed %}
-<p>Результат по предыдущему вопросу:
-	{% if prev_result %} верно {% else %} неверно {% endif %}
-</p>
-{% endif %}
-<p>Время окончания тестирования: {{ date_limit }}</p>
-<div id="test_frame">
-	<div>
-	{{ frame.data }}
-	</div>
-	{% if form.non_field_errors %}
+<!-- FRAME-CONTENT -->
+{% block frame-content %}
+	<p>
+		Пройдено:
+		{{ cnt_passed }}
+	</p>
+	
+	{% if show_result and cnt_passed %}
 		<p>
-		{{ form.non_field_errors }}
+			Результат по предыдущему вопросу:
+			{% if prev_result %}
+				верно
+			{% else %}
+				неверно
+			{% endif %}
 		</p>
 	{% endif %}
-	{% if form.answer.errors %}
-		<p>При ответе допущена ошибка:</p>
-		{{ form.answer.errors }}
-	{% endif %}
-	<form method="post" action="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
-		{% csrf_token %}
-		{{ form.answer }}
-		<input type="submit" value="Отправить" />
-	</form>
-	<p><a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">завершить тест</a></p>
-</div>
+	
+	<p>
+		Время окончания тестирования:
+		{{ date_limit }}
+	</p>
+	
+	<div id="test_frame">
+		
+		<div>
+			{{ frame.data }}
+		</div>
+		
+		{% if form.non_field_errors %}
+			<p>
+				{{ form.non_field_errors }}
+			</p>
+		{% endif %}
+		
+		{% if form.answer.errors %}
+			<p>
+				При ответе допущена ошибка:
+			</p>
+			{{ form.answer.errors }}
+		{% endif %}
+		
+		<form method="post" action="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">{% csrf_token %}
+			{{ form.answer }}
+			<input type="submit" value="Отправить" />
+		</form>
+		
+		<p>
+			<a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
+				Завершить тест
+			</a>
+		</p>
+		
+	</div>
+	
 {% endblock %}

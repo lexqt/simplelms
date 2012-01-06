@@ -1,14 +1,118 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Открытая сессия тестирования — SimpleLMS</title>
-</head>
-<body>
-<p>У вас уже имеется одна открытая сессия тестирования в рамках курса "{{ course.title }}". Вы можете:</p>
-<ul>
-<li><a href="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">продолжить тест</a></li>
-<li><a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">завершить тест</a></li>
-</ul>
-</body>
-</html>
+{% extends 'test_frame_base.html' %}
+
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list
+{% endblock %}
+
+{% block content-class %}
+	content-flexible
+{% endblock %}
+
+<!-- TITLE -->
+{% block title %}
+	Сессии
+	|
+	{{ test.title }}
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Открытая сессия тестирования
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+	
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ test.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<div class="row">
+				
+				<div class="column span-flexible normal">
+					<p>
+						У вас уже имеется одна открытая сессия тестирования в рамках курса
+						"<strong>{{ course.title }}</strong>".
+					</p>
+				</div>
+				
+			</div>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							<p>
+								Вы можете:
+							</p>
+						</td>
+						
+						<th class="span-4 controls actions">
+							
+							<ul>
+								
+								<li class="change-link">
+									
+									<a href="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
+										Продолжить
+									</a>
+									
+									<br />
+									
+									<span class="mini quiet">
+										Тест
+									</span>
+									
+								</li>
+								
+								<li class="delete-link">
+									
+									<a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
+										Завершить
+									</a>
+									
+									<br />
+									
+									<span class="mini quiet">
+										Тест
+									</span>
+									
+								</li>
+								
+							</ul>
+							
+						</th>
+						
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+		</div>
+		
+		<br clear="all" />
+		
+	</div>
+	
+{% endblock %}

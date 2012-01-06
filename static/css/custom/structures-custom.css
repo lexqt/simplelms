@@ -77,3 +77,10 @@ div#breadcrumbs.sub-level {
 	padding: 4px 10px 3px 20px;
 	font-size: 14px;
 }
+
+/*  Messages
+------------------------------------------------------------------------------------------------------ */
+
+body.no-breadcrumbs ul.messagelist {
+	top: -63px;
+}

@@ -1,23 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>{% block page_title %}Тест{% endblock %} — SimpleLMS</title>
-</head>
-<body>
-<h1>{% block frame_title %}{% endblock %}</h1>
-<hr />
-<div>
-{% block frame_content %}{% endblock %}
-</div>
-{% if debug %}
-<div id="debug">
-    <ol>
-    {% for q in sql_queries %}
-        <li><b>{{ q.time }}s</b>: {{ q.sql }};
-    {% endfor %}
-    </ol>
-</div>
-{% endif %}
-</body>
-</html>
+{% extends 'base_site.html' %}
+
+<!-- EXTRASTYLES --><!-- TEMP -->
+{% block extrastyle %}
+	<link rel="stylesheet" type="text/css" href="/../../static/css/base.css" />
+{% endblock %}
+
+<!-- TITLE -->
+{% block title %}
+	Тесты
+	|
+	{{ course.title }}
+	—
+	Курсы
+{% endblock %}
+
+<!-- BREADCRUMBS -->
+{% block breadcrumbs %}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Тест
+{% endblock %}
+
+<!-- OBJECT-TOOLS -->
+{% block no-object-tools %}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+{% endblock %}

@@ -1,13 +1,121 @@
 {% extends 'test_frame_base.html' %}
 
-{% block page_title %}{{ script.name }}{% endblock %}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list
+{% endblock %}
 
-{% block frame_title %}{{ script.name }}{% endblock %}
+{% block content-class %}
+	content-flexible
+{% endblock %}
 
-{% block frame_content %}
-<p>{{ script.description }}</p>
-<p>Время окончания тестирования: {{ date_limit }}</p>
-<p>
-<a href="{% url tests:run_test course_id=course.id scheme=script.script_index.scheme script_id=script.script_index.script_id %}">Перейти к первому вопросу</a>
-</p>
+<!-- TITLE -->
+{% block title %}
+	Сессии
+	|
+	{{ script.name }}
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Создана сессия тестирования
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+	
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ script.name }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<thead>
+					
+					<tr>
+						
+						<th>
+							<a href="javascript:void(null);">
+								Описание
+							</a>
+						</th>
+						
+						<th class="span-5">
+							<a href="javascript:void(null);">
+								Время окончания тестирования
+							</a>
+						</th>
+						
+						<th class="span-5">
+							<a href="javascript:void(null);">
+								Действия
+							</a>
+						</th>
+						
+					</tr>
+					
+				</thead>
+				
+				<tbody>
+					
+					<tr class="row1">
+						
+						<td>
+							{% if script.description %}
+								{{ script.description|safe }}
+							{% else %}
+								&nbsp;
+							{% endif %}
+						</td>
+						
+						<td class="span-5">
+							<p>
+								{{ date_limit }}
+							</p>
+						</td>
+						
+						<th class="span-5">
+							
+							<ul class="controls actions">
+								
+								<li class="change-link">
+									
+									<a href="{% url tests:run_test course_id=course.id scheme=script.script_index.scheme script_id=script.script_index.script_id %}">
+										Перейти к первому вопросу
+									</a>
+									
+								</li>
+								
+							</ul>
+							
+						</th>
+						
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+		</div>
+		
+		<br clear="all" />
+		
+	</div>
+	
 {% endblock %}
