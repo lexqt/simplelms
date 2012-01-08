@@ -3,6 +3,9 @@
  *  Custom
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+/*  Header
+------------------------------------------------------------------------------------------------------ */
+
 #main-title {
 	position: fixed;
 	top: 0;
@@ -15,22 +18,19 @@
 	text-align: center;
 }
 
-div#module-title, .left {
+/*  Module Header
+------------------------------------------------------------------------------------------------------ */
+
+div#module-title, div.left {
 	float: left;
 }
 
-div#module-info, .right {
+div#module-info, div.right {
 	text-align: right;
 }
 
-.right {
-	clear: right;
-	float: right;
-}
-
-.normal {
-	font-weight: normal;
-}
+/*  Structures
+------------------------------------------------------------------------------------------------------ */
 
 hr.separator {
 	margin-top: 20px;
@@ -48,4 +48,34 @@ div#footer {
 	font-size: 16px;
 	color: #000000;
 	text-align: center;
+}
+
+/*  Global Layout Styles
+------------------------------------------------------------------------------------------------------ */
+
+div.right {
+	clear: right;
+	float: right;
+}
+
+tr.right th, tr.right td, th.right, td.right {
+	text-align: right;
+}
+
+tr.left th, tr.left td, th.left, td.left {
+	text-align: left;
+}
+
+.normal {
+	font-weight: normal;
+}
+
+.test-result-success {
+	font-size: 14px;
+	color: #83bf30;
+}
+
+.test-result-failure {
+	font-size: 14px;
+	color: #bf3030;
 }

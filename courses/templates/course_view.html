@@ -185,7 +185,7 @@
 												
 												{% if element.element_type.model == 'test' %}		
 													
-													<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}">
+													<a href="{% url tests:start_test course_id=course.id test_id=element.object_id %}" target="_blank">
 														Открыть
 													</a>
 													

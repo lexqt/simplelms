@@ -1,17 +1,88 @@
 {% extends 'test_frame_base.html' %}
 
-<!-- FRAME-TITLE -->
-{% block frame-title %}
-	{{ test.title }}
+<!-- COLTYPE/BODYCLASS -->
+{% block bodyclass %}
+	change-list no-breadcrumbs
 {% endblock %}
 
-<!-- FRAME-CONTENT-TITLE -->
-{% block frame-content-title %}
-	{{ test.title }}
+{% block content-class %}
+	content-flexible
 {% endblock %}
 
-<!-- FRAME-CONTENT -->
-{% block frame-content %}
+<!-- TITLE -->
+{% block title %}
+	Сессии
+	|
+	{{ test.title }}
+	—
+	{{ block.super }}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	Тестирование
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+	
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{{ test.title }}
+				</div>
+				
+				<div id="module-info">
+					{{ course.title }}
+				</div>
+				
+			</h2>
+			
+			<table class="module changelist-results xfull">
+				
+				<tbody>
+					
+					<tr>
+						
+						<td>
+							<p>
+								&nbsp;
+							</p>
+						</td>
+						
+						<th class="span-4">
+							
+							<ul class="controls actions">
+								
+								<li class="change-link">
+									<a href="">
+										Temp
+									</a>
+								</li>
+								
+							</ul>
+							
+						</th>
+										
+					</tr>
+					
+				</tbody>
+				
+			</table>
+			
+			<!--  -->
+			
+		</div>
+		
+	</div>
+	
+	<!--  -->
 	<p>
 		Пройдено:
 		{{ cnt_passed }}

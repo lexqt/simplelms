@@ -11,7 +11,7 @@
 
 <!-- TITLE -->
 {% block title %}
-	Статистика
+	Сессии
 	|
 	{{ test.title }}
 	—
@@ -22,7 +22,7 @@
 {% block message-list %}
 	{% if message %}
 		<ul id="messages" class="messagelist">
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+			<li class="warning {% if message.tags %}{{ message.tags }}{% endif %}">
 				<strong>
 					Системное сообщение:
 				</strong>
@@ -66,7 +66,14 @@
 						
 						<td>
 							<p>
-								&nbsp;
+								Результат:
+								<strong>
+									{% if is_passed %}
+										<span class="test-result-success">зачёт</span>
+									{% else %}
+										<span class="test-result-failure">незачёт</span>
+									{% endif %}
+								</strong>
 							</p>
 						</td>
 						
@@ -91,7 +98,7 @@
 			</table>
 			
 			<h2 class="collapse-handler">
-				Temp
+				Статистика
 			</h2>
 			
 			<div id="changelist" class="module changelist-results">
@@ -102,21 +109,33 @@
 						
 						<tr>
 							
-							<th class="span-5">
+							<th class="span-1 sorted descending">
 								<a href="javascript:void(null);">
-									Temp
+									№
 								</a>
 							</th>
 							
-							<th class="span-5">
+							<th class="span-3">
 								<a href="javascript:void(null);">
-									Temp
+									Критерий
 								</a>
 							</th>
 							
-							<th class="span-5">
+							<th class="span-3 sorted">
 								<a href="javascript:void(null);">
-									Temp
+									Верно
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Пройдено
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Максимум
 								</a>
 							</th>
 							
@@ -126,18 +145,50 @@
 					
 					<tbody>
 						
-						<tr class="{% cycle 'row1' 'row2' %}">
+						<tr class="row1">
 							
-							<td class="span-5">
-								Temp
+							<td class="sorted centered">
+								1
 							</td>
 							
-							<td class="span-5">
-								Temp
+							<td class="span-3">
+								Вопросы
 							</td>
 							
-							<td class="span-5">
-								Temp
+							<td class="span-3 sorted right">
+								{{ count.right }}
+							</td>
+							
+							<td class="span-3 right">
+								{{ count.passed }}
+							</td>
+							
+							<td class="span-3 right">
+								{{ count.total }}
+							</td>
+							
+						</tr>
+						
+						<tr class="row2">
+							
+							<td class="sorted centered">
+								2
+							</td>
+							
+							<td class="span-3">
+								Баллы
+							</td>
+							
+							<td class="span-3 sorted right">
+								{{ rating.got }}
+							</td>
+							
+							<td class="span-3 right">
+								&nbsp;
+							</td>
+							
+							<td class="span-3 right">
+								{{ rating.total }}
 							</td>
 							
 						</tr>
@@ -153,25 +204,5 @@
 		<br clear="all" />
 		
 	</div>
-	
-	<!--  -->
-	<p>
-		Вопросы (верно / пройдено / всего):
-		{{ count.right }} / {{ count.passed }} / {{ count.total }}
-	</p>
-	
-	<p>
-		Баллы:
-		{{ rating.got }} / {{ rating.total }}
-	</p>
-	
-	<p>
-		Зачтено:
-		{% if is_passed %}
-			да
-		{% else %}
-			нет
-		{% endif %}
-	</p>
 	
 {% endblock %}

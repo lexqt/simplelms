@@ -14,6 +14,20 @@
 	{{ block.super }}
 {% endblock %}
 
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if not users %}
+		<ul id="messages" class="messagelist">
+			<li class="warning">
+				<strong>
+					Системное сообщение:
+				</strong>
+				Отсутствуют пользователи, записанные на выбранный курс.
+			</li>
+		</ul>
+	{% endif %}
+{% endblock %}
+
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	"{{ course.title }}"
@@ -47,77 +61,69 @@
 				
 			</h2>
 			
-			{% if not users %}
+			<div id="changelist" class="module changelist-results">
 				
-				<div class="row">
-					<p>
-						Отсутствуют пользователи, записанные на выбранный курс.
-					</p>
-				</div>
-				
-			{% else %}
-				
-				<div id="changelist" class="module changelist-results">
+				<table class="module changelist-results">
 					
-					<table class="module changelist-results">
+					<thead>
 						
-						<thead>
+						<tr>
 							
-							<tr>
-								
-								<th class="span-4">
-									<a href="javascript:void(null);">
-										Фамилия
-									</a>
-								</th>
-								
-								<th class="span-4">
-									<a href="javascript:void(null);">
-										Имя
-									</a>
-								</th>
-								
-								<th class="span-4">
-									<a href="javascript:void(null);">
-										Отчество
-									</a>
-								</th>
-								
-								<th class="span-4">
-									<a href="javascript:void(null);">
-										Действия
-									</a>
-								</th>
-									
-							</tr>
+							<th class="span-5 sorted descending">
+								<a href="javascript:void(null);">
+									Фамилия
+								</a>
+							</th>
 							
-						</thead>
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Имя
+								</a>
+							</th>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Отчество
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Действия
+								</a>
+							</th>
+								
+						</tr>
 						
-						<tbody>
+					</thead>
+					
+					<tbody>
+						
+						{% if users %}
 							
 							{% for user in users %}
 								
 								<tr class="{% cycle 'row1' 'row2' %}">
 									
-									<td class="span-4">
+									<td class="span-5 sorted">
 										<p>
 											{{ user.last_name }}
 										</p>
 									</td>
 									
-									<td class="span-4">
+									<td class="span-5">
 										<p>
 											{{ user.first_name }}
 										</p>
 									</td>
 									
-									<td class="span-4">
+									<td class="span-5">
 										<p>
 											{{ user.profile.middle_name }}
 										</p>
 									</td>
 									
-									<th class="span-4">
+									<th class="span-3">
 										
 										<ul class="controls actions">
 											
@@ -137,13 +143,43 @@
 								
 							{% endfor %}
 							
-						</tbody>
+						{% else %}
+							
+							<tr class="row2">
+								
+								<td class="span-5 sorted">
+									<p>
+										N/A
+									</p>
+								</td>
+								
+								<td class="span-5">
+									<p>
+										N/A
+									</p>
+								</td>
+								
+								<td class="span-5">
+									<p>
+										N/A
+									</p>
+								</td>
+								
+								<td class="span-3">
+									<p>
+										N/A
+									</p>
+								</td>
+								
+							</tr>
+							
+						{% endif %}
 						
-					</table>
+					</tbody>
 					
-				</div>
+				</table>
 				
-			{% endif %}
+			</div>
 			
 		</div>
 		
