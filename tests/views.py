@@ -14,7 +14,7 @@ from django.http import Http404, HttpResponseServerError, HttpResponse,\
     HttpResponseRedirect
 from django.db import transaction
 import datetime
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from common.http import Http403
 
 
@@ -158,6 +158,7 @@ class TestView(FormView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         request = args[0]
+        self.request = request
         self.user = request.user
         self.course = Course.get_or_fail(kwargs['course_id'], user=self.user)
         
@@ -201,7 +202,7 @@ class TestView(FormView):
                 'course': self.course,
                 'test': test
             }
-            return render_to_response('opened_test_session.html', context)
+            return render(self.request, 'opened_test_session.html', context)
         
         # unpacking test script and frames
         self.script = TestScriptXml(self.test.get_xml())
@@ -241,7 +242,7 @@ class TestView(FormView):
             'script': self.script,
             'date_limit': self.session.date_limit
         }
-        return render_to_response('start_test_session.html', context)
+        return render(self.request, 'start_test_session.html', context)
     
     @transaction.commit_manually
     def _prepare_session_frames(self, frames):
@@ -299,7 +300,7 @@ class TestView(FormView):
         # workaround bug in floatformat
         context['rating']['got'] = '%.2f' % rating
         
-        return render_to_response('finish_test_session.html', context)
+        return render(self.request, 'finish_test_session.html', context)
     
     def prepare_frame(self):
         s = Session.get_opened_session(self.course, self.user, self.test.scheme, self.test.script_id)
