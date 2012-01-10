@@ -16,6 +16,32 @@
 	{{ block.super }}
 {% endblock %}
 
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if messages or not course_list %}
+		<ul id="messages" class="messagelist">
+			
+			{% if messages %}
+				{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+						{{ message|safe }}
+					</li>
+				{% endfor %}
+			{% endif %}
+			
+			{% if not course_list %}
+				<li class="warning">
+					<strong>
+						Системное сообщение:
+					</strong>
+					Отсутствуют курсы для отображения в текущем списке.
+				</li>
+			{% endif %}
+			
+		</ul>
+	{% endif %}
+{% endblock %}
+
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	Список моих курсов
@@ -43,26 +69,14 @@
 			
 			<div class="module aligned">
 				
-				<div class="row">
-					Отсутствуют курсы для отображения в текущем списке.
-				</div>
-				
-			</div>
-			
-		{% endif %}
-		
-		{% for course in course_list %}
-			
-			<div class="module aligned">
-				
 				<h2 class="collapse-handler">
 					
 					<div id="module-title">
-						{{ course.title }}
+						Warning
 					</div>
 					
 					<div id="module-info">
-						{{ course.date_created }}
+						Message
 					</div>
 					
 				</h2>
@@ -71,38 +85,12 @@
 					
 					<tbody>
 						
-						<tr>
+						<tr class="selected">
 							
-							<td>
-								{% if course.description %}
-									{{ course.description|safe }}
-								{% else %}
-									&nbsp;
-								{% endif %}
-							</td>
-							
-							<th class="span-6">
-								
-								<ul class="controls actions">
-									
-									<li class="change-link">
-										
-										<a href="{% url courses:course_view course.id %}">
-											Открыть курс
-										</a>
-										
-									</li>
-									
-									<li class="change-link">
-										
-										<a href="{% url monitoring:user_results user.id course.id %}">
-											Мониторинг
-										</a>
-										
-									</li>
-									
-								</ul>
-								
+							<th>
+								<p>
+									Отсутствуют курсы для отображения в текущем списке.
+								</p>
 							</th>
 							
 						</tr>
@@ -115,7 +103,75 @@
 				
 			<br clear="all" />
 			
-		{% endfor %}
+		{% else %}
+			
+			{% for course in course_list %}
+				
+				<div class="module aligned">
+					
+					<h2 class="collapse-handler">
+						
+						<div id="module-title">
+							{{ course.title }}
+						</div>
+						
+						<div id="module-info">
+							{{ course.date_created }}
+						</div>
+						
+					</h2>
+					
+					<table class="module changelist-results xfull">
+						
+						<tbody>
+							
+							<tr>
+								
+								<td>
+									{% if course.description %}
+										{{ course.description|safe }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</td>
+								
+								<th class="span-6">
+									
+									<ul class="controls actions">
+										
+										<li class="change-link">
+											
+											<a href="{% url courses:course_view course.id %}">
+												Открыть курс
+											</a>
+											
+										</li>
+										
+										<li class="change-link">
+											
+											<a href="{% url monitoring:user_results user.id course.id %}">
+												Мониторинг
+											</a>
+											
+										</li>
+										
+									</ul>
+									
+								</th>
+								
+							</tr>
+							
+						</tbody>
+						
+					</table>
+					
+				</div>
+					
+				<br clear="all" />
+				
+			{% endfor %}
+			
+		{% endif %}
 		
 		<!-- PAGINATION -->
 		{% if is_paginated %}

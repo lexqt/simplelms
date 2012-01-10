@@ -18,7 +18,7 @@
 	
 	<!-- MAIN TITLE -->
 	<div id="main-title">
-		< < SimpleLMS > >
+		&lsaquo; &laquo; SimpleLMS &raquo; &rsaquo;
 	</div>
 	
 	<!-- ACCOUNT -->
@@ -28,7 +28,7 @@
 			<!-- USERNAME -->
 			<li class="user-options-container collapse closed">
 				<a href="javascript://" class="user-options-handler collapse-handler">
-					{{ user.username }}
+					{% firstof user.first_name user.username %}
 				</a>
 				<ul class="user-options">
 					<!-- Logout -->

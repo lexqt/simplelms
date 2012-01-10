@@ -14,6 +14,32 @@
 	{{ block.super }}
 {% endblock %}
 
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if messages or not course_list %}
+		<ul id="messages" class="messagelist">
+			
+			{% if messages %}
+				{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+						{{ message|safe }}
+					</li>
+				{% endfor %}
+			{% endif %}
+			
+			{% if not course_list %}
+				<li class="warning">
+					<strong>
+						Системное сообщение:
+					</strong>
+					Отсутствуют курсы для отображения в текущем списке.
+				</li>
+			{% endif %}
+			
+		</ul>
+	{% endif %}
+{% endblock %}
+
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	Список доступных курсов
@@ -36,73 +62,103 @@
 			
 			<div class="module aligned">
 				
-				<div class="row">
-					Отсутствуют курсы для отображения в текущем списке.
-				</div>
+				<h2 class="collapse-handler">
+					
+					<div id="module-title">
+						Warning
+					</div>
+					
+					<div id="module-info">
+						Message
+					</div>
+					
+				</h2>
+				
+				<table class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr class="selected">
+							
+							<th>
+								<p>
+									Отсутствуют курсы для отображения в текущем списке.
+								</p>
+							</th>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
 				
 			</div>
+				
+			<br clear="all" />
+			
+		{% else %}
+			
+			{% with nexturl=next|urlencode %}
+				
+				{% for course in course_list %}
+					
+					<div class="module aligned">
+						
+						<h2 class="collapse-handler">
+							
+							<div id="module-title">
+								{{ course.title }}
+							</div>
+							
+							<div id="module-info">
+								{{ course.date_created }}
+							</div>
+							
+						</h2>
+						
+						<table class="module changelist-results xfull">
+							
+							<tbody>
+								
+								<tr>
+									
+									<td>
+										{% if course.description %}
+											{{ course.description|safe }}
+										{% else %}
+											&nbsp;
+										{% endif %}
+									</td>
+									
+									<th class="span-4">
+										<ul class="controls actions">
+											
+											<li class="add-link">
+												
+												<a href="{% url courses:submit_app course.id %}?next={{ nexturl }}">
+							    					Записаться на курс
+							    				</a>
+							    				
+											</li>
+											
+										</ul>
+									</th>
+									
+								</tr>
+								
+							</tbody>
+							
+						</table>
+						
+					</div>
+					
+					<br clear="all" />
+					
+				{% endfor %}
+				
+			{% endwith %}
 			
 		{% endif %}
-		
-		{% with nexturl=next|urlencode %}
-			
-			{% for course in course_list %}
-				
-				<div class="module aligned">
-					
-					<h2 class="collapse-handler">
-						
-						<div id="module-title">
-							{{ course.title }}
-						</div>
-						
-						<div id="module-info">
-							{{ course.date_created }}
-						</div>
-						
-					</h2>
-					
-					<table class="module changelist-results xfull">
-						
-						<tbody>
-							
-							<tr>
-								
-								<td>
-									{% if course.description %}
-										{{ course.description|safe }}
-									{% else %}
-										&nbsp;
-									{% endif %}
-								</td>
-								
-								<th class="span-4">
-									<ul class="controls actions">
-										
-										<li class="add-link">
-											
-											<a href="{% url courses:submit_app course.id %}?next={{ nexturl }}">
-						    					Записаться на курс
-						    				</a>
-						    				
-										</li>
-										
-									</ul>
-								</th>
-								
-							</tr>
-							
-						</tbody>
-						
-					</table>
-					
-				</div>
-				
-				<br clear="all" />
-				
-			{% endfor %}
-			
-		{% endwith %}
 		
 		<!-- PAGINATION -->
 		{% if is_paginated %}

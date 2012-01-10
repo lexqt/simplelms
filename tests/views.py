@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from django.views.generic import FormView
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import TestFrame, Test, SessionFrame, Session, TestResult
@@ -148,11 +149,13 @@ class TestView(FormView):
                 pass
         
         context['cnt_passed'] = self.session.num_passed
+        context['cnt_total'] = Session.get_opened_session(self.course, self.user, self.test.scheme, self.test.script_id).get_test_frame_count_total()
         context['date_limit'] = self.session.date_limit
 
         context['course'] = self.course
         context['test']   = self.test
         context['frame']  = self.frame
+        
         return context
     
     @method_decorator(login_required)
@@ -198,6 +201,7 @@ class TestView(FormView):
                 s.delete()
                 # TODO: better way
                 return self.start_test()
+            messages.info(self.request, '<strong>Системное сообщение:</strong> У вас уже имеется одна открытая сессия тестирования "<strong>' + self.test.title + '</strong>" в рамках курса "<strong>' + self.course.title + '</strong>".')
             context = {
                 'course': self.course,
                 'test': test
@@ -295,7 +299,7 @@ class TestView(FormView):
         
         now = datetime.datetime.today()
         if now > s.date_limit:
-            context['message'] = 'Время, отведенное на тестирование, вышло.'
+            messages.warning(self.request, '<strong>Системное сообщение:</strong> Время, отведённое на тестирование, вышло.')
         
         # workaround bug in floatformat
         context['rating']['got'] = '%.2f' % rating

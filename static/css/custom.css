@@ -53,6 +53,10 @@ div#footer {
 /*  Global Layout Styles
 ------------------------------------------------------------------------------------------------------ */
 
+.right {
+	text-align: right;
+}
+
 div.right {
 	clear: right;
 	float: right;

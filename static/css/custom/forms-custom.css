@@ -20,3 +20,23 @@ ul.errorlist {
 /* ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
  *  Custom
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/*  Structures
+------------------------------------------------------------------------------------------------------ */
+
+div#form-data {
+	padding-bottom: 11px;
+}
+
+form#test-form div#form-data input, form#test-form div#form-data textarea {
+	width: 100%;
+	height: 80px;
+}
+
+form#test-form div#form-data input {
+	padding-bottom: 60px;
+}
+
+form#test-form div#form-data textarea {
+	resize: none;
+}

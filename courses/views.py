@@ -167,7 +167,7 @@ def submit_application_view(request, course_id):
         
 #        app = Application.objects.create(course=course, user=request.user)
         app = request.user.applications_submitted.create(course=course)
-        messages.success(request, 'Заявка на курс <b>{}</b> подана от {}'.format(course, app.date_submitted))
+        messages.success(request, 'Заявка на курс "<strong>{}</strong>" подана от {}'.format(course, app.date_submitted))
     except AnyError:
         pass
     if 'next'  in request.GET:

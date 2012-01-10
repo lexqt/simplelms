@@ -29,6 +29,40 @@
 	Регистрация
 {% endblock %}
 
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% with uf=user_form pf=profile_form %}
+		
+		{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
+			
+			{% if messages or errs1 or errs2 %}
+				<ul id="messages" class="messagelist">
+					
+					{% if messages %}
+						{% for message in messages %}
+							<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+								{{ message|safe }}
+							</li>
+						{% endfor %}
+					{% endif %}
+					
+					{% if errs1 or errs2 %}
+						<li class="error">
+							<strong>
+								Ошибка:
+							</strong>
+							{% firstof errs1 errs2 %}
+						</li>
+					{% endif %}
+					
+				</ul>
+			{% endif %}
+			
+		{% endwith %}
+		
+	{% endwith %}
+{% endblock %}
+
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	Вход на сайт
@@ -54,13 +88,6 @@
 		<div class="form-container">
 			
 			{% with uf=user_form pf=profile_form %}
-				
-				{% with errs1=uf.non_field_errors errs2=pf.non_field_errors %}
-					{% if errs1 or errs2 %}
-						<h3>Ошибки:</h3>
-						{% firstof errs1 errs2 %}
-					{% endif %}
-				{% endwith %}
 				
 				<form id="user_form" action="{% url 'accounts:register' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
 					

@@ -184,6 +184,9 @@ class Session(models.Model):
                         got=rate_got
                     ))
     
+    def get_test_frame_count_total(self):
+        return len(SessionFrame.objects.only('is_passed', 'weight', 'rating').filter(session=self))
+    
     def __unicode__(self):
         return u'{0} - {1} - тест[{2}][{3}] - открыто {4} [{5}] [{6}]'.format(
             self.course, self.user,

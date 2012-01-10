@@ -18,20 +18,6 @@
 	{{ block.super }}
 {% endblock %}
 
-<!-- MESSAGE-LIST -->
-{% block message-list %}
-	{% if message %}
-		<ul id="messages" class="messagelist">
-			<li class="warning {% if message.tags %}{{ message.tags }}{% endif %}">
-				<strong>
-					Системное сообщение:
-				</strong>
-				{{ message|safe }}
-			</li>
-		</ul>
-	{% endif %}
-{% endblock %}
-
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	Статистика по тесту
@@ -62,16 +48,20 @@
 				
 				<tbody>
 					
-					<tr>
+					<tr class="selected">
 						
 						<td>
 							<p>
 								Результат:
 								<strong>
 									{% if is_passed %}
-										<span class="test-result-success">зачёт</span>
+										<span class="test-result-success">
+											зачёт
+										</span>
 									{% else %}
-										<span class="test-result-failure">незачёт</span>
+										<span class="test-result-failure">
+											незачёт
+										</span>
 									{% endif %}
 								</strong>
 							</p>

@@ -18,6 +18,32 @@
 	{{ block.super }}
 {% endblock %}
 
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if messages or form.answer.errors %}
+		<ul id="messages" class="messagelist">
+			
+			{% if messages %}
+				{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+						{{ message|safe }}
+					</li>
+				{% endfor %}
+			{% endif %}
+			
+			{% if form.answer.errors %}
+				<li class="error">
+					<strong>
+						Ошибка:
+					</strong>
+					При ответе допущены ошибки, исправьте ошибки, указанные в секции ввода ответа.
+				</li>
+			{% endif %}
+			
+		</ul>
+	{% endif %}
+{% endblock %}
+
 <!-- CONTENT-TITLE -->
 {% block content-title %}
 	Тестирование
@@ -44,95 +70,218 @@
 				
 			</h2>
 			
-			<table class="module changelist-results xfull">
+			<div class="module changelist-results xfull">			
 				
-				<tbody>
+				<table class="no-border right">
 					
-					<tr>
+					<thead>
 						
-						<td>
-							<p>
-								&nbsp;
-							</p>
-						</td>
-						
-						<th class="span-4">
+						<tr>
 							
-							<ul class="controls actions">
+							{% if show_result and cnt_passed %}
 								
-								<li class="change-link">
-									<a href="">
-										Temp
+								<th class="span-3">
+									<a href="javascript:void(null);">
+										Предыдущий ответ
 									</a>
-								</li>
+								</th>
 								
-							</ul>
+							{% endif %}
 							
-						</th>
-										
-					</tr>
+							<th class="span-2 sorted">
+								<a href="javascript:void(null);">
+									Пройдено
+								</a>
+							</th>
+							
+							<th class="span-2">
+								<a href="javascript:void(null);">
+									Всего
+								</a>
+							</th>
+							
+							<th class="span-5">
+								<a href="javascript:void(null);">
+									Время окончания тестирования
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Действия
+								</a>
+							</th>
+							
+						</tr>
+						
+					</thead>
 					
-				</tbody>
+					<tbody>
+						
+						<tr>
+							
+							{% if show_result and cnt_passed %}
+								
+								<td class="span-3 right">
+									<p>
+										{% if prev_result %}
+											<span class="test-result-success">
+												верно
+											</span>
+										{% else %}
+											<span class="test-result-failure">
+												неверно
+											</span>
+										{% endif %}
+									</p>
+								</td>
+								
+							{% endif %}
+							
+							<td class="span-2 sorted right">
+								<p>
+									{{ cnt_passed }}
+								</p>
+							</td>
+							
+							<td class="span-2 right">
+								<p>
+									{{ cnt_total }}
+								</p>
+							</td>
+							
+							<td class="span-5 right">
+								<p>
+									{{ date_limit }}
+								</p>
+							</td>
+							
+							<th class="span-3 controls actions">
+								
+								<ul>
+									
+									<li class="delete-link">
+										
+										<a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
+											Завершить
+										</a>
+										
+										<br />
+										
+										<span class="mini quiet">
+											Тест
+										</span>
+										
+									</li>
+									
+								</ul>
+								
+							</th>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
 				
-			</table>
+			</div>
 			
-			<!--  -->
+			<div id="test-frame">
+				
+				<h2 class="collapse-handler">
+					Вопрос
+				</h2>
+				
+				<table id="test-question" class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr class="selected">
+							
+							<td>
+								<p>
+									{% if frame.data %}
+										{{ frame.data|safe }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</p>
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+				<h2 class="collapse-handler">
+					Ответ
+				</h2>
+				
+				{% if form.non_field_errors %}
+					<p class="errornote test-frame-errors">
+						{{ form.non_field_errors }}
+					</p>
+				{% endif %}
+				
+				{% if form.answer.errors %}
+					<p class="errornote test-frame-errors">
+						При ответе допущены ошибки:
+					</p>
+					{{ form.answer.errors }}
+				{% endif %}
+				
+				<table id="test-answer" class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr class="row1">
+							
+							<td id="test-answer-content">
+								
+								<form id="test-form" action="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}" method="post">{% csrf_token %}
+									
+									<div id="test-form-content">
+										
+										<!-- ANSWER -->
+										<div id="form-data">
+											
+											{% if form.answer %}
+												{{ form.answer|safe }}
+											{% else %}
+												&nbsp;
+											{% endif %}
+											
+										</div>
+										
+										<!-- SUBMIT -->
+										<div id="form-submit" class="module submit-row">
+											
+											<ul class="submit-row inline right">
+												<li class="submit-button-container">
+													<input id="id_submit" type="submit" class="default" value="Отправить" />
+												</li>
+											</ul>
+											
+										</div>
+										
+									</div>
+									
+								</form>
+								
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+			</div>
 			
 		</div>
 		
-	</div>
-	
-	<!--  -->
-	<p>
-		Пройдено:
-		{{ cnt_passed }}
-	</p>
-	
-	{% if show_result and cnt_passed %}
-		<p>
-			Результат по предыдущему вопросу:
-			{% if prev_result %}
-				верно
-			{% else %}
-				неверно
-			{% endif %}
-		</p>
-	{% endif %}
-	
-	<p>
-		Время окончания тестирования:
-		{{ date_limit }}
-	</p>
-	
-	<div id="test_frame">
-		
-		<div>
-			{{ frame.data }}
-		</div>
-		
-		{% if form.non_field_errors %}
-			<p>
-				{{ form.non_field_errors }}
-			</p>
-		{% endif %}
-		
-		{% if form.answer.errors %}
-			<p>
-				При ответе допущена ошибка:
-			</p>
-			{{ form.answer.errors }}
-		{% endif %}
-		
-		<form method="post" action="{% url tests:run_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">{% csrf_token %}
-			{{ form.answer }}
-			<input type="submit" value="Отправить" />
-		</form>
-		
-		<p>
-			<a href="{% url tests:finish_test course_id=course.id scheme=test.scheme script_id=test.script_id %}">
-				Завершить тест
-			</a>
-		</p>
+		<br clear="all" />
 		
 	</div>
 	

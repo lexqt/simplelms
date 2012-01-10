@@ -44,16 +44,26 @@
 				
 			</h2>
 			
-			<div class="row">
+			<table class="module changelist-results xfull">
 				
-				<div class="column span-flexible normal">
-					<p>
-						У вас уже имеется одна открытая сессия тестирования в рамках курса
-						"<strong>{{ course.title }}</strong>".
-					</p>
-				</div>
+				<tbody>
+					
+					<tr class="selected">
+						
+						<td>
+							<p>
+								У вас уже имеется одна открытая сессия тестирования
+								"<strong>{{ test.title }}</strong>"
+								в рамках курса
+								"<strong>{{ course.title }}</strong>".
+							</p>
+						</td>
+						
+					</tr>
+					
+				</tbody>
 				
-			</div>
+			</table>
 			
 			<table class="module changelist-results xfull">
 				
@@ -67,7 +77,7 @@
 							</p>
 						</td>
 						
-						<th class="span-4 controls actions">
+						<th class="span-3 controls actions">
 							
 							<ul>
 								
