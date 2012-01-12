@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 
+<!-- MAIN-MENU -->
+{% block main-menu %}
+	<li class="item-collapse item-open">
+		<a href="{% url courses:list %}">
+			Курсы
+		</a>
+		
+		<!-- APP-MENU-COURSES -->
+		{% block app-menu-courses %}
+		{% endblock %}
+		
+	</li>
+{% endblock %}
+
+<!-- MANAGER-MENU -->
+{% block main-menu_manager %}
+	<li>
+		<a href="/admin/">
+			Админка
+		</a>
+	</li>
+{% endblock %}
+
 <!-- TITLE -->
 {% block title %}
 	Главная
@@ -16,4 +39,21 @@
 
 <!-- NAV-GLOBAL -->
 {% block nav-global %}
+{% endblock %}
+
+<!-- MAIN MENU -->
+{% block mainmenu %}
+	{{ block.super }}
+	||
+	<a href="{% url courses:list %}">
+		Курсы
+	</a>
+{% endblock %}
+
+<!-- MAIN MENU MANAGER -->
+{% block mainmenu_manager %}
+	||
+	<a href="/admin/">
+		Админка
+	</a>
 {% endblock %}

@@ -1,22 +1,69 @@
 {% extends 'base_site.html' %}
 
-<!-- APP MENU -->
-{% block appmenu %}
-	&rsaquo;&rsaquo;
-	<a href="{% url courses:list %}">Доступные курсы</a>
-	|
-	<a href="{% url courses:learning_courses %}">Мои курсы (учащийся)</a>
-{% endblock %}
+<!-- LOADING -->
+{% load user_extras %}
 
-<!-- MANAGER MENU -->
-{% block appmenu_manager %}
-	|
-	<a href="{% url courses:managing_courses %}">Мои курсы (учитель)</a>
+<!-- APP-MENU-COURSES -->
+{% block app-menu-courses %}
+	<ul>
+		
+		<li>
+			<a href="{% url courses:list %}">
+				Доступные курсы
+			</a>
+		</li>
+		
+		<li>
+			<a href="{% url courses:learning_courses %}">
+				Мои курсы (учащийся)
+			</a>
+		</li>
+		
+		<!-- APP-MENU-COURSES_MANAGER -->
+		{% ifusergroup managers %}
+			{% block app-menu-courses_manager %}
+				<li>
+					<a href="{% url courses:managing_courses %}">
+						Мои курсы (учитель)
+					</a>
+				</li>
+			{% endblock %}
+		{% endifusergroup %}
+		
+	</ul>
 {% endblock %}
 
 <!-- TITLE -->
 {% block title %}
 	Курсы
+{% endblock %}
+
+<!-- BREADCRUMBS-SUB-LEVEL -->
+{% block breadcrumbs-sub-level %}
+	<div id="breadcrumbs" class="sub-level">
+		
+		<!-- APP MENU -->
+		{% block appmenu %}
+			<a href="{% url courses:list %}">
+				Доступные курсы
+			</a>
+			||
+			<a href="{% url courses:learning_courses %}">
+				Мои курсы (учащийся)
+			</a>
+		{% endblock %}
+		
+		<!-- MANAGER MENU -->
+		{% ifusergroup managers %}
+			{% block appmenu_manager %}
+				||
+				<a href="{% url courses:managing_courses %}">
+					Мои курсы (учитель)
+				</a>
+			{% endblock %}
+		{% endifusergroup %}
+		
+	</div>
 {% endblock %}
 
 <!-- OBJECT-TOOLS -->

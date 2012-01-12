@@ -1,5 +1,5 @@
 <!-- LOADING -->
-{% load i18n user_extras simplelms_tags %}
+{% load i18n grp_tags user_extras simplelms_tags %}
 
 <!-- VARIABLES -->
 {% captureas title %}
@@ -29,7 +29,9 @@
 		
 		{% block object-tools %}
 			<li>
-				<a class="viewsite-handler focus" href="/">Главная</a>
+				<a class="viewsite-handler focus" href="/">
+					{% trans 'Home' %}
+				</a>
 			</li>
 		{% endblock %}
 		
@@ -95,6 +97,14 @@
 		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_fk.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_m2m.js"></script>
 		<script type="text/javascript" src="{{ STATIC_URL }}js/grappelli/jquery.grp_autocomplete_generic.js"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+			(function($) {
+				$(document).ready(function() {
+					$("div#header .collapse").grp_collapsible();
+				});
+			})(django.jQuery);
+		</script>
 	{% endblock %}
 	
 	<!-- EXTRAHEAD -->
@@ -108,7 +118,116 @@
 		
 		<!-- HEADER -->
 		{% if not is_popup %}
-			{% include "includes/header.html" %}
+			
+			<!-- HEADER-CONTENT -->
+			<div id="header">
+				
+				<!-- BRANDING -->
+				<div class="branding">
+					&nbsp;
+				</div>
+				
+				<!-- GREETING -->
+				<div class="admin-title">
+					{% if user.is_authenticated %}
+						Добро пожаловать, {% firstof user.first_name user.username %}.
+					{% else %}
+					    Добро пожаловать!
+					{% endif %}
+				</div>
+				
+				<!-- NAVIGATION-MENU -->
+				{% block no-navigation-menu %}
+					<ul id="bookmarks" class="navigation-menu">
+						
+						<li class="main-title bookmark item-collapse collapse closed">
+							
+							<a href="javascript://" class="main-title item-collapse-handler-container collapse-handler">
+								&lsaquo; &laquo; SimpleLMS &raquo; &rsaquo;
+							</a>
+							
+							<ul>
+								
+								<!-- HOME -->
+								<li>
+									<a href="/">
+										{% trans 'Home' %}
+									</a>
+								</li>
+								
+								<!-- MAIN-MENU -->
+								{% block main-menu %}
+								{% endblock %}
+								
+								<!-- MANAGER-MENU -->
+								{% ifusergroup managers %}
+									{% block main-menu_manager %}
+									{% endblock %}
+								{% endifusergroup %}
+								
+							</ul>
+							
+						</li>
+						
+					</ul>
+				{% endblock %}
+				
+				<!-- MAIN TITLE -->
+				{% block main-title %}
+				{% endblock %}
+				
+				<!-- ACCOUNT -->
+				<ul id="user-tools">
+					{% if user.is_authenticated %}
+						
+						<!-- USERNAME -->
+						<li class="user-options-container collapse closed">
+							
+							<a href="javascript://" class="user-options-handler collapse-handler">
+								{{ user.username }}
+							</a>
+							
+							<ul class="user-options">
+								
+								<!-- Options -->
+								{% block user-options %}
+								{% endblock %}
+								
+								<!-- Logout -->
+								<li>
+									<a href="{% url accounts:logout %}">
+										{% trans 'Log out' %}
+									</a>
+								</li>
+								
+							</ul>
+							
+						</li>
+						
+						<!-- USER-LINKS -->
+						{% block user-links %}
+						{% endblock %}
+						
+					{% else %}
+						
+						<!-- LOGIN && REGISTER -->
+						<li class="user-options-container collapse opened">
+							<a href="{% url accounts:login %}">
+								{% trans 'Log in' %}
+							</a>
+							|
+							<a href="{% url accounts:register %}">
+								Регистрация
+							</a>
+						</li>
+						
+					{% endif %}
+				</ul>
+				
+				{% block nav-global %}
+				{% endblock %}
+				
+			</div>
 			
 			<!-- BREADCRUMBS -->
 			{% block breadcrumbs %}
@@ -119,49 +238,21 @@
 						<a href="/">
 							Главная
 						</a>
-						|
-						<a href="{% url courses:list %}">Курсы</a>
 					{% endblock %}
 					
+					<!-- MAIN MENU MANAGER -->
 					{% ifusergroup managers %}
 						{% block mainmenu_manager %}
-							|
-							<a href="/admin/">Админка</a>
 						{% endblock %}
 					{% endifusergroup %}
 					
 				</div>
-				
-				<div id="breadcrumbs" class="sub-level">
-					
-					<!-- HOME -->
-					<a href="/">
-						{% trans 'Home' %}
-					</a>
-					
-					<!-- APP MENU -->
-					{% block appmenu %}
-					{% endblock %}
-					
-					<!-- MANAGER MENU -->
-					{% ifusergroup managers %}
-						{% block appmenu_manager %}
-						{% endblock %}
-					{% endifusergroup %}
-					
-					<!-- TITLE -->
-					{% if title %}
-						&rsaquo;&rsaquo;
-						{% if content_title %}
-							{{ content_title }}
-							—
-						{% endif %}
-						{{ title }}
-					{% endif %}
-					
-				</div>
-				
 			{% endblock %}
+			
+			<!-- BREADCRUMBS-SUB-LEVEL -->
+			{% block breadcrumbs-sub-level %}
+			{% endblock %}
+			
 		{% endif %}
 		
 		<!-- MESSAGES -->

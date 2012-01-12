@@ -46,5 +46,5 @@ class MultipleCloseTypeForm(CloseTypeForm):
 
 class StringOpenTypeForm(OpenTypeForm):
 
-    answer = forms.CharField(error_messages={
+    answer = forms.CharField(widget=forms.Textarea, error_messages={
                                     'required': 'Вам необходимо вписать ответ. Поле для ответа не должно быть пустым'})

@@ -25,6 +25,17 @@ body {
 	padding: 12px 20px;
 }
 
+/*  Navigation Menu (UL Navigation-Menu of Admin-Tools)
+------------------------------------------------------------------------------------------------------ */
+
+ul.navigation-menu li li a {
+	font-size: 16px;
+}
+
+ul.navigation-menu li li li a {
+	font-size: 14px;
+}
+
 /*  Breadcrumbs
 ------------------------------------------------------------------------------------------------------ */
 
@@ -72,6 +83,31 @@ body.no-breadcrumbs {
 	padding: 40px 20px 0;
 }
 
+body.no-breadcrumbs-sub-level {
+	padding: 78px 20px 0;
+}
+
+/*  Branding, Bookmarks & User-Tools
+------------------------------------------------------------------------------------------------------ */
+
+#bookmarks li.main-title {
+	padding: 4px 0;
+}
+
+#bookmarks a.main-title {
+	font-family: Agency FB;
+	font-size: 34px !important;
+	margin-bottom: 6px;
+}
+
+#bookmarks a.main-title:link, #bookmarks a.main-title:visited {
+	color: #FF9900 !important;
+}
+
+#bookmarks a.main-title:hover, #bookmarks a.main-title:active {
+	color: #DDDDDD !important;
+}
+
 /*  Breadcrumbs
 ------------------------------------------------------------------------------------------------------ */
 
@@ -83,4 +119,5 @@ div#breadcrumbs.sub-level {
 	top: 78px;
 	padding: 4px 10px 3px 20px;
 	font-size: 14px;
+	text-align: center;
 }
