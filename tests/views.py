@@ -201,7 +201,7 @@ class TestView(FormView):
                 s.delete()
                 # TODO: better way
                 return self.start_test()
-            messages.info(self.request, '<strong>Системное сообщение:</strong> У вас уже имеется одна открытая сессия тестирования "<strong>' + self.test.title + '</strong>" в рамках курса "<strong>' + self.course.title + '</strong>".')
+            messages.info(self.request, u'<strong>Системное сообщение:</strong> У вас уже имеется одна открытая сессия тестирования "<strong>{}</strong>" в рамках курса "<strong>{}</strong>".'.format(self.test.title, self.course.title))
             context = {
                 'course': self.course,
                 'test': test
