@@ -22,8 +22,8 @@ class TestFrame(models.Model):
     title     = models.CharField('название вопроса', max_length=200)
     
     FRAME_TYPES = (
-        ('close', 'Закрытый вопрос'),
-        ('open', 'Открытый вопрос'),
+        ('close', u'Закрытый вопрос'),
+        ('open', u'Открытый вопрос'),
     )
     FRAME_TYPES_DICT = dict(FRAME_TYPES)
     
@@ -192,8 +192,8 @@ class Session(models.Model):
             self.course, self.user,
             self.scheme, self.script_id,
             self.date_started,
-            'активно'   if self.is_active   else 'остановлено',
-            'завершено' if self.is_finished else 'не завершено',
+            u'активно'   if self.is_active   else u'остановлено',
+            u'завершено' if self.is_finished else u'не завершено',
             )
 
 
@@ -238,7 +238,7 @@ class TestResult(models.Model):
             self.course, self.user,
             self.scheme, self.script_id,
             self.try_number,
-            'зачтено' if self.is_passed else 'не зачтено',
+            u'зачтено' if self.is_passed else u'не зачтено',
             )
 
 

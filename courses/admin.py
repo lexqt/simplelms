@@ -87,12 +87,12 @@ class ApplicationAdmin(admin.ModelAdmin):
     def accept_action(self, request, queryset):
         for app in queryset:
             self.accept_application(request, unicode(app), app.id, accept=True)
-    accept_action.short_description = 'Принять выбранные заявки'
+    accept_action.short_description = u'Принять выбранные заявки'
     
     def reject_action(self, request, queryset):
         for app in queryset:
             self.accept_application(request, unicode(app), app.id, accept=False)
-    reject_action.short_description = 'Отклонить выбранные заявки'
+    reject_action.short_description = u'Отклонить выбранные заявки'
     
     def accept_application(self, request, info_title, app_id, accept):
         class AnyError:
