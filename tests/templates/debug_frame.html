@@ -1,40 +1,231 @@
-<html>
-<body>
+{% extends 'test_frame_base.html' %}
+
+<!-- TITLE -->
+{% block title %}
+	Тестовые задания
+	|
+	Тесты
+	|
+	Админка
+{% endblock %}
+
+<!-- MESSAGE-LIST -->
+{% block message-list %}
+	{% if messages or form.answer.errors %}
+		<ul id="messages" class="messagelist">
+			
+			{% if messages %}
+				{% for message in messages %}
+					<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+						{{ message|safe }}
+					</li>
+				{% endfor %}
+			{% endif %}
+			
+			{% if form.answer.errors %}
+				<li class="error">
+					<strong>
+						Ошибка:
+					</strong>
+					При ответе допущены ошибки, исправьте ошибки, указанные в секции ввода ответа.
+				</li>
+			{% endif %}
+			
+		</ul>
+	{% endif %}
+{% endblock %}
+
+<!-- CONTENT-TITLE -->
+{% block content-title %}
+	[DEBUG] Тестирование
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
 	
-	<h1>
-		{{ frame.name }}
-	</h1>
-	
-	<div>
-		{{ frame.data }}
+	<div class="container-flexible">
+		
+		<br clear="all" />
+		
+		<div class="module aligned">
+			
+			<h2 class="collapse-handler">
+				
+				<div id="module-title">
+					{% if frame.name %}
+						{{ frame.name|safe }}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</div>
+				
+				<div id="module-info">
+					&nbsp;
+				</div>
+				
+			</h2>
+			
+			<div class="module changelist-results xfull">			
+				
+				<table class="no-border right">
+					
+					<thead>
+						
+						<tr>
+							
+							<th class="span-2 sorted">
+								<a href="javascript:void(null);">
+									Балл
+								</a>
+							</th>
+							
+							<th class="span-3">
+								<a href="javascript:void(null);">
+									Результат проверки
+								</a>
+							</th>
+							
+						</tr>
+						
+					</thead>
+					
+					<tbody>
+						
+						<tr>
+							
+							<th class="span-2 sorted right">
+								<p>
+									{% if answered %}
+										{{ answer_result }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</p>
+							</th>
+							
+							<td class="span-3 right">
+								<p>
+									{% if answered %}
+										{% if answer_result %}
+											<span class="test-result-success">
+												верно
+											</span>
+										{% else %}
+											<span class="test-result-failure">
+												неверно
+											</span>
+										{% endif %}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</p>
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+			</div>
+			
+			<div id="test-frame">
+				
+				<h2 class="collapse-handler">
+					Вопрос
+				</h2>
+				
+				<table id="test-question" class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr class="selected">
+							
+							<td>
+								<p>
+									{% if frame.data %}
+										{{ frame.data|safe }}
+									{% else %}
+										&nbsp;
+									{% endif %}
+								</p>
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+				<h2 class="collapse-handler">
+					Ответ
+				</h2>
+				
+				{% if form.non_field_errors %}
+					<p class="errornote test-frame-errors">
+						{{ form.non_field_errors }}
+					</p>
+				{% endif %}
+				
+				{% if form.answer.errors %}
+					<p class="errornote test-frame-errors">
+						При ответе допущены ошибки:
+					</p>
+					{{ form.answer.errors }}
+				{% endif %}
+				
+				<table id="test-answer" class="module changelist-results xfull">
+					
+					<tbody>
+						
+						<tr class="row1">
+							
+							<td id="test-answer-content">
+								
+								<form id="test-form" action="{% url tests:debug_frame scheme=frame_index.scheme frame_id=frame_index.frame_id %}" method="post">{% csrf_token %}
+									
+									<div id="test-form-content">
+										
+										<!-- ANSWER -->
+										<div id="form-data">
+											
+											{% if form.answer %}
+												{{ form.answer|safe }}
+											{% else %}
+												&nbsp;
+											{% endif %}
+											
+										</div>
+										
+										<!-- SUBMIT -->
+										<div id="form-submit" class="module submit-row">
+											
+											<ul class="submit-row inline right">
+												<li class="submit-button-container">
+													<input id="id_submit" type="submit" class="default" value="Отправить" />
+												</li>
+											</ul>
+											
+										</div>
+										
+									</div>
+									
+								</form>
+								
+							</td>
+							
+						</tr>
+						
+					</tbody>
+					
+				</table>
+				
+			</div>
+			
+		</div>
+		
+		<br clear="all" />
+		
 	</div>
 	
-	{% if answered %}
-		<p>Результат проверки:
-			{% if answer_result %}
-				верно
-			{% else %}
-				неверно
-			{% endif %}
-			(балл: {{ answer_result }})
-		</p>
-	{% endif %}
-	{% if form.non_field_errors %}
-		<p>
-			{{ form.non_field_errors }}
-		</p>
-	{% endif %}
-	{% if form.answer.errors %}
-		<p>
-			При ответе допущена ошибка:
-		</p>
-		{{ form.answer.errors }}
-	{% endif %}
-	
-	<form method="post" action="{% url tests:debug_frame scheme=frame_index.scheme frame_id=frame_index.frame_id %}">{% csrf_token %}
-		{{ form.answer }}
-		<input type="submit" value="Отправить" />
-	</form>
-	
-</body>
-</html>
+{% endblock %}

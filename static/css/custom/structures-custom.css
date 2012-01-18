@@ -22,7 +22,7 @@ body {
 ------------------------------------------------------------------------------------------------------ */
 
 .branding, .admin-title, #bookmarks li, #user-tools li {
-	padding: 12px 20px;
+	padding: 13px 20px;
 }
 
 /*  Navigation Menu (UL Navigation-Menu of Admin-Tools)
@@ -34,6 +34,13 @@ ul.navigation-menu li li a {
 
 ul.navigation-menu li li li a {
 	font-size: 14px;
+}
+
+/*  User Tools
+------------------------------------------------------------------------------------------------------ */
+
+li.user-options-container.open ul.user-options {
+	margin: 12px -10px 0;
 }
 
 /*  Breadcrumbs
